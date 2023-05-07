@@ -4,6 +4,7 @@
     --gunmetal: #51534a;
     --gunmetal-tint: #d9dbd0;
     --anchorage-blue: #00629b;
+    --chapel-purple: #702082;
     scroll-padding-top: calc(var(--header-height)*0.6);
 }
 

@@ -1,0 +1,91 @@
+---
+import AnchorageBaseLayout from "./AnchorageBaseLayout.astro";
+import { IconEmail } from "@rkn/base-components";
+const { frontmatter } = Astro.props;
+---
+
+<AnchorageBaseLayout>
+    <section class="profile">
+        <div class="profile_container_inner">
+            <div class="profile_banner">
+                <h1>{frontmatter.name}</h1>
+                <div class="profile_icon_container">
+                    <IconEmail iconemail={frontmatter.email} />
+                </div>
+            </div>
+
+            <img src={frontmatter.image} />
+
+            <h3>Education:</h3>
+
+            <p>{frontmatter.education}</p>
+
+            <h3>Memberships:</h3>
+
+            <p>{frontmatter.memberships}</p>
+
+            <h3>Services Offered:</h3>
+
+            <p>{frontmatter.servicesOffered}</p>
+
+            <h3>Experience areas:</h3>
+
+            <p>{frontmatter.experienceAreas}</p>
+
+            <h3>Specialty areas:</h3>
+
+            <p>{frontmatter.specialtyAreas}</p>
+
+            <hr />
+            <section class="profile-content">
+                <slot />
+            </section>
+            <hr />
+        </div>
+    </section>
+</AnchorageBaseLayout>
+
+<style>
+    h1,
+    h3,
+    p {
+        color: #51534a;
+    }
+    :global(.profile-content *) {
+        color: var(--gunmetal);
+    }
+    :global(.profile_icon_container svg) {
+        fill: var(--gunmetal);
+        height: var(--header1-size);
+    }
+    :global(.profile_icon_container) {
+        margin-left: auto;
+    }
+    div .profile_banner {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+    .profile {
+        max-width: 750px;
+        padding: 0 2vw 2rem 2vw;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin: 0 auto;
+        background-color: #ffffff;
+    }
+    img {
+        width: 100%;
+        height: auto;
+    }
+    main {
+        background-color: #f2f2f2;
+    }
+    hr {
+        margin-top: 2em;
+    }
+    hr:last-of-type {
+        margin-bottom: 2em;
+    }
+</style>
