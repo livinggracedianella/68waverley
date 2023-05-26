@@ -1,0 +1,39 @@
+---
+import AnchorageBaseLayout from "./AnchorageBaseLayout.astro";
+import {
+    HeroBannerShallow,
+    SectionWrapper,
+    BlockSingleColumn,
+} from "@rkn/page-components";
+const { frontmatter } = Astro.props;
+---
+
+<AnchorageBaseLayout title={frontmatter.title}>
+    <HeroBannerShallow
+        BackgroundImage="/images/HeaderImage.jpg"
+        HeroText={frontmatter.title}
+    />
+    <SectionWrapper>
+        <BlockSingleColumn>
+            <div class="content-wrapper">
+                <p class="date">{frontmatter.date}</p>
+                <img src={frontmatter.image} />
+                <slot />
+            </div>
+        </BlockSingleColumn>
+    </SectionWrapper>
+</AnchorageBaseLayout>
+<style>
+    :global(div.content-wrapper *) {
+        color: var(--gunmetal);
+    }
+    p.date {
+        padding-bottom: 1rem;
+        color: var(--gunmetal);
+        font-style: italic;
+    }
+    img {
+        width: 100%;
+        height: auto;
+    }
+</style>
