@@ -7,135 +7,184 @@ import { BlockDoubleColumn } from "@rkn/page-components";
 import { SectionWrapper } from "@rkn/page-components";
 import { BlockPaddingWrapper } from "@rkn/page-components";
 import { HeroImageScroll } from "@rkn/page-components";
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import EventGrid from "../components/EventGrid.jsx";
+const  { data: events } = await fetch(`http://pro.local:1337/api/events?populate[organisers][populate][0]=Portrait`).then(res => res.json())
 ---
 
 <AnchorageBaseLayout>
-	<HeroImage BackgroundImage="images/HeaderImage.jpg">
-		<h2 class="hero">
-			A place of formation<br />
-			Shape your ministry
-		</h2>
-	</HeroImage>
-	<SectionWrapper backgroundColor="var(--anchorage-blue)">
-		<BlockSingleColumn>
-			<h2>Our Heart</h2>
-			<h4 style="color: white">
-				<em
-					>Journeying alongside people for growth; in Christ, in
-					calling, in our identity.</em
-				>
-			</h4>
-		</BlockSingleColumn>
-		<BlockDoubleColumn>
-			<BlockPaddingWrapper>
-				<h3>Watup</h3>
-				<p>
-					Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-					Vero et minima nisi veritatis, necessitatibus in inventore
-					unde atque a. Accusamus perferendis amet facere suscipit
-					illum ipsum, possimus ab aliquid rerum?
-				</p>
-			</BlockPaddingWrapper>
-			<BlockPaddingWrapper>
-				<h3>Homies</h3>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-					Labore dignissimos quia natus deserunt. Numquam, quo culpa!
-					Debitis pariatur autem ipsa eius cupiditate delectus, fugit,
-					expedita consequatur odit magnam magni iste?
-				</p>
-			</BlockPaddingWrapper>
-		</BlockDoubleColumn>
-		<BlockSingleColumn>
-			<div class="FindMeAWrapper">
-				<FindMeADropdown buttonName="Find me a..." />
-			</div>
-		</BlockSingleColumn>
-	</SectionWrapper>
-	<SectionWrapper backgroundColor="var(--gunmetal)">
-		<BlockSingleColumn>
-			<h5 style="color: white; padding: 1rem; text-align: center;">
-				We would love to kep you up to date with what's coming soon at
-				The Anchorage!
-			</h5>
-			<div class="flex_center">
-				<a
-					class="callToAction"
-					href="http://eepurl.com/h5wagT"
-					target="_blank"
-					>Click here to subscribe to our mailing list</a
-				>
-			</div>
-		</BlockSingleColumn>
-	</SectionWrapper>
-	<HeroImageScroll BackgroundImage="images/HeaderImage.jpg">
-		<BlockSingleColumn>
-			<h2 class="small">
-				An inspirational quote about The Anchorage and stuff. Lorem
-				ipsum dolor sit amet consectetur adipisicing elit. Obcaecati id
-				dicta qui delectus quasi sunt voluptatibus temporibus expedita
-				sint iste eaque numquam, et tempora quo quia error facilis!
-				Beatae, expedita! A change for change's sake.
-			</h2>
-		</BlockSingleColumn>
-	</HeroImageScroll>
-	<style>
+  <HeroImage BackgroundImage="images/HeaderImage.jpg">
+    <h2 class="hero">
+      A place of formation<br />
+      Shape your ministry
+    </h2>
+  </HeroImage>
+  <SectionWrapper backgroundColor="var(--anchorage-blue)">
+    <BlockSingleColumn>
+      <h2>Our Heart</h2>
+      <h4 style="color: white">
+        <em
+          >Journeying alongside people for growth; in Christ, in
+          calling, in our identity.</em
+        >
+      </h4>
+    </BlockSingleColumn>
+    <EventGrid events={events}/>
+    <BlockDoubleColumn>
+      <BlockPaddingWrapper>
+        <h3>Watup</h3>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          Vero et minima nisi veritatis, necessitatibus in inventore
+          unde atque a. Accusamus perferendis amet facere suscipit
+          illum ipsum, possimus ab aliquid rerum?
+        </p>
+      </BlockPaddingWrapper>
+      <BlockPaddingWrapper>
+        <h3>Homies</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Labore dignissimos quia natus deserunt. Numquam, quo culpa!
+          Debitis pariatur autem ipsa eius cupiditate delectus, fugit,
+          expedita consequatur odit magnam magni iste?
+        </p>
+      </BlockPaddingWrapper>
+    </BlockDoubleColumn>
+    <BlockSingleColumn>
+      <div class="FindMeAWrapper">
+        <FindMeADropdown buttonName="Find me a  ." />
+      </div>
+    </BlockSingleColumn>
+  </SectionWrapper>
+  <SectionWrapper backgroundColor="var(--gunmetal)">
+    <BlockSingleColumn>
+      <h5 style="color: white; padding: 1rem; text-align: center;">
+        We would love to kep you up to date with what's coming soon at
+        The Anchorage!
+      </h5>
+      <div class="flex_center">
+        <a
+          class="callToAction"
+          href="http://eepurl.com/h5wagT"
+          target="_blank"
+          >Click here to subscribe to our mailing list</a
+        >
+      </div>
+    </BlockSingleColumn>
+  </SectionWrapper>
+  <HeroImageScroll BackgroundImage="images/HeaderImage.jpg">
+    <BlockSingleColumn>
+      <h2 class="small">
+        An inspirational quote about The Anchorage and stuff. Lorem
+        ipsum dolor sit amet consectetur adipisicing elit. Obcaecati id
+        dicta qui delectus quasi sunt voluptatibus temporibus expedita
+        sint iste eaque numquam, et tempora quo quia error facilis!
+        Beatae, expedita! A change for change's sake.
+      </h2>
+    </BlockSingleColumn>
+  </HeroImageScroll>
+  <style>
     :root {
       --banner-color: var(--chapel-purple);
     }
-		h2 {
-			color: white;
-			z-index: 1;
-			transition: 0.25s;
-			font-size: 36px;
-			text-align: center;
-		}
-		h2.hero {
-			margin-top: max(40vh, 150px);
-			padding: 0;
-			text-shadow: 0 0 8px black;
-		}
-		h3,
-		p {
-			color: white;
-		}
-		div.FindMeAWrapper {
-			padding-top: 2rem;
-		}
-		a.callToAction {
-			margin: 2rem;
-			padding: 1rem;
-			text-align: center;
-			font-size: 18px;
-			/*background-color: var(--anchorage-blue);*/
-			border-radius: 10px;
-			border: solid 1px white;
-			color: white;
-			text-decoration: none;
-			transition: 0.25s;
-		}
-		a.callToAction:hover,
-		a.callToAction:focus {
-			background-color: white;
-			color: black;
-			transform: scale(1.05);
-			transition: 0.25s;
-		}
-		div.flex_center {
-			display: flex;
-			justify-content: center;
-		}
-		h2.small {
-			font-size: 32px;
-			text-shadow: 0 0 8px black;
-		}
-		@media (max-width: 640px) {
-			h2 {
-				font-size: 26px;
-			}
-			h2.small {
-				font-size: 22px;
-			}
-		}
-	</style>
+    h2 {
+      color: white;
+      z-index: 1;
+      transition: 0.25s;
+      font-size: 36px;
+      text-align: center;
+    }
+    h2.hero {
+      margin-top: max(40vh, 150px);
+      padding: 0;
+      text-shadow: 0 0 8px black;
+    }
+    h3,
+    p {
+      color: white;
+    }
+    div.FindMeAWrapper {
+      padding-top: 2rem;
+    }
+    a.callToAction {
+      margin: 2rem;
+      padding: 1rem;
+      text-align: center;
+      font-size: 18px;
+      /*background-color: var(--anchorage-blue);*/
+      border-radius: 10px;
+      border: solid 1px white;
+      color: white;
+      text-decoration: none;
+      transition: 0.25s;
+    }
+    a.callToAction:hover,
+    a.callToAction:focus {
+      background-color: white;
+      color: black;
+      transform: scale(1.05);
+      transition: 0.25s;
+    }
+    div.flex_center {
+      display: flex;
+      justify-content: center;
+    }
+    h2.small {
+      font-size: 32px;
+      text-shadow: 0 0 8px black;
+    }
+    @media (max-width: 640px) {
+      h2 {
+        font-size: 26px;
+      }
+      h2.small {
+        font-size: 22px;
+      }
+    }
+
+    main {
+      margin: auto;
+      padding: 1.5rem;
+      max-width: 60ch;
+    }
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 0;
+    }
+    .text-gradient {
+      background-image: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400%;
+      background-position: 0%;
+    }
+    .instructions {
+      line-height: 1.6;
+      margin: 1rem 0;
+      border: 1px solid rgba(var(--accent), 25%);
+      background-color: white;
+      padding: 1rem;
+      border-radius: 0.4rem;
+    }
+    .instructions code {
+      font-size: 0.875em;
+      font-weight: bold;
+      background: rgba(var(--accent), 12%);
+      color: rgb(var(--accent));
+      border-radius: 4px;
+      padding: 0.3em 0.45em;
+    }
+    .instructions strong {
+      color: rgb(var(--accent));
+    }
+    .link-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+      gap: 1rem;
+      padding: 0;
+    }
+
+  </style>
 </AnchorageBaseLayout>

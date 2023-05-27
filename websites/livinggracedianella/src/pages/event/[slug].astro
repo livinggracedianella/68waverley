@@ -1,0 +1,17 @@
+---
+//import BaseLayout from "../../layout/BaseLayout.astro"
+import Layout from '../../layouts/Layout.astro';
+import SingleEventItem from "../../components/SingleEventItem.jsx"
+
+export async function getStaticPaths() {
+  const  { data: events } =  await fetch(`http://localhost:1337/api/events?populate[organisers][populate][0]=Portrait`).then(res => res.json())
+  return  events.map(event =>  ({params : {slug: event.attributes.slug}}))
+}
+
+const {slug} =  Astro.params
+const { data: eventItem } = await fetch(`http://localhost:1337/api/events?populate[organisers][populate][0]=Portrait&slug=${slug}`).then(x  => x.json())
+---
+
+<Layout title={eventItem[0]?.title}>
+<SingleEventItem event={eventItem[0]}/>
+</Layout>
