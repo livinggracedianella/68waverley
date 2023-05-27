@@ -5,7 +5,6 @@ export interface Props {
 };
 
 const { events } = Astro.props;
-console.log(events)
 ---
 <div class="grid layout-1-1-1">
     {events && events.length > 0 ? events.map((event) => <EventGridItem event={event} />) : 'No events found'}

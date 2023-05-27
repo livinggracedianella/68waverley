@@ -15,6 +15,8 @@
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "marked": "^5.0.3",
+    "marked-gfm-heading-id": "^3.0.3",
+    "marked-mangle": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

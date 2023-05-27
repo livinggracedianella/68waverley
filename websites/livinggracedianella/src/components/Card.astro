@@ -1,6 +1,10 @@
 ---
 import { marked } from 'marked';
-
+marked.use({
+  mangle: false,
+  headerIds: false,
+  headerPrefix: false
+});
 export interface Props {
   title: string;
   body: string;

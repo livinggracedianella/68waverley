@@ -1,6 +1,11 @@
 ---
 import { formatDistance, format } from 'date-fns';
 import { marked } from 'marked';
+marked.use({
+  mangle: false,
+  headerIds: false,
+  headerPrefix: false
+});
 export interface Props {
   event: object
 }
