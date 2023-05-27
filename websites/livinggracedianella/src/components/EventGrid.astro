@@ -1,0 +1,45 @@
+---
+import EventGridItem from './EventGridItem.astro';
+export interface Props {
+  events: array
+};
+
+const { events } = Astro.props;
+console.log(events)
+---
+<div class="grid layout-1-1-1">
+    {events && events.length > 0 ? events.map((event) => <EventGridItem event={event} />) : 'No events found'}
+</div>
+
+<style>
+@media screen and (min-width : 48em) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 4.5vh 4.25vw;
+  }
+}
+
+.grid {
+  display: grid;
+  row-gap: 1.5vh;
+}
+
+
+.layout-1-1-1 {
+
+  padding: 0 3vw;
+}
+
+.layout-2-1-1-2 .column-1 {
+    grid-column: 1;
+}
+
+.layout-2-1-1-2 .column-2 {
+    grid-column: 2;
+}
+
+.layout-2-1-1-2 .column-3 {
+    grid-column: 3;
+}
+
+</style>

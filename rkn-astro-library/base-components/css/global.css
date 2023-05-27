@@ -63,7 +63,7 @@ header button {
     background-color: var(--banner-color);
 }
 
-/*Font Stles*/
+/*Font Styles*/
 :root {
     --header1-size: 3.6rem;
     --header2-size: 2.6rem;
@@ -119,6 +119,22 @@ a {
     h2 {
         font-size: var(--header2-size);
     }
+}
+
+.link-card h2 {
+  font-size: 1.3em;
+  margin-top: 0.3em;
+}
+
+.link-card p:first-of-type {
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.link-card p:not(:first-of-type) {
+  display: none;
 }
 
 /*ICON STYLES*/

@@ -9,7 +9,7 @@ import { BlockPaddingWrapper } from "@rkn/page-components";
 import { HeroImageScroll } from "@rkn/page-components";
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-import EventGrid from "../components/EventGrid.jsx";
+import EventGrid from "../components/EventGrid.astro";
 const  { data: events } = await fetch(`http://pro.local:1337/api/events?populate[organisers][populate][0]=Portrait`).then(res => res.json())
 ---
 
@@ -84,6 +84,9 @@ const  { data: events } = await fetch(`http://pro.local:1337/api/events?populate
       </h2>
     </BlockSingleColumn>
   </HeroImageScroll>
+
+
+  /* ---------------------- Rohan's Styles ---------------------- */
   <style>
     :root {
       --banner-color: var(--chapel-purple);
@@ -143,6 +146,7 @@ const  { data: events } = await fetch(`http://pro.local:1337/api/events?populate
       }
     }
 
+    /* ---------------------- Strapi Tut Styles ---------------------- */
     main {
       margin: auto;
       padding: 1.5rem;

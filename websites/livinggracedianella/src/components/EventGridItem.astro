@@ -1,0 +1,14 @@
+---
+import Card from './Card.astro';
+export interface Props {
+  event: object
+};
+
+const { event } = Astro.props;
+const { attributes: { title, summary, date, contact, slug, organiser } } = event;
+---
+<Card
+  href={`/event/${slug}`}
+  title={title}
+  body={summary}
+/>
