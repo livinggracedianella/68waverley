@@ -2,9 +2,10 @@
 import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
 import { HeroBannerShallow } from "@rkn/page-components";
 import Grid from "../components/Grid.astro";
+import GridItem from "../components/GridItem.astro";
 
 const  { data: posts } =  await fetch(`http://192.168.1.102:1337/api/posts`).then(res => res.json())
-const title = "Blog";
+const title = "Blog Articles";
 ---
 
 <AnchorageBaseLayout title={title}>
@@ -13,5 +14,10 @@ const title = "Blog";
         HeroText="Blog."
     />
 
-    <Grid heading="Blog Articles" subtitle="Thoughtful musings from thoughtful people" itemType="post" items={posts}/>
+    <Grid
+      heading="Blog Articles"
+      subtitle="Thoughtful musings from thoughtful people"
+      class="layout-1-1-1">
+        {posts && posts.length > 0 ? posts.map((post) => <GridItem itemType="post" item={post} />) : 'No posts found'}
+    </Grid>
 </AnchorageBaseLayout>
