@@ -8,7 +8,7 @@ export async function getStaticPaths() {
 }
 
 const {slug} =  Astro.params
-const { data: postItem } = await fetch(`http://192.168.1.102:1337/api/posts?slug=${slug}`).then(x  => x.json())
+const { data: postItem } = await fetch(`http://192.168.1.102:1337/api/posts?filters[slug][$eq]=${slug}`).then(x  => x.json())
 ---
 
 <BlogLayout title={postItem[0]?.title}>
