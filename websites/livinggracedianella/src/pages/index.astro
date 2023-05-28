@@ -9,7 +9,7 @@ import { BlockPaddingWrapper } from "@rkn/page-components";
 import { HeroImageScroll } from "@rkn/page-components";
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-import EventGrid from "../components/EventGrid.astro";
+import Grid from "../components/Grid.astro";
 const  { data: events } = await fetch(`http://192.168.1.102:1337/api/events?populate[organisers][populate][0]=Portrait`).then(res => res.json())
 ---
 
@@ -30,7 +30,7 @@ const  { data: events } = await fetch(`http://192.168.1.102:1337/api/events?popu
         >
       </h4>
     </BlockSingleColumn>
-    <EventGrid events={events}/>
+    <Grid heading="Gatherings" subtitle="Connect with your tribe" itemType="event" items={events}/>
     <BlockDoubleColumn>
       <BlockPaddingWrapper>
         <h3>Watup</h3>

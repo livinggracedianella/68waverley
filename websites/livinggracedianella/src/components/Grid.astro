@@ -1,16 +1,26 @@
 ---
-import EventGridItem from './EventGridItem.astro';
+import GridItem from './GridItem.astro';
 export interface Props {
   events: array
 };
 
-const { events } = Astro.props;
+const { itemType, heading, subtitle, items } = Astro.props;
 ---
+<hgroup>
+  <h1>{heading}</h1>
+  <p>{subtitle}</p>
+</hgroup>
+
 <div class="grid layout-1-1-1">
-    {events && events.length > 0 ? events.map((event) => <EventGridItem event={event} />) : 'No events found'}
+    {items && items.length > 0 ? items.map((item) => <GridItem itemType={itemType} item={item} />) : 'No events found'}
 </div>
 
 <style>
+h1 {
+  color: #bbb;
+  margin: 0;
+}
+
 @media screen and (min-width : 48em) {
   .grid {
     grid-template-columns: 1fr 1fr 1fr;
@@ -18,14 +28,24 @@ const { events } = Astro.props;
   }
 }
 
+hgroup {
+  text-align: center;
+  margin-top: 2.5em;
+}
+
+hgroup p {
+  color: #999;
+  font-weight: 600;
+  font-style: italic;
+  margin: 0.1em 0 2em 0;
+}
+
 .grid {
   display: grid;
   row-gap: 1.5vh;
 }
 
-
 .layout-1-1-1 {
-
   padding: 0 3vw;
 }
 

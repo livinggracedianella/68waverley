@@ -1,7 +1,7 @@
 ---
 import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
 import { HeroBannerShallow } from "@rkn/page-components";
-import EventGrid from "../components/EventGrid.astro";
+import Grid from "../components/Grid.astro";
 
 const  { data: posts } =  await fetch(`http://192.168.1.102:1337/api/posts`).then(res => res.json())
 const title = "Blog";
@@ -12,9 +12,6 @@ const title = "Blog";
         BackgroundImage="images/HeaderImage.jpg"
         HeroText="Blog."
     />
-    <div class="container">
-        <h2>Blog</h2>
-        <p><em>Thoughtful musings from thoughtful people</em></p>
-    </div>
-    <EventGrid events={posts}/>
+
+    <Grid heading="Blog Articles" subtitle="Thoughtful musings from thoughtful people" itemType="post" items={posts}/>
 </AnchorageBaseLayout>
