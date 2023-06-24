@@ -1,5 +1,6 @@
 ---
 import GridItem from './GridItem.astro';
+import "@rkn/base-components/css/layouts.css";
 export interface Props {
   heading: string;
   subtitle: string;
@@ -23,44 +24,6 @@ h1 {
   margin: 0;
 }
 
-@media screen and (min-width : 48em) {
-  .grid {
-    gap: 4.5vh 4.25vw;
-  }
-
-  .grid.layout-1-1-1 {
-    grid-template-columns: 1fr 1fr 1fr;
-    margin: 0 3vw;
-  }
-
-  .grid.layout-1-1-1-1 {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin: 0 3vw;
-  }
-
-  .grid.layout-2-1-1-2 {
-    grid-template-columns: 2fr 1fr 1fr 2fr;
-    margin: 0 2vw;
-    gap: 3.5vh 3.25vw;
-  }
-
-  .layout-2-1-1-2 .column-1 {
-      grid-column: 1;
-  }
-
-  .layout-2-1-1-2 .column-2 {
-      grid-column: 2;
-  }
-
-  .layout-2-1-1-2 .column-3 {
-      grid-column: 3;
-  }
-
-  .layout-2-1-1-2 .column-4 {
-      grid-column: 4;
-  }
-}
-
 hgroup {
   text-align: center;
   margin-top: 2.5em;
@@ -72,12 +35,5 @@ hgroup p {
   font-style: italic;
   margin: 0.1em 0 2em 0;
 }
-
-.grid {
-  display: grid;
-  row-gap: 1.5vh;
-  margin: 0 2vw;
-}
-
 
 </style>

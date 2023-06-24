@@ -21,3 +21,11 @@ const title = "Blog Articles";
         {posts && posts.length > 0 ? posts.map((post) => <GridItem itemType="post" item={post} />) : 'No posts found'}
     </Grid>
 </AnchorageBaseLayout>
+
+<style>
+@media screen and (min-width : 48em) {
+  .grid.layout-1-1-1 {
+    gap: 1.5vh 4.25vw;
+  }
+}
+</style>

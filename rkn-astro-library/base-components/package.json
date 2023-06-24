@@ -4,7 +4,8 @@
     "version": "1.0.0",
     "description": "header and footer components for astro websites",
     "exports": {
-        ".": "./index.js"
+        ".": "./index.js",
+        "./css/": "./css/"
     },
     "main": "index.js",
     "scripts": {
