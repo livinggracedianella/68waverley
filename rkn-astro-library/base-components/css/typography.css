@@ -1,0 +1,6 @@
+
+@font-face {
+  font-family: 'Magallanes';
+  src:  url('/fonts/magallanescondregular.woff2') format('woff2'),
+        url('/fonts/magallanescondregular.woff') format('woff');
+}

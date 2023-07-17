@@ -35,7 +35,7 @@ header button {
 header a:hover,
 header button:hover {
     color: var(--gunmetal-tint);
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
 }
 
 header a:focus,
@@ -128,9 +128,14 @@ a {
 
 .link-card p:first-of-type {
   width: 90%;
-  white-space: nowrap;
   overflow: hidden;
+/* 
+  white-space: nowrap;
+*/
   text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .link-card p:not(:first-of-type) {

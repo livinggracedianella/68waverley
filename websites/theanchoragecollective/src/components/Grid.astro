@@ -1,6 +1,7 @@
 ---
 import GridItem from './GridItem.astro';
 import "@rkn/base-components/css/layouts.css";
+import "@rkn/base-components/css/typography.css";
 export interface Props {
   heading: string;
   subtitle: string;
@@ -9,13 +10,15 @@ export interface Props {
 
 const { heading, subtitle, class: className } = Astro.props;
 ---
-<hgroup>
-  <h1>{heading}</h1>
-  <p>{subtitle}</p>
-</hgroup>
+<div>
+  <hgroup>
+    <h1>{heading}</h1>
+    <p>{subtitle}</p>
+  </hgroup>
 
-<div class=`grid ${className}`>
-  <slot />
+  <div class=`grid ${className}`>
+    <slot />
+  </div>
 </div>
 
 <style>

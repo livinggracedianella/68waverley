@@ -1,6 +1,8 @@
 ---
 import { formatDistance, format } from 'date-fns';
 import { marked } from 'marked';
+marked.use({ mangle: false, headerIds: false, headerPrefix: false });
+
 import Grid from './Grid.astro';
 
 export interface Props {
@@ -8,13 +10,18 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const { attributes: { title, summary, body, date } } = post || {};
+const { attributes: { title, one_liner, summary, body, date, organiser } } = post || {};
+const { attributes: { Name, Title, Bio_Short, Portrait } } = organiser.data || {};
+const { attributes: { url } } = Portrait.data || {};
+const imageUrl = url ? `http://localhost:1337${url}`
+                        : 'https://via.placeholder.com/120';
 const content = marked.parse(body);
 //console.log(marked.lexer(body))
 const paragraphs = marked.lexer(body).filter(t => t.type !== 'space');
-const spans = ['leftside', 'leftmiddle', 'rightmiddle', 'rightside']
 //console.log(paragraphs);
-
+const spans = ['middle', 'rightmiddle']
+//const spans = ['leftside', 'leftmiddle', 'rightmiddle', 'rightside']
+const numRows = paragraphs.length > 0 ? paragraphs.length + 3 : 1
 const randomSpan = () => {
   const spanIndex = Math.floor(Math.random() * spans.length);
   return spans[spanIndex];
@@ -23,16 +30,18 @@ const randomSpan = () => {
 const itemClasses = (itemIndex) => {
   let classes;
   if (itemIndex === 0){
-    classes = 'column-2-5 highlight'
+    classes = 'column-2-4 highlight first-paragraph'
   } else {
     classes = randomSpan()
   }
   return classes;
 };
+
+const mockupStyles = ``;
 ---
 <div style="position: relative">
 
-    <div class="rounded-md h-56 w-full overflow-hidden column-1 row-1">
+    <div class="rounded-md h-56 w-full overflow-hidden">
         <img
             className="object-cover w-full h-full"
             style="width: 100%;"
@@ -46,26 +55,33 @@ const itemClasses = (itemIndex) => {
         />
     </div>
     <Grid class="layout-2-1-1-2">
-          <p class="mockup column-1"></p>
-          <p class="mockup column-2"></p>
-          <p class="mockup column-3"></p>
-          <p class="mockup column-4"></p>
-    <div class="my-4 text-center column-2-5 row-1">
-        <h1 class="text-center text-4xl leading-tight text-gray-900 my-4 font-bold">{title}</h1>
-        <div class="text-gray-500 flex justify-center items-center space-x-2">
-            <span>&middot;</span>
-            <span>{format(new Date(date), 'MM/dd/yyyy')}</span>
-            <span>&middot;</span>
-            <span>{/*readingTime*/}</span>
+      <p class="mockup column-1" style={mockupStyles}></p>
+      <p class="mockup column-2" style={mockupStyles}></p>
+      <p class="mockup column-3" style={mockupStyles}></p>
+      <p class="mockup column-4" style={mockupStyles}></p>
+      <div class="head-matter column-all row-1">
+          <h1>{title}</h1>
+          <div class="one-liner">{one_liner}</div>
+          <div>
+              <span class="article-date">{format(new Date(date), 'do LLL yyyy')}</span>
+          </div>
+      </div>
+      <div class="head-matter column-1 row-2">
+        <!-- <div class="summary column-1">{summary}</div> -->
+        <div class="author">
+          <img class="author-image" src={imageUrl} alt="Author Photo" />
+          <div class="author-details"><div class="author-name">{Name}<span class="desktop">,<br /></span></div>
+            <div class="author-title">{Title}</div>
+          </div>
         </div>
-    </div>
+        <div class="author-bio">{Bio_Short}</div>
+      </div>
     {
       paragraphs && paragraphs.length > 0
       ? paragraphs.map((paragraph, index) => (
       <div
         set:html={marked.parse(paragraph.text)}
-        class={`${itemClasses(index)}`}
-        style={`grid-row: ${index + 2};`}>
+        class={`${itemClasses(index)}`}>
       </div>
       ))
       : 'No posts found'
@@ -75,18 +91,144 @@ const itemClasses = (itemIndex) => {
 
 <style>
 .highlight {
-  font-weight: 700;
-  font-size: 150%;
+  font-weight: 600;
+  font-size: 120%;
+}
+
+.head-matter {
+  text-align: center;
+  font-family: Magallanes;
+}
+
+h1 {
+  font-weight: 800;
+  color: #555;
+  margin: 12px 0 4px 0;
+}
+
+.one-liner {
+  border-top: 1px #aaa solid;
+  padding: 8px 0px 0px 0px;
+  margin: 4px 0px 0px 0px;
+  font-size: 110%;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 0.98;
+  color: #333;
+}
+
+.article-date {
+  margin: 0px 0px 4px 0px;
+  font-size: 70%;
+}
+
+.summary {
+  color: #c64;
+  font-size: 130%;
+  font-weight: 600;
+}
+
+.author {
+  display: flex;
+  text-align: left;
+  padding: 2px;
+  background-color: #f0e0f8;
+}
+
+.author-bio {
+  color: #999;
+  font-size: 75%;
+  font-weight: 500;
+  /* border: 1px solid #666; */
+  padding: 4px;
+  background-color: #f0f4f0;
+  display: none;
+}
+
+.author-name {
+  font-size: 120%;
+  font-weight: 600;
+  text-align: start;
+  line-height: 1.5rem;
+  padding: 0px 0px 4px 4px;
+  margin: 0;
+  display: block;
+}
+
+.author-title {
+  font-size: 120%;
+  font-weight: 400;
+  line-height: 1.1rem;
+  text-align: start;
+  flex: 1 1 auto;
+  padding: 0px 4px 0px 4px;
+  display: inline;
+}
+
+.author-image {
+width: 12%;
+}
+
+.mockup {
+  grid-row-start: 1;
+}
+
+.desktop {
+  display: none;
 }
 
 @media screen and (min-width : 48em) {
-  .layout-2-1-1-2 {
-    grid-template-rows: 180px auto auto;
+  .desktop {
+    display: inline;
   }
 
-  .grid.layout-2-1-1-2 {
-    margin: 0 2vw;
-    gap: 3.5vh 3.25vw;
+  .head-matter {
+    align-items: center;
+  }
+
+  .one-liner {
+    width: 56%;
+    margin: auto;
+  }
+
+  .author {
+    padding: 2px;
+  }
+
+  .author-bio {
+    display: block;
+  }
+
+  .author-details {
+    display: block;
+  }
+
+  .author-name {
+    font-size: 125%;
+    font-weight: 700;
+    font-size: 125%;
+    text-align: start;
+    line-height: 1rem;
+    padding: 0px 4px;
+    margin: 0;
+  }
+
+  .author-title {
+    font-weight: 400;
+    text-align: start;
+    flex: 1 1 auto;
+    line-height: 1rem;
+    padding: 0px 4px;
+  }
+
+  .author-image {
+    width: min(150px, 30%);
+    padding: 1px;
+  }
+
+  .first-paragraph {
+    grid-row: 2;
   }
 }
+
 </style>
