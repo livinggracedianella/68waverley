@@ -16,12 +16,11 @@ const mockupStyles = ``;
         BackgroundImage="/images/HeaderImage.jpg"
         HeroText="Blog."
     />
-
     <Grid
-      heading="Blog Articles"
-      subtitle="Thoughtful musings from thoughtful people"
+      heading="More Rings"
+      subtitle="Guidance for Advanced Souls"
       class="layout-1-1-1">
-        {posts && posts.length > 0 ? posts.map((post) => <GridItem itemType="post" item={post} />) : 'No posts found'}
+
     </Grid>
 
     <Grid class="layout-2-1-1-2">
@@ -29,14 +28,15 @@ const mockupStyles = ``;
       <p class="mockup column-2" style={mockupStyles}></p>
       <p class="mockup column-3" style={mockupStyles}></p>
       <p class="mockup column-4" style={mockupStyles}></p>
-      <div class="head-matter column-1-2 row-1">
+      <div class="head-matter leftmiddle row-1">
           <h1>Title Goes Here!</h1>
-          <div class="one-liner" style="font-size: 1.4rem; font-weight: 600">A one liner to catch your attention, across col 1 + 2 !</div>
+          <div class="one-liner" style="font-size: 1.3rem; font-weight: 600">A one liner to catch your attention, across col 1 + 2 !</div>
           <div>
               <span class="article-date">14 Feb 2023</span>
           </div>
       </div>
-      <div class="head-matter column-3-4 row-2">
+
+      <div class="head-matter column-3-4 row-1">
         <div class="summary column-1"><span style="font-size: 1.6rem; font-weight: 600">Text for right side of the page (col 3+4).</span> Lorem ipsum dolor sit amet, officiis reprehendunt ei his, modus congue laoreet quo an, ea nec modus deserunt disputando.<br />Soleat evertitur mnesarchum cum id. Eam labore mnesarchum et. Quodsi inermis necessitatibus mea ei, usu cibo eloquentiam repudiandae ne.<br />Fuisset praesent id cum. Discere appareat ea sea, eu scripta volutpat electram sit, modus quando concludaturque ea vel.</div>
         <!-- <div class="summary column-1">{summary}</div>
         <div class="author">
@@ -48,6 +48,15 @@ const mockupStyles = ``;
         <div class="author-bio">{Bio_Short}</div> -->
       </div>
     </Grid>
+
+    <Grid
+      heading="Recent Articles"
+      subtitle="Thoughtful musings from thoughtful people"
+      class="layout-1-1-1">
+        {posts && posts.length > 0 ? posts.map((post) => <GridItem itemType="post" item={post} />) : 'No posts found'}
+    </Grid>
+
+
 
 </AnchorageBaseLayout>
 
