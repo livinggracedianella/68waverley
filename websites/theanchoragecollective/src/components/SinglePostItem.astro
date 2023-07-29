@@ -10,18 +10,11 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const { attributes: { title, one_liner, summary, body, date, organiser } } = post || {};
-const { attributes: { Name, Title, Bio_Short, Portrait } } = organiser.data || {};
-const { attributes: { url } } = Portrait.data || {};
-const imageUrl = url ? `http://localhost:1337${url}`
-                        : 'https://via.placeholder.com/120';
-const content = marked.parse(body);
-//console.log(marked.lexer(body))
+const { attributes: { title, one_liner, summary, body, date, services: { data: services } } } = post || {};
+const { attributes: { providers: { data: providers } } } = post || {};
 const paragraphs = marked.lexer(body).filter(t => t.type !== 'space');
-//console.log(paragraphs);
 const spans = ['middle', 'rightmiddle']
-//const spans = ['leftside', 'leftmiddle', 'rightmiddle', 'rightside']
-const numRows = paragraphs.length > 0 ? paragraphs.length + 3 : 1
+
 const randomSpan = () => {
   const spanIndex = Math.floor(Math.random() * spans.length);
   return spans[spanIndex];
@@ -37,45 +30,60 @@ const itemClasses = (itemIndex) => {
   return classes;
 };
 
-const mockupStyles = ``;
+const serviceStyles = (service) => {return `border: 1px solid #999999; background-color: ${service.background}`};
 ---
 <div style="position: relative">
-
-    <div class="rounded-md h-56 w-full overflow-hidden">
-        <img
-            className="object-cover w-full h-full"
-            style="width: 100%;"
-            src={
-                // featuredImage
-                //    ? `http://localhost:1337${featuredImage.url}`
-                //    : 'https://via.placeholder.com/1080'
-                // 'https://dummyimage.com/1080x180/dddddd/111111&text=banner+image'
-                '/images/whites-beach-2048x827.jpg'
-            }
-        />
-    </div>
-    <Grid class="layout-2-1-1-2">
-      <p class="mockup column-1" style={mockupStyles}></p>
-      <p class="mockup column-2" style={mockupStyles}></p>
-      <p class="mockup column-3" style={mockupStyles}></p>
-      <p class="mockup column-4" style={mockupStyles}></p>
-      <div class="head-matter column-all row-1">
-          <h1>{title}</h1>
-          <div class="one-liner">{one_liner}</div>
-          <div>
-              <span class="article-date">{format(new Date(date), 'do LLL yyyy')}</span>
-          </div>
-      </div>
-      <div class="head-matter column-1 row-2">
-        <!-- <div class="summary column-1">{summary}</div> -->
-        <div class="author">
-          <img class="author-image" src={imageUrl} alt="Author Photo" />
-          <div class="author-details"><div class="author-name">{Name}<span class="desktop">,<br /></span></div>
-            <div class="author-title">{Title}</div>
-          </div>
+  <div class="rounded-md h-56 w-full overflow-hidden">
+      <img
+          className="object-cover w-full h-full"
+          style="width: 100%;"
+          src={
+              // featuredImage
+              //    ? `http://localhost:1337${featuredImage.url}`
+              //    : 'https://via.placeholder.com/1080'
+              // 'https://dummyimage.com/1080x180/dddddd/111111&text=banner+image'
+              '/images/whites-beach-2048x827.jpg'
+          }
+      />
+  </div>
+  <Grid class="layout-2-1-1-2">
+    <p class="mockup column-1"></p>
+    <p class="mockup column-2"></p>
+    <p class="mockup column-3"></p>
+    <p class="mockup column-4"></p>
+    <div class="head-matter column-all row-1">
+        <h1>{title}</h1>
+        <div class="one-liner">{one_liner}</div>
+        <div>
+            <span class="article-date">{format(new Date(date), 'do LLL yyyy')}</span>
         </div>
-        <div class="author-bio">{Bio_Short}</div>
-      </div>
+        <div>
+            {
+              services.map(({ attributes: service }, index) => (
+                <a href={`/service/${service.name}`} style={serviceStyles(service)}>{ service.name }</a>
+              ))
+            }
+        </div>
+    </div>
+    <div class="head-matter column-1 row-2">
+      <!-- <div class="summary column-1">{summary}</div> -->
+      {
+        providers.map(({ attributes: provider }, index) => {
+          const { data: [{ attributes: { url } }] } = provider?.portrait || {};
+          const imageUrl = url ? `http://localhost:1337${url}`
+                                  : 'https://via.placeholder.com/120';
+          return (
+            <div class="author">
+              <img class="author-image" src={imageUrl} alt="Author Photo" />
+              <div class="author-details"><div class="author-name">{provider.name}<span class="desktop">,<br /></span></div>
+                <div class="author-title">{provider.title}</div>
+              </div>
+            </div>
+            <div class="author-bio">{provider.bio_short}</div>
+          )
+        })
+      }
+    </div>
     {
       paragraphs && paragraphs.length > 0
       ? paragraphs.map((paragraph, index) => (
@@ -230,5 +238,4 @@ width: 12%;
     grid-row: 2;
   }
 }
-
 </style>

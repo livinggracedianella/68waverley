@@ -1,0 +1,83 @@
+---
+import { formatDistance, format } from 'date-fns';
+import { marked } from 'marked';
+import Grid from './Grid.astro';
+export interface Props {
+  service: object
+}
+const { service } = Astro.props;
+const { attributes: { name, description, background, providers: { data: providers }, posts: { data: posts }  } } = service || {};
+const introStyles = () => { return `width: 100vw; background-color: ${background}; padding: 30px 0px; display: flex; flex-direction: column;`};
+---
+
+<div style="position: relative">
+    <div style={introStyles()}>
+      <h1 style="text-align: center;">{name}</h1>
+      <div style="max-width: 400px; align-self: center">
+        { description }
+      </div>
+    </div>
+    <Grid class="layout-2-1-1-2">
+          <div class="column-1-2">
+            <h2>Providers</h2>
+            <ul>
+              {
+                Object.values(providers).map(({ attributes: provider }, index) => (
+                  <li>
+                    <span class="item-name">{ provider.name }</span><br />
+                    <div class="item-body">
+                    { provider.bio_short }
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div class="column-3-4">
+            <h2>Posts</h2>
+            <ul>
+              {
+                Object.values(posts).map(({ attributes: post }, index) => (
+                  <li>
+                    <span class="item-name">{ post.title }</span><br />
+                    <div class="item-body">
+                    { post.body }
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+  </Grid>
+</div>
+<style>
+.highlight {
+  font-weight: 700;
+  font-size: 150%;
+}
+li {
+  margin-bottom: 1rem;
+}
+
+.item-name {
+  font-weight: 700;
+}
+
+.item-body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+@media screen and (min-width : 48em) {
+  .layout-2-1-1-2 {
+    grid-template-rows: 180px auto auto;
+  }
+  .grid.layout-2-1-1-2 {
+    margin: 0 2vw;
+    gap: 3.5vh 3.25vw;
+  }
+}
+</style>

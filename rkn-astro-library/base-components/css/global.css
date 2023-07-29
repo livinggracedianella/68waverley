@@ -63,7 +63,7 @@ header button {
     background-color: var(--banner-color);
 }
 
-/*Font Styles*/
+/*Global Font Styles*/
 :root {
     --header1-size: 3.6rem;
     --header2-size: 2.6rem;
@@ -129,7 +129,7 @@ a {
 .link-card p:first-of-type {
   width: 90%;
   overflow: hidden;
-/* 
+/*
   white-space: nowrap;
 */
   text-overflow: ellipsis;

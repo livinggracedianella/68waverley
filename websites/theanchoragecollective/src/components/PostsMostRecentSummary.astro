@@ -1,0 +1,122 @@
+---
+import Grid from "../components/Grid.astro";
+// import GridItem from "../components/GridItem.astro";
+import { formatDistance, format } from 'date-fns';
+
+// const  { data: posts } =  await fetch(`http://127.0.0.1:1337/api/posts`).then(res => res.json())
+// const { attributes: mostRecent } = posts.shift() || {};
+
+export interface Props {
+  slug: object
+}
+
+const { slug } = Astro.props;
+const { data: [post] } = await fetch(`http://127.0.0.1:1337/api/posts?filters[slug][$eq]=${slug}&populate[services]=t&populate[providers][populate][0]=portrait`).then(x  => x.json())
+const { attributes: { title, one_liner, summary, body, date, services: { data: services } } } = post || {};
+const { attributes: { providers: { data: providers } } } = post || {};
+
+// const title = "Blog Articles";
+---
+<Grid class="layout-2-1-1-2">
+  <p class="mockup column-1"></p>
+  <p class="mockup column-2"></p>
+  <p class="mockup column-3"></p>
+  <p class="mockup column-4"></p>
+  <div class="head-matter head-first leftmiddle row-1">
+    <h1>{ title }</h1>
+    <div class="one-liner" style="font-size: 1.3rem; font-weight: 600">{ one_liner }</div>
+    <div>
+        <span class="article-date">{ format(new Date(date), 'do LLL yyyy') }</span>
+    </div>
+  </div>
+  <div class="column-2 row-2">
+    {
+      providers.map(({ attributes: provider }, index) => {
+        const { data: [{ attributes: { url } }] } = provider?.portrait || {};
+        const imageUrl = url ? `http://localhost:1337${url}`
+                                : 'https://via.placeholder.com/120';
+        return (
+          <div class="author">
+            <img class="author-image" src={imageUrl} alt="Author Photo" />
+            <div class="author-details"><div class="author-name">{provider.name}</div>
+              <div class="author-title">{provider.title}</div>
+            </div>
+          </div>
+          <div class="author-bio">{provider.bio_short}</div>
+        )
+      })
+    }
+  </div>
+
+  <div class="head-matter column-3-4 row-1">
+    <div class="summary"><br /><span style="font-size: 1.6rem; font-weight: 600">{ summary }</span></div>
+    <div class="excerpt"><br /><span style="font-size: 1.6rem; font-weight: 500">{ body }</span></div>
+
+  </div>
+</Grid>
+
+<style>
+
+@media screen and (min-width : 48em) {
+  .grid.layout-1-1-1 {
+    gap: 1.5vh 4.25vw;
+  }
+
+  .head-first {
+    text-align: end;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-family: Magallanes;
+  }
+
+  h1 {
+    font-weight: 800;
+    color: #555;
+    margin: 2px 0 8px 0;
+  }
+
+
+  .author {
+    padding: 2px;
+  }
+
+  .author-bio {
+    display: block;
+    font-size: 140%;
+  }
+
+  .author-details {
+    display: block;
+  }
+
+  .author-name {
+    font-size: 200%;
+    font-weight: 700;
+    text-align: start;
+    line-height: 1rem;
+    padding: 4px 0;
+    margin: 0;
+  }
+
+  .author-title {
+    font-weight: 400;
+    text-align: start;
+    flex: 1 1 auto;
+    line-height: 1rem;
+    padding: 0px 4px;
+  }
+
+  .author-image {
+    width: max(150px, 100%);
+    padding: 1px;
+  }
+
+  .excerpt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+      -webkit-line-clamp: 7;
+      -webkit-box-orient: vertical;
+  }
+
+</style>
