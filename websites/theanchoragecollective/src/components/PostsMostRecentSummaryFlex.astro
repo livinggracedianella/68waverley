@@ -21,51 +21,58 @@ const { attributes: { providers: { data: providers } } } = post || {};
   <p class="mockup column-2"></p>
   <p class="mockup column-3"></p>
   <p class="mockup column-4"></p>
-  <div class="head-matter head-first leftmiddle row-1">
-    <h1>{ title }</h1>
-    <div class="one-liner" style="font-size: 1.3rem; font-weight: 600">{ one_liner }</div>
-    <div>
-        <span class="article-date">{ format(new Date(date), 'do LLL yyyy') }</span>
-    </div>
-  </div>
-  <div class="column-2 row-2">
-    {
-      providers.map(({ attributes: provider }, index) => {
-        const { data: [{ attributes: { url } }] } = provider?.portrait || {};
-        const imageUrl = url ? `http://localhost:1337${url}`
-                                : 'https://via.placeholder.com/120';
-        return (
+  <div class="leftmiddle">
+    <div class="head-first head-attribution">
+
+      <div><h1>{ title }</h1></div>
+      <div class="one-liner" style="font-size: 1.3rem; font-weight: 600">{ one_liner }</div>
+      <div>
+          <span class="article-date">{ format(new Date(date), 'do LLL yyyy') }</span>
+      </div>
+
+      {
+        providers.map(({ attributes: provider }, index) => {
+          const { data: [{ attributes: { url } }] } = provider?.portrait || {};
+          const imageUrl = url ? `http://localhost:1337${url}`
+                                  : 'https://via.placeholder.com/120';
+          return (
           <div class="author">
-            <img class="author-image" src={imageUrl} alt="Author Photo" />
-            <div class="author-details"><div class="author-name">{provider.name}</div>
-              <div class="author-title">{provider.title}</div>
+            <div>
+              <img class="author-image" src={imageUrl} alt="Author Photo" />
             </div>
-          </div>
-          <div class="author-bio">{provider.bio_short}</div>
-        )
-      })
-    }
-  </div>
+
+            <div class="author-details"><div class="author-name">{provider.name}</div>
+            <div class="author-title">{provider.title}</div>
+
+            <div class="author-bio">{provider.bio_short}</div>
+          </div>  <!-- end class "author" -->
+          )
+        })
+      }
+    </div> <!-- end class head-attribution -->
+  </div> <!-- end class leftmiddle -->
 
   <div class="head-matter column-3-4 row-1">
     <div class="summary"><br /><span style="font-size: 1.6rem; font-weight: 600">{ summary }</span></div>
     <div class="excerpt"><br /><span style="font-size: 1.6rem; font-weight: 500">{ body }</span></div>
-
   </div>
 </Grid>
 
 <style>
 
-
-  .author-image {
-    width: min(345px, 100%);
-    padding: 1px;
-  }
-
+.author-image {
+  width: min(345px, 100%);
+  padding: 1px;
+}
 
 @media screen and (min-width : 48em) {
   .grid.layout-1-1-1 {
     gap: 1.5vh 4.25vw;
+  }
+
+  .head-attribution {
+    display: flex;
+    flex-direction: column;
   }
 
   .head-first {
@@ -80,7 +87,6 @@ const { attributes: { providers: { data: providers } } } = post || {};
     color: #555;
     margin: 2px 0 8px 0;
   }
-
 
   .author {
     padding: 2px;

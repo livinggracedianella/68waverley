@@ -5,28 +5,25 @@ import LessHeroicBanner from "../components/LessHeroicBanner.astro";
 import Grid from "../components/Grid.astro";
 import GridItem from "../components/GridItem.astro";
 import { formatDistance, format } from 'date-fns';
-import PostsMostRecentSummary from "../components/PostsMostRecentSummary.astro";
 
-const posts = (await fetch(`http://127.0.0.1:1337/api/posts`).then(res => res.json())).data
-const { attributes: mostRecent } = posts.shift() || {};
-console.log(posts.length)
-const title = "Blog Articles";
+const manpages = (await fetch(`http://127.0.0.1:1337/api/manual-pages`).then(res => res.json())).data
+//console.log(manpages)
+const { attributes: mainpage } = manpages.shift() || {};
+
 ---
 
-<AnchorageBaseLayout title={title}>
+<AnchorageBaseLayout title={mainpage.title}>
     <LessHeroicBanner
         BackgroundImage="/images/whites-beach-1920x560.png"
-        HeroText="Moorings"
-        Subtitle="Guidance for Advanced Souls"
+        HeroText={mainpage.title}
+        Subtitle=""
     />
 
-    <PostsMostRecentSummary slug={mostRecent.slug} />
-
     <Grid
-      heading="Recent Articles"
-      subtitle="Thoughtful musings from thoughtful people"
+      heading="---"
+      subtitle="Work in Progress"
       class="layout-1-1-1">
-        {posts && posts.length > 0 ? posts.map((post) => <GridItem itemType="post" item={post} />) : 'No posts found'}
+        {manpages && manpages.length > 0 ? manpages.map((manpage) => <GridItem itemType="manpage" item={manpage} />) : 'No manpages found'}
     </Grid>
 </AnchorageBaseLayout>
 
