@@ -19,5 +19,12 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# dev environment untidiness
+.xcf
+.tar
+.tgz
+.ZIP
+.zip
+
 # manages Astro collections
 \n.astro

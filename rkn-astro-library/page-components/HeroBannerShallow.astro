@@ -1,5 +1,5 @@
 ---
-const { BackgroundImage, HeroText } = Astro.props;
+const { BackgroundImage, HeroText, Subtitle } = Astro.props;
 const BackgroundImageMed = `${
     BackgroundImage.split(".").join("Med.") + " 915w"
 }`;
@@ -21,6 +21,7 @@ const BackgroundImageLge = `${BackgroundImage} + "1920w"`;
         <img src={BackgroundImage} />
     </picture>
     <h1>{HeroText}</h1>
+    <h3>{Subtitle}</h3>
     <slot />
 </section>
 <style>
@@ -57,7 +58,18 @@ const BackgroundImageLge = `${BackgroundImage} + "1920w"`;
         text-align: center;
         max-width: min(80%, 38ch);
         margin-top: max(27vh, calc(var(--header-height) + 30px));
-        padding: 0 0 4rem;
+        padding: 0 0 0rem;
+    }
+    h3 {
+        color: white;
+        text-shadow: 0 0 8px black;
+        z-index: 1;
+        transition: 0.25s;
+        font-size: 1.7rem;
+        text-align: center;
+        max-width: min(80%, 38ch);
+        margin-top: 0.2rem;
+        padding: 0 0 6rem;
     }
     @media (max-width: 915px) {
         h1 {
