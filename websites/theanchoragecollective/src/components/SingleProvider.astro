@@ -3,30 +3,38 @@ import { formatDistance, format } from 'date-fns';
 import { marked } from 'marked';
 import Grid from './Grid.astro';
 export interface Props {
-  service: object
+  provider: object
 }
-const { service } = Astro.props;
-const { attributes: { name, description, background, providers: { data: providers }, posts: { data: posts }  } } = service || {};
-const introStyles = () => { return `width: 100vw; background-color: ${background}; padding: 30px 0px; display: flex; flex-direction: column;`};
+const { provider } = Astro.props;
+const { attributes: { name, title, bio_short, portrait: { data: [portrait] }, services: { data: services }, posts: { data: posts }  } } = provider || {};
+const { attributes: { url } } = portrait || {};
+const imageUrl = url ? `http://localhost:1337${url}`
+                      : 'https://via.placeholder.com/120';
+const introStyles = () => {return `width: 100vw; padding: 30px 0px; display: flex; flex-direction: column; text-align: center; align-items: center;`};
+
 ---
 
-<div style="position: relative">
+<div style="position: relative; text-align: center">
     <div style={introStyles()}>
-      <h1 style="text-align: center; color: #00629B;">{name}</h1>
-      <div style="max-width: 400px; align-self: center">
-        { description }
+      <div class="author" style="display: flex; flex-direction: column; align-items: center;">
+        <img class="author-image" src={imageUrl} alt="Author Photo" />
+
+        <h1 style="text-align: center; color: #00629B;">{name}</h1>
+        <div style="max-width: 400px;">
+          { bio_short }
+        </div>
       </div>
     </div>
     <Grid class="layout-2-1-1-2">
-          <div class="column-1-2">
-            <h2>Providers</h2>
+          <div class="column-2-3">
+            <h2>Services</h2>
             <ul>
               {
-                Object.values(providers).map(({ attributes: provider }, index) => (
+                Object.values(services).map(({ attributes: service }, index) => (
                   <li>
-                    <span class="item-name">{ provider.name }</span><br />
+                    <span class="item-name">{ service.name }</span><br />
                     <div class="item-body">
-                    { provider.bio_short }
+                    { service.description }
                     </div>
                   </li>
                 ))

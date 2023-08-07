@@ -1,5 +1,5 @@
 ---
-import BlogLayout from '../../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 import SinglePostItem from "../../components/SinglePostItem.astro"
 
 export async function getStaticPaths() {
@@ -11,6 +11,6 @@ const {slug} =  Astro.params
 const { data: postItem } = await fetch(`http://127.0.0.1:1337/api/posts?filters[slug][$eq]=${slug}&populate[services]=t&populate[providers][populate][0]=portrait`).then(x  => x.json())
 ---
 
-<BlogLayout title={postItem[0]?.title}>
+<Layout title={postItem[0]?.title}>
   <SinglePostItem post={postItem[0]}/>
-</BlogLayout>
+</Layout>

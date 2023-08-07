@@ -3,19 +3,19 @@ import { marked } from 'marked';
 marked.use({ mangle: false, headerIds: false, headerPrefix: false });
 
 export interface Props {
-  title: string;
-  body: string;
   href: string;
+  name: string;
+  bio_short: string;
 }
 
-const { href, title, body } = Astro.props;
-const content = marked.parse(body);
+const { href, name, bio_short } = Astro.props;
+const content = marked.parse(bio_short);
 ---
 
 <li class="link-card">
   <a href={href}>
     <h1>
-      {title}
+      {name}
       <span>&rarr;</span>
     </h1>
     <div set:html={content}></div>

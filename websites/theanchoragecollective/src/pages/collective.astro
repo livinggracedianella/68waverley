@@ -3,30 +3,27 @@ import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
 // import { HeroBannerShallow } from "@rkn/page-components";
 import LessHeroicBanner from "../components/LessHeroicBanner.astro";
 import Grid from "../components/Grid.astro";
-import GridItem from "../components/GridItem.astro";
-import { formatDistance, format } from 'date-fns';
-import PostsMostRecentSummaryFlex from "../components/PostsMostRecentSummaryFlex.astro";
+import GridItemProvider from "../components/GridItemProvider.astro";
+// import { formatDistance, format } from 'date-fns';
 
-const posts = (await fetch(`http://127.0.0.1:1337/api/posts`).then(res => res.json())).data
-const { attributes: mostRecent } = posts.shift() || {};
-console.log(posts.length)
-const title = "Blog Articles";
+const providers = (await fetch(`http://127.0.0.1:1337/api/providers`).then(res => res.json())).data
+// const { attributes: mostRecent } = providers.shift() || {};
+//console.log(providers.length)
+const title = "The Collective";
 ---
 
 <AnchorageBaseLayout title={title}>
     <LessHeroicBanner
         BackgroundImage="/images/whites-beach-1920x560.png"
-        HeroText="Moorings"
-        Subtitle="Guidance for Advanced Souls"
+        HeroText="Our Collective"
+        Subtitle="Supervisors, Mentors, Practitioners, Spiritual Directors"
     />
 
-    <PostsMostRecentSummaryFlex slug={mostRecent.slug} />
-
     <Grid
-      heading="More From the Anchorage"
-      subtitle="Thoughtful musings from thoughtful people"
+      heading="Grow With Us"
+      subtitle="- - -"
       class="layout-1-1-1">
-        {posts && posts.length > 0 ? posts.map((post) => <GridItem itemType="post" item={post} />) : 'No posts found'}
+        {providers && providers.length > 0 ? providers.map((provider) => <GridItemProvider itemType="provider" item={provider} />) : 'No providers found'}
     </Grid>
 </AnchorageBaseLayout>
 

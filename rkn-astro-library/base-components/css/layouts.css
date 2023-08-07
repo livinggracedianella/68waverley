@@ -10,7 +10,8 @@
 
 .grid p {
   margin: 6px 0px;
-  font-family: 'Magallanes';
+  font-family: 'CrimsonPro';
+  /* font-family: 'Magallanes'; */
 }
 
 /* Sensible defaults for mobile */

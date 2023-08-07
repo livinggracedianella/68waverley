@@ -4,3 +4,9 @@
   src:  url('/fonts/magallanescondregular.woff2') format('woff2'),
         url('/fonts/magallanescondregular.woff') format('woff');
 }
+
+@font-face {
+  font-family: 'CrimsonPro';
+  src:  url('/fonts/CrimsonPro-VariableFont_wght.ttf'),
+        url('/fonts/CrimsonPro-Italic-VariableFont_wght.ttf');
+}

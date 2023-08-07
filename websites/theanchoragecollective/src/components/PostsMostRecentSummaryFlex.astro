@@ -17,12 +17,12 @@ const { attributes: { providers: { data: providers } } } = post || {};
 
 ---
 <Grid class="layout-2-1-1-2">
-  <p class="mockup column-1"></p>
+  <!-- <p class="mockup column-1"></p>
   <p class="mockup column-2"></p>
   <p class="mockup column-3"></p>
-  <p class="mockup column-4"></p>
-  <div class="leftmiddle">
-    <div class="head-first head-attribution">
+  <p class="mockup column-4"></p> -->
+  <div class="leftmiddle row-1">
+    <div class="head-first head-attribution"> <!-- flex column begins -->
 
       <div><h1>{ title }</h1></div>
       <div class="one-liner" style="font-size: 1.3rem; font-weight: 600">{ one_liner }</div>
@@ -42,26 +42,26 @@ const { attributes: { providers: { data: providers } } } = post || {};
             </div>
 
             <div class="author-details"><div class="author-name">{provider.name}</div>
-            <div class="author-title">{provider.title}</div>
-
-            <div class="author-bio">{provider.bio_short}</div>
+              <!-- <div class="author-title">{provider.title}</div> -->
+              <div class="author-bio">{provider.bio_short}</div>
+            </div><!-- This was missing. Not sure if this is the right spot for it though... -->
           </div>  <!-- end class "author" -->
           )
         })
       }
-    </div> <!-- end class head-attribution -->
+    </div> <!-- end flex column (head-attribution) -->
   </div> <!-- end class leftmiddle -->
 
-  <div class="head-matter column-3-4 row-1">
-    <div class="summary"><br /><span style="font-size: 1.6rem; font-weight: 600">{ summary }</span></div>
-    <div class="excerpt"><br /><span style="font-size: 1.6rem; font-weight: 500">{ body }</span></div>
+  <div class="column-3-4 row-1">
+    <div class="summary">{ summary }</div>
+    <div class="excerpt"><p>{ body }</p></div>
   </div>
 </Grid>
 
 <style>
 
 .author-image {
-  width: min(345px, 100%);
+  width: min(330px, 100%);
   padding: 1px;
 }
 
@@ -94,7 +94,12 @@ const { attributes: { providers: { data: providers } } } = post || {};
 
   .author-bio {
     display: block;
-    font-size: 140%;
+    font-size: 120%;
+    overflow: hidden;
+    /* text-overflow: ellipsis " [...]"; */
+    display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
   }
 
   .author-details {
@@ -119,17 +124,29 @@ const { attributes: { providers: { data: providers } } } = post || {};
   }
 
   .author-image {
-    width: max(150px, 100%);
+    width: max(150px, 24vw);
     padding: 1px;
   }
 
-
   .excerpt {
+    font-size: 1.4rem;
+    color: #555;
+    font-weight: 400;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis " [...]"; */
     display: -webkit-box;
-      -webkit-line-clamp: 7;
+      -webkit-line-clamp: 10;
       -webkit-box-orient: vertical;
+  }
+
+  .summary {
+    /* margin: 8px 16px; */
+    /* background: #8ed7e1; */
+    padding: 8px;
+    border-left: 8px solid #00629B;
+    border-right: 8px solid #00629B;
+    font-size: 2rem;
+    font-family: Magallanes;
   }
 }
 
