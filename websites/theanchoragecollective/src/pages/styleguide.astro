@@ -1,0 +1,35 @@
+---
+import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
+---
+
+<AnchorageBaseLayout title="Styleguide">
+  <div class="outer">
+    <div class="inner">
+      <h1>Heading 1</h1>
+      <h2>Heading 2</h2>
+      <h3>Heading 3</h3>
+      <h4>Heading 4</h4>
+      <h5>Heading 5</h5>
+      <p>
+        Body text<br />
+        Try to avoid using &lt;em&gt; where possible. Use the italic font instead (magallanescondregular-italic).
+        We can buy the bold italic font if necessary.
+      </p>
+    </div>
+  </div>
+</AnchorageBaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+  }
+</style>
