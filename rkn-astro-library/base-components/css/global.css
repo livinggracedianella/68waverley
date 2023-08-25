@@ -1,5 +1,5 @@
 :root {
-    font-size: 10pt;
+    font-size: 16px;
     --banner-color: #51534a;
     --gunmetal: #51534a;
     --gunmetal-tint: #d9dbd0;
@@ -23,7 +23,7 @@ header button {
 
 header a,
 header button {
-    font-family: Montserrat;
+    font-family: Magallanes;
     text-transform: uppercase;
     font-weight: 700;
     text-decoration: none;
@@ -65,8 +65,8 @@ header button {
 
 /*Global Font Styles*/
 :root {
-    --header1-size: 3.6rem;
-    --header2-size: 2.6rem;
+    --header1-size: calc(40rem / 16);
+    --header2-size: calc(26rem / 16);
 }
 
 h1,
@@ -80,36 +80,53 @@ p {
 
 h1 {
     font-size: var(--header1-size);
+    font-family: "magallanescondblack", sans-serif;
+    line-height: calc(var(--header1-size) + 0.625rem);
+    font-weight: normal;
 }
 
 h2 {
     font-size: var(--header2-size);
+    font-family: 'magallanescondblack', sans-serif;
+    line-height: calc(var(--header2-size) + 0.625rem);
+    font-weight: normal;
 }
 
 h3 {
-    font-size: 2rem;
+    font-family: 'magallanescondregular-italic', sans-serif;
+    font-size: calc(20rem / 16);
+    line-height: calc((20rem / 16) + 0.625rem);
+    font-weight: normal;
 }
 
 h4 {
-    font-size: 1.8rem;
+    font-family: 'magallanescondbold', sans-serif;
+    font-weight: normal;
+    line-height: calc((20rem / 16) + 0.625rem);
+    font-size: calc(20rem / 16);
 }
 
 h5 {
-    font-size: 1.8rem;
+    font-family: 'magallanescondregular-italic', sans-serif;
+    font-size: calc(18rem / 16);
+    line-height: calc((18rem / 16) + 0.625rem);
+    font-weight: normal;
 }
 
 p {
-    font-size: 1.6rem;
+    font-size: 1rem;
+    line-height: 1.625rem;
 }
 
 a {
-    font-size: 1.6rem;
+    font-size: 1rem;
+    line-height: 1.625rem;
 }
 
 @media (max-width:640px) {
     :root {
-        --header1-size: 2.6rem;
-        --header2-size: 2.3rem;
+        --header1-size: calc(26rem / 16);
+        --header2-size: calc(23rem / 16);
     }
 
     h1 {

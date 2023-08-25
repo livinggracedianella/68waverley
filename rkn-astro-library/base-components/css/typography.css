@@ -1,3 +1,20 @@
+@font-face {
+  font-family: 'magallanescondblack';
+  src: url('/fonts/magallanescondblack-webfont.woff2') format('woff2'),
+       url('/fonts/magallanescondblack-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'magallanescondbold';
+  src: url('/fonts/magallanescondbold-webfont.woff2') format('woff2'),
+       url('/fonts/magallanescondbold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
 
 @font-face {
   font-family: 'Magallanes';
@@ -6,7 +23,10 @@
 }
 
 @font-face {
-  font-family: 'CrimsonPro';
-  src:  url('/fonts/CrimsonPro-VariableFont_wght.ttf'),
-        url('/fonts/CrimsonPro-Italic-VariableFont_wght.ttf');
+  font-family: 'magallanescondregular-italic';
+  src: url('/fonts/magallanescondregular-italic-webfont.woff2') format('woff2'),
+       url('/fonts/magallanescondregular-italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
 }
