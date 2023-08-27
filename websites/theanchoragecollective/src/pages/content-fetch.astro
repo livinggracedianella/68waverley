@@ -1,0 +1,34 @@
+---
+import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
+import { DesignBlockSwitch } from "@rkn/page-components";
+
+const pageDataUrl =
+  "https://cargo.anchorage.org.au/api/homepage?populate%5Bhomepage_content%5D%5Bpopulate%5D=*";
+const response = await fetch(pageDataUrl);
+const pageData = await response.json();
+const homepageContent = pageData.data.attributes.homepage_content;
+---
+
+<AnchorageBaseLayout title="Styleguide">
+  <div class="outer">
+    <div class="inner">
+      <h1>Homepage</h1>
+      <DesignBlockSwitch blocks={homepageContent} />
+    </div>
+  </div>
+  <style>
+    div.outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    div.inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 700px;
+    }
+  </style>
+</AnchorageBaseLayout>

@@ -1,0 +1,41 @@
+---
+const props = Astro.props;
+const textContent = props.text_content;
+const imagePlacement = props.image_on_left ? "image-on-left" : "image-on-right";
+
+const { url, alternativeText, width, height } = props.image.data.attributes;
+const imageHost = "https://wharf.anchorage.org.au";
+const src = new URL(url, imageHost).href;
+---
+
+<div class={`diptych ${imagePlacement}`}>
+  <div class="text">
+    <pre>{textContent}</pre>
+  </div>
+  <div class="image">
+    <img src={src} alt={alternativeText} width={width} height={height} />
+  </div>
+</div>
+
+<style>
+  div.diptych {
+    display: flex;
+  }
+  div.image-on-right {
+    flex-direction: row;
+  }
+  div.image-on-left {
+    flex-direction: row-reverse;
+  }
+  div.text {
+    flex: 1;
+  }
+  div.image {
+    flex: 1;
+  }
+  @media (max-width: 640px) {
+    div.inner-wrapper {
+      /* TODO */
+    }
+  }
+</style>
