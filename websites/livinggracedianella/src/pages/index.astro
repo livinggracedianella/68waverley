@@ -1,16 +1,20 @@
 ---
-import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
-import { HeroImage } from "@rkn/page-components";
-import { BlockSingleColumn } from "@rkn/page-components";
-import FindMeADropdown from "../components/FindMeADropdown.astro";
-import { BlockDoubleColumn } from "@rkn/page-components";
-import { SectionWrapper } from "@rkn/page-components";
-import { BlockPaddingWrapper } from "@rkn/page-components";
-import { HeroImageScroll } from "@rkn/page-components";
-import Grid from "../components/Grid.astro";
-import GridItem from "../components/GridItem.astro";
+import AnchorageBaseLayout from '../layouts/AnchorageBaseLayout.astro'
+import { HeroImage } from '@rkn/page-components'
+import { BlockSingleColumn } from '@rkn/page-components'
+import FindMeADropdown from '../components/FindMeADropdown.astro'
+import { BlockDoubleColumn } from '@rkn/page-components'
+import { SectionWrapper } from '@rkn/page-components'
+import { BlockPaddingWrapper } from '@rkn/page-components'
+import { HeroImageScroll } from '@rkn/page-components'
+import Grid from '../components/Grid.astro'
+import GridItem from '../components/GridItem.astro'
 
-const  { data: events } = await fetch(`http://127.0.0.1:1337/api/events?populate[organisers][populate][0]=Portrait`).then(res => res.json())
+const { data: events } = await fetch(
+  `${
+    import.meta.env.STRAPI_HOST
+  }:1337/api/events?populate[organisers][populate][0]=Portrait`
+).then((res) => res.json())
 ---
 
 <AnchorageBaseLayout>
@@ -25,34 +29,39 @@ const  { data: events } = await fetch(`http://127.0.0.1:1337/api/events?populate
       <h2>Our Heart</h2>
       <h4 style="color: white">
         <em
-          >Journeying alongside people for growth; in Christ, in
-          calling, in our identity.</em
+          >Journeying alongside people for growth; in Christ, in calling, in our
+          identity.</em
         >
       </h4>
     </BlockSingleColumn>
     <Grid
       heading="Gatherings"
       subtitle="Connect with your tribe"
-      class="layout-1-1-1-1">
-          {events && events.length > 0 ? events.map((event) => <GridItem itemType="event" item={event} />) : 'No events found'}
+      class="layout-1-1-1-1"
+    >
+      {
+        events && events.length > 0
+          ? events.map((event) => <GridItem itemType="event" item={event} />)
+          : 'No events found'
+      }
     </Grid>
     <BlockDoubleColumn>
       <BlockPaddingWrapper>
         <h3>Watup</h3>
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Vero et minima nisi veritatis, necessitatibus in inventore
-          unde atque a. Accusamus perferendis amet facere suscipit
-          illum ipsum, possimus ab aliquid rerum?
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero et
+          minima nisi veritatis, necessitatibus in inventore unde atque a.
+          Accusamus perferendis amet facere suscipit illum ipsum, possimus ab
+          aliquid rerum?
         </p>
       </BlockPaddingWrapper>
       <BlockPaddingWrapper>
         <h3>Homies</h3>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Labore dignissimos quia natus deserunt. Numquam, quo culpa!
-          Debitis pariatur autem ipsa eius cupiditate delectus, fugit,
-          expedita consequatur odit magnam magni iste?
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore
+          dignissimos quia natus deserunt. Numquam, quo culpa! Debitis pariatur
+          autem ipsa eius cupiditate delectus, fugit, expedita consequatur odit
+          magnam magni iste?
         </p>
       </BlockPaddingWrapper>
     </BlockDoubleColumn>
@@ -65,14 +74,11 @@ const  { data: events } = await fetch(`http://127.0.0.1:1337/api/events?populate
   <SectionWrapper backgroundColor="var(--gunmetal)">
     <BlockSingleColumn>
       <h5 style="color: white; padding: 1rem; text-align: center;">
-        We would love to kep you up to date with what's coming soon at
-        The Anchorage!
+        We would love to kep you up to date with what's coming soon at The
+        Anchorage!
       </h5>
       <div class="flex_center">
-        <a
-          class="callToAction"
-          href="http://eepurl.com/h5wagT"
-          target="_blank"
+        <a class="callToAction" href="http://eepurl.com/h5wagT" target="_blank"
           >Click here to subscribe to our mailing list</a
         >
       </div>
@@ -81,15 +87,14 @@ const  { data: events } = await fetch(`http://127.0.0.1:1337/api/events?populate
   <HeroImageScroll BackgroundImage="images/HeaderImage.jpg">
     <BlockSingleColumn>
       <h2 class="small">
-        An inspirational quote about The Anchorage and stuff. Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Obcaecati id
-        dicta qui delectus quasi sunt voluptatibus temporibus expedita
-        sint iste eaque numquam, et tempora quo quia error facilis!
-        Beatae, expedita! A change for change's sake.
+        An inspirational quote about The Anchorage and stuff. Lorem ipsum dolor
+        sit amet consectetur adipisicing elit. Obcaecati id dicta qui delectus
+        quasi sunt voluptatibus temporibus expedita sint iste eaque numquam, et
+        tempora quo quia error facilis! Beatae, expedita! A change for change's
+        sake.
       </h2>
     </BlockSingleColumn>
   </HeroImageScroll>
-
 
   /* ---------------------- Rohan's Styles ---------------------- */
   <style>
@@ -194,6 +199,5 @@ const  { data: events } = await fetch(`http://127.0.0.1:1337/api/events?populate
       gap: 1rem;
       padding: 0;
     }
-
   </style>
 </AnchorageBaseLayout>

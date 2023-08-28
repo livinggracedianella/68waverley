@@ -1,3 +1,4 @@
+/*Brand Fonts*/
 @font-face {
   font-family: 'magallanescondblack';
   src: url('/fonts/magallanescondblack-webfont.woff2') format('woff2'),
@@ -29,4 +30,87 @@
   font-weight: normal;
   font-style: normal;
 
+}
+
+/*Global Font Styles*/
+:root {
+  --font-size-h1: calc(40rem / 16);
+  --line-height-h1: calc(var(--font-size-h1) + 0.625rem);
+  --font-size-h2: calc(26rem / 16);
+  --line-height-h2: calc(var(--font-size-h2) + 0.625rem);
+  --font-size-h3: calc(20rem / 16);
+  --line-height-h3: calc((20rem / 16) + 0.625rem);
+  --font-size-h4: calc(20rem / 16);
+  --line-height-h4: calc((20rem / 16) + 0.625rem);
+  --font-size-h5: calc(18rem / 16);
+  --line-height-h6: calc((18rem / 16) + 0.625rem);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin-top: 1em;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-family: "magallanescondblack", sans-serif;
+  line-height: var(--line-height-h1);
+  font-weight: normal;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-family: 'magallanescondblack', sans-serif;
+  line-height: var(--line-height-h2);
+  font-weight: normal;
+}
+
+h3 {
+  font-family: 'magallanescondregular-italic', sans-serif;
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  font-weight: normal;
+}
+
+h4 {
+  font-family: 'magallanescondbold', sans-serif;
+  font-weight: normal;
+  line-height: var(--line-height-h4);
+  font-size: var(--font-size-h4)
+}
+
+h5 {
+  font-family: 'magallanescondregular-italic', sans-serif;
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  font-weight: normal;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.625rem;
+}
+
+a {
+  font-size: 1rem;
+  line-height: 1.625rem;
+}
+
+@media (max-width:640px) {
+  :root {
+      --font-size-h1: calc(26rem / 16);
+      --font-size-h2: calc(23rem / 16);
+  }
+
+  h1 {
+      font-size: var(--font-size-h1);
+  }
+
+  h2 {
+      font-size: var(--font-size-h2);
+  }
 }

@@ -1,5 +1,6 @@
 :root {
     font-size: 16px;
+    font-family: "Magallanes", sans-serif;
     --banner-color: #51534a;
     --gunmetal: #51534a;
     --gunmetal-tint: #d9dbd0;
@@ -19,13 +20,12 @@ header a,
 header li,
 header button {
     color: white;
+    font-size: var(--font-size-h5);
 }
 
 header a,
 header button {
-    font-family: Magallanes;
     text-transform: uppercase;
-    font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
     transition: 0.25s;
@@ -35,7 +35,7 @@ header button {
 header a:hover,
 header button:hover {
     color: var(--gunmetal-tint);
-    /* transform: scale(1.05); */
+    transform: scale(1.05);
 }
 
 header a:focus,
@@ -57,85 +57,9 @@ header button {
     display: inline-block;
     border: none;
     text-decoration: none;
-    font-size: 1.4rem;
     cursor: pointer;
     text-align: center;
     background-color: var(--banner-color);
-}
-
-/*Global Font Styles*/
-:root {
-    --header1-size: calc(40rem / 16);
-    --header2-size: calc(26rem / 16);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-p {
-    margin-top: 1em;
-}
-
-h1 {
-    font-size: var(--header1-size);
-    font-family: "magallanescondblack", sans-serif;
-    line-height: calc(var(--header1-size) + 0.625rem);
-    font-weight: normal;
-}
-
-h2 {
-    font-size: var(--header2-size);
-    font-family: 'magallanescondblack', sans-serif;
-    line-height: calc(var(--header2-size) + 0.625rem);
-    font-weight: normal;
-}
-
-h3 {
-    font-family: 'magallanescondregular-italic', sans-serif;
-    font-size: calc(20rem / 16);
-    line-height: calc((20rem / 16) + 0.625rem);
-    font-weight: normal;
-}
-
-h4 {
-    font-family: 'magallanescondbold', sans-serif;
-    font-weight: normal;
-    line-height: calc((20rem / 16) + 0.625rem);
-    font-size: calc(20rem / 16);
-}
-
-h5 {
-    font-family: 'magallanescondregular-italic', sans-serif;
-    font-size: calc(18rem / 16);
-    line-height: calc((18rem / 16) + 0.625rem);
-    font-weight: normal;
-}
-
-p {
-    font-size: 1rem;
-    line-height: 1.625rem;
-}
-
-a {
-    font-size: 1rem;
-    line-height: 1.625rem;
-}
-
-@media (max-width:640px) {
-    :root {
-        --header1-size: calc(26rem / 16);
-        --header2-size: calc(23rem / 16);
-    }
-
-    h1 {
-        font-size: var(--header1-size);
-    }
-
-    h2 {
-        font-size: var(--header2-size);
-    }
 }
 
 .link-card h2 {

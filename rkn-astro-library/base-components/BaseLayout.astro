@@ -1,6 +1,7 @@
 ---
 import "./css/normalize.css";
 import "./css/global.css";
+import "@rkn/base-components/css/typography.css";
 const { title } = Astro.props;
 ---
 
@@ -11,20 +12,12 @@ const { title } = Astro.props;
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Magallanes:wght@400;500;700&family=Source+Sans+Pro&display=swap"
-            rel="stylesheet"
-        />
         <title>{title}</title>
     </head>
 
     <slot />
 
     <style is:global>
-        :root {
-            font-family: "Magallanes", sans-serif;
-        }
+        
     </style>
 </html>

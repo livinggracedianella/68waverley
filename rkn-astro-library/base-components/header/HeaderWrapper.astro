@@ -8,7 +8,7 @@
 
 <style>
     :root {
-        --header-height: 10rem;
+        --header-height: calc(100rem / 16);
     }
 
     header {
@@ -45,7 +45,7 @@
     const obsCallback = (entries) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) {
-                html.style.setProperty("--header-height", "7rem");
+                html.style.setProperty("--header-height", "calc(70rem / 16)");
                 headerWrapper.classList.add("scrolled");
             } else {
                 html.style.setProperty("--header-height", headerHeightInit);
