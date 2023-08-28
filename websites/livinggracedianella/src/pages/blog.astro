@@ -1,31 +1,38 @@
 ---
-import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
-import { HeroBannerShallow } from "@rkn/page-components";
-import Grid from "../components/Grid.astro";
-import GridItem from "../components/GridItem.astro";
+import AnchorageBaseLayout from '../layouts/LivingGraceBaseLayout.astro'
+import { HeroBannerShallow } from '@rkn/page-components'
+import Grid from '../components/Grid.astro'
+import GridItem from '../components/GridItem.astro'
 
-const  { data: posts } =  await fetch(`http://127.0.0.1:1337/api/posts`).then(res => res.json())
-const title = "Blog Articles";
+const { data: posts } = await fetch(`http://127.0.0.1:1337/api/posts`).then(
+  (res) => res.json()
+)
+const title = 'Blog Articles'
 ---
 
 <AnchorageBaseLayout title={title}>
-    <HeroBannerShallow
-        BackgroundImage="images/HeaderImage.jpg"
-        HeroText="Blog."
-    />
+  <HeroBannerShallow
+    BackgroundImage="images/HeaderImage.jpg"
+    HeroText="Blog."
+  />
 
-    <Grid
-      heading="Blog Articles"
-      subtitle="Thoughtful musings from thoughtful people"
-      class="layout-1-1-1">
-        {posts && posts.length > 0 ? posts.map((post) => <GridItem itemType="post" item={post} />) : 'No posts found'}
-    </Grid>
+  <Grid
+    heading="Blog Articles"
+    subtitle="Thoughtful musings from thoughtful people"
+    class="layout-1-1-1"
+  >
+    {
+      posts && posts.length > 0
+        ? posts.map((post) => <GridItem itemType="post" item={post} />)
+        : 'No posts found'
+    }
+  </Grid>
 </AnchorageBaseLayout>
 
 <style>
-@media screen and (min-width : 48em) {
-  .grid.layout-1-1-1 {
-    gap: 1.5vh 4.25vw;
+  @media screen and (min-width: 48em) {
+    .grid.layout-1-1-1 {
+      gap: 1.5vh 4.25vw;
+    }
   }
-}
 </style>
