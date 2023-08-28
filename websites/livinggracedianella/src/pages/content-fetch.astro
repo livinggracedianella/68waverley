@@ -1,12 +1,12 @@
 ---
-import AnchorageBaseLayout from '../layouts/AnchorageBaseLayout.astro'
+import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
 import { BlockRenderer, fetchPageData } from '@rkn/page-components'
 
 const pageData = await fetchPageData('/api/pages/1?populate=*')
 const homepageContent = pageData.data.attributes.blocks
 ---
 
-<AnchorageBaseLayout title="Styleguide">
+<BaseLayout title="Styleguide">
   <div class="outer">
     <div class="inner">
       <h1>Homepage</h1>
@@ -28,4 +28,4 @@ const homepageContent = pageData.data.attributes.blocks
       max-width: 700px;
     }
   </style>
-</AnchorageBaseLayout>
+</BaseLayout>
