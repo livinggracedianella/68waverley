@@ -2,8 +2,8 @@
 const { textLogo, logoAltText } = Astro.props;
 import { fetchPageData } from '../page-components/util.js';
 const site = import.meta.env.THIS_SITE
-console.log(site)
-console.log(await fetchPageData(`/api/menu-entries?filters[key][$eq]=${site}.header-menu&populate[menu_items][populate][0]=sub_menu_links`));
+const navDetails = await fetchPageData(`/api/menu-entries?filters[key][$eq]=${site}.header-menu&populate[menu_items][populate][0]=sub_menu_links`);
+const menuItems = navDetails.data[0].attributes.menu_items
 ---
 <header class="header-wrapper">
     <a href="/">
@@ -11,7 +11,18 @@ console.log(await fetchPageData(`/api/menu-entries?filters[key][$eq]=${site}.hea
     </a>
     <nav class="headerNav">
         <ul>
-            
+            {menuItems.map(menuItem => {
+                if (menuItem.sub_menu_links) {
+                    return (<ul class="dropdown">
+                    <li class="menu-item dropdown-toggle"><a href={menuItem.url_path}>{menuItem.name}</a></li>
+                    {menuItem.sub_menu_links.map(sml => {
+                    return (<li class="sub-menu-item"><a href={sml.url_path}>{sml.name}</a></li>)
+                    })}
+                    </ul>)
+                    
+                }
+                return <li><a href={menuItem.url_path}>{menuItem.name}</a></li>
+            })}  
         </ul>
     </nav>
     <button type="button" class="headerNavToggle hamburger">
@@ -21,7 +32,7 @@ console.log(await fetchPageData(`/api/menu-entries?filters[key][$eq]=${site}.hea
     </button>
 </header>
 <div id="header-trigger"></div>
-
+<pre>{JSON.stringify(menuItems, null, 2)}</pre>
 <style>
     /*WRAPPER STYLES*/
     :root {
@@ -94,6 +105,82 @@ console.log(await fetchPageData(`/api/menu-entries?filters[key][$eq]=${site}.hea
             flex-direction: column;
             padding-bottom: 10px;
             align-items: center;
+        }
+    }
+    /*MENU LIST ITEM STYLES*/
+    li.menu-item {
+        display: flex;
+        align-items: center;
+        max-height: 50px;
+        padding-right: 20px;
+        flex-shrink: 0;
+    }
+    @media (min-width: 917px) {
+        /* insert '|' spaced in between nav items */
+        li.menu-item:not(:first-of-type):before {
+            padding-right: 20px;
+            content: "|";
+            color: white;
+            z-index: 1;
+        }
+        li.menu-item:last-of-type {
+            padding-right: 20px;
+        }
+    }
+    @media (max-width: 916px) {
+        li.menu-item {
+            padding: 10px 0;
+        }
+    }
+    li.sub-menu-item {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        flex-grow: 1;
+        flex-direction: column;
+        position: relative;
+    }
+    ul.dropdown {
+        flex-direction: column;
+        background-color: var(--banner-color);
+        position: relative;
+        transition: 0.25s;
+        width: 100%;
+    }
+    ul.dropdown:hover {
+        display: flex;
+    }
+    /*Button Styling*/
+    /*li.dropdown-toggle {
+        color: white;
+        font-size: 10px;
+        display: inline-block;
+        transform: rotate(90deg);
+        position: relative;
+        bottom: 3px;
+        left: 3px;
+        transition: 0.25s;
+    }
+    li.dropdown-toggle:hover {
+        transform: rotate(-90deg);
+        transition: 0.25s;
+    }*/
+    @media (min-width: 917px) {
+        li.sub-menu-item {
+            flex-basis: 50px;
+            align-self: flex-start;
+        }
+        ul.dropdown {
+            top: clamp(10px, -25px + (var(--header-height) / 2), 25px);
+            align-items: center;
+        }
+    }
+    @media (max-width: 916px) {
+        li.dropdown-toggle {
+            padding: 10px 0;
+        }
+        ul.dropdown {
+            padding-left: 40%;
         }
     }
     /*HAMBURGER AND RESPONSIVE DROPDOWN STYLES*/
