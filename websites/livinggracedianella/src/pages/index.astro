@@ -13,7 +13,7 @@ import GridItem from '../components/GridItem.astro'
 const { data: events } = await fetch(
   `${
     import.meta.env.STRAPI_HOST
-  }:1337/api/events?populate[organisers][populate][0]=Portrait`
+  }/api/events?populate[organisers][populate][0]=Portrait`
 ).then((res) => res.json())
 ---
 
