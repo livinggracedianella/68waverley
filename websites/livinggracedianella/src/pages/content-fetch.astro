@@ -1,16 +1,19 @@
 ---
 import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
-import { BlockRenderer, fetchPageData } from '@rkn/page-components'
+import { BlockRenderer, PageHeader, fetchPageData } from '@rkn/page-components'
 
-const pageData = await fetchPageData('/api/pages/1?populate=*')
-const homepageContent = pageData.data.attributes.blocks
+const pageData = await fetchPageData(
+  '/api/pages/1?populate[blocks][populate]=*&populate[header][populate]=*'
+)
+const blocks = pageData.data.attributes.blocks
+const header = pageData.data.attributes.header
 ---
 
 <BaseLayout title="Styleguide">
   <div class="outer">
     <div class="inner">
-      <h1>Homepage</h1>
-      <BlockRenderer blocks={homepageContent} />
+      <PageHeader {...header} />
+      <BlockRenderer blocks={blocks} />
     </div>
   </div>
   <style>

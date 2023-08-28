@@ -4,3 +4,7 @@ export async function fetchPageData(uri) {
   const pageData = await response.json()
   return pageData
 }
+
+export function strapiAsset(uri) {
+  return import.meta.env.STRAPI_HOST + uri
+}
