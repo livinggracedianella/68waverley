@@ -1,0 +1,27 @@
+---
+import { BlockDiptych } from '@rkn/page-components'
+
+const { blocks } = Astro.props
+---
+
+{
+  blocks.map((componentData) => {
+    if (componentData.__component == 'blocks.gatherings-list') {
+      return <section>Gatherings list</section>
+    } else if (componentData.__component == 'blocks.feature-event') {
+      return <section>Feature Event</section>
+    } else if (componentData.__component == 'blocks.feature-message') {
+      return <section>Feature Message</section>
+    } else if (componentData.__component == 'blocks.feature-blog') {
+      return <section>Feature Blog</section>
+    } else if (componentData.__component == 'blocks.full-width-block') {
+      return <section>Full width block</section>
+    } else if (componentData.__component == 'blocks.two-column') {
+      return <BlockDiptych {...componentData} />
+    } else if (componentData.__component == 'blocks.rich-text') {
+      return <section>Rich text</section>
+    } else {
+      return <section>Unknown content: {componentData.__component}</section>
+    }
+  })
+}

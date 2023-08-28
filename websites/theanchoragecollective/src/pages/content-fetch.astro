@@ -1,19 +1,19 @@
 ---
-import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
-import { DesignBlockSwitch } from "@rkn/page-components";
+import AnchorageBaseLayout from '../layouts/AnchorageBaseLayout.astro'
+import { BlockRenderer } from '@rkn/page-components'
 
 const pageDataUrl =
-  "https://cargo.anchorage.org.au/api/homepage?populate%5Bhomepage_content%5D%5Bpopulate%5D=*";
-const response = await fetch(pageDataUrl);
-const pageData = await response.json();
-const homepageContent = pageData.data.attributes.homepage_content;
+  'https://cargo.anchorage.org.au/api/homepage?populate%5Bhomepage_content%5D%5Bpopulate%5D=*'
+const response = await fetch(pageDataUrl)
+const pageData = await response.json()
+const homepageContent = pageData.data.attributes.homepage_content
 ---
 
 <AnchorageBaseLayout title="Styleguide">
   <div class="outer">
     <div class="inner">
       <h1>Homepage</h1>
-      <DesignBlockSwitch blocks={homepageContent} />
+      <BlockRenderer blocks={homepageContent} />
     </div>
   </div>
   <style>
