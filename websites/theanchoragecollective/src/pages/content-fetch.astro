@@ -1,12 +1,9 @@
 ---
 import AnchorageBaseLayout from '../layouts/AnchorageBaseLayout.astro'
-import { BlockRenderer } from '@rkn/page-components'
+import { BlockRenderer, fetchPageData } from '@rkn/page-components'
 
-const pageDataUrl =
-  'https://cargo.anchorage.org.au/api/homepage?populate%5Bhomepage_content%5D%5Bpopulate%5D=*'
-const response = await fetch(pageDataUrl)
-const pageData = await response.json()
-const homepageContent = pageData.data.attributes.homepage_content
+const pageData = await fetchPageData('/api/pages/1?populate=*')
+const homepageContent = pageData.data.attributes.blocks
 ---
 
 <AnchorageBaseLayout title="Styleguide">
