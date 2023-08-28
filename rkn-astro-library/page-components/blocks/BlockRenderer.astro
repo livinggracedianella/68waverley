@@ -17,10 +17,10 @@ const { blocks } = Astro.props
       return <section>Feature Message</section>
     } else if (componentData.__component == 'blocks.feature-blog') {
       return <section>Feature Blog</section>
-    } else if (componentData.__component == 'blocks.full-width-block') {
+    } else if (componentData.__component == 'blocks.full-width') {
       return <section>Full width block</section>
     } else if (componentData.__component == 'blocks.two-column') {
-      return <BlockDiptych {...componentData} />
+      return <section>Two column</section>
     } else if (componentData.__component == 'blocks.rich-text') {
       return <section>Rich text</section>
     } else {
