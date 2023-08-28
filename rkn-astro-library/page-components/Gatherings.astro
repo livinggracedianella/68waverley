@@ -1,0 +1,32 @@
+---
+import { fetchPageData } from '@rkn/page-components'
+const gatherings = await fetchPageData('/api/gatherings/?populate=*')
+console.log(gatherings.data)
+---
+<div class="grid-wrapper">
+    {gatherings.data.map(gathering => (<div class="inner">
+        <h2>{gathering.attributes.title}</h2>
+        <h3>{gathering.attributes?.time_slot}</h3>
+        <p>{gathering.attributes?.short_description}</p>
+        </div>))}
+</div>
+<div>
+<pre>{JSON.stringify(gatherings.data, null, 2)}</pre>
+<pre>{JSON.stringify(Astro.props)}</pre>
+</div>
+<style>
+div.grid-wrapper {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90vw;
+}
+div.inner {
+    border-radius: 10px;
+    padding: 10px;
+}
+pre {
+    white-space: pre-wrap;
+}
+
+</style>

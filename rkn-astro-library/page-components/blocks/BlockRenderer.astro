@@ -1,13 +1,12 @@
 ---
-import { BlockDiptych } from '@rkn/page-components'
-
+import { BlockDiptych, Gatherings } from '@rkn/page-components'
 const { blocks } = Astro.props
 ---
 
 {
   blocks.map((componentData) => {
-    if (componentData.__component == 'blocks.gatherings-list') {
-      return <section>Gatherings list</section>
+    if (componentData.__component == 'blocks.gatherings') {
+      return <section><Gatherings/></section>
     } else if (componentData.__component == 'blocks.feature-event') {
       return <section>Feature Event</section>
     } else if (componentData.__component == 'blocks.feature-message') {
