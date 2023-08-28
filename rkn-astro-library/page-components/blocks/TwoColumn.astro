@@ -1,0 +1,48 @@
+---
+import { strapiAsset } from '@rkn/page-components'
+
+const props = Astro.props
+const textContent = props.text_content
+const imagePlacement = props.image_on_left ? 'image-on-left' : 'image-on-right'
+
+const img = props.image.data.attributes
+console.log(img)
+const src = strapiAsset(img.url)
+---
+
+<div class={`two-column ${imagePlacement}`}>
+  <div class="text">
+    <pre>{textContent}</pre>
+  </div>
+  <div class="image">
+    <img
+      src={src}
+      alt={img.alternativeText}
+      width={img.width}
+      height={img.height}
+    />
+  </div>
+</div>
+
+<style>
+  .two-column {
+    display: flex;
+  }
+  .image-on-right {
+    flex-direction: row;
+  }
+  .image-on-left {
+    flex-direction: row-reverse;
+  }
+  .text {
+    flex: 1;
+  }
+  .image {
+    flex: 1;
+  }
+  @media (max-width: 640px) {
+    .inner-wrapper {
+      /* TODO */
+    }
+  }
+</style>
