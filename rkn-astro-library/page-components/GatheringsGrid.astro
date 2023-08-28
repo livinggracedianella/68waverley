@@ -1,0 +1,57 @@
+---
+import { fetchPageData } from '@rkn/page-components'
+const gatherings = await fetchPageData('/api/gatherings/?populate=*')
+const { title, overview } = Astro.props
+---
+
+<div class="grid-wrapper">
+  <div class="inner">
+    <h2>{title}</h2>
+    {overview}
+  </div>
+  {
+    gatherings.data.map((gathering) => (
+      <div class="inner">
+        <h4>{gathering.attributes.title}</h4>
+        <h5>
+          {gathering.attributes.time_slot && (
+            <span class="gathering-detail">
+              {gathering.attributes.time_slot}
+            </span>
+          )}
+          {gathering.attributes.location && (
+            <span class="gathering-detail">
+              {gathering.attributes.location}
+            </span>
+          )}
+        </h5>
+        <p>{gathering.attributes.short_description}</p>
+      </div>
+    ))
+  }
+</div>
+<style>
+  div.grid-wrapper {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90vw;
+  }
+  div.inner {
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .gathering-detail:not(:last-of-type)::after {
+    content: '|';
+  }
+  @media (max-width: 1024px) {
+    div.grid-wrapper {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    div.grid-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
