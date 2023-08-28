@@ -1,5 +1,13 @@
 ---
-import { BlockDiptych, GatheringsGrid } from '@rkn/page-components'
+import {
+  GatheringsGrid,
+  FeatureEvent,
+  FeatureMessage,
+  FeatureBlog,
+  FullWidth,
+  TwoColumn,
+  RichText,
+} from '@rkn/page-components'
 const { blocks } = Astro.props
 ---
 
@@ -12,17 +20,41 @@ const { blocks } = Astro.props
         </section>
       )
     } else if (componentData.__component == 'blocks.feature-event') {
-      return <section>Feature Event</section>
+      return (
+        <section>
+          <FeatureEvent {...componentData} />
+        </section>
+      )
     } else if (componentData.__component == 'blocks.feature-message') {
-      return <section>Feature Message</section>
+      return (
+        <section>
+          <FeatureMessage {...componentData} />
+        </section>
+      )
     } else if (componentData.__component == 'blocks.feature-blog') {
-      return <section>Feature Blog</section>
-    } else if (componentData.__component == 'blocks.full-width-block') {
-      return <section>Full width block</section>
+      return (
+        <section>
+          <FeatureBlog {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.full-width') {
+      return (
+        <section>
+          <FullWidth {...componentData} />
+        </section>
+      )
     } else if (componentData.__component == 'blocks.two-column') {
-      return <BlockDiptych {...componentData} />
+      return (
+        <section>
+          <TwoColumn {...componentData} />
+        </section>
+      )
     } else if (componentData.__component == 'blocks.rich-text') {
-      return <section>Rich text</section>
+      return (
+        <section>
+          <RichText {...componentData} />
+        </section>
+      )
     } else {
       return <section>Unknown content: {componentData.__component}</section>
     }
