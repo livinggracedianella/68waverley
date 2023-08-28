@@ -148,3 +148,14 @@ button.color_gunmetal_tint:hover {
 .border-radius {
     border-radius: 4px;
 }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
