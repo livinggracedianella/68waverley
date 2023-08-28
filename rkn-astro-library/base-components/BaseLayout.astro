@@ -3,6 +3,7 @@ import "./css/normalize.css";
 import "./css/global.css";
 import "@rkn/base-components/css/typography.css";
 const { title } = Astro.props;
+import NavigationBar from "./NavigationBar.astro";
 ---
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@ const { title } = Astro.props;
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
     </head>
-
+    <NavigationBar />
     <slot />
 
     <style is:global>
