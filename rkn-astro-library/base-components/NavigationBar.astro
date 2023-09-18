@@ -12,19 +12,20 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     <a href="/">
         <img src={logoURL} alt={logoAltText} />
     </a>
-    <nav class="headerNav">
-        <ul>
+    <nav class="headerNav hidden">
+        <ul class="navlist">
             {menuItems.map(menuItem => {
                 if (menuItem.sub_menu_links[0]) {
-                    return (<ul class="dropdown">
-                    <li class="menu-item dropdown-toggle"><a href={menuItem.url_path}>{menuItem.name}</a></li>
+                    return (
+                    <li class="menu-item dropdown"><a class="menu-item">{menuItem.name.trim()} <span>❯</span></a>
+                    <ul class="dropdown">
                     {menuItem.sub_menu_links.map(sml => {
-                    return (<li class="sub-menu-item"><a href={sml.url_path}>{sml.name}</a></li>)
+                    return (<li class="sub-menu-item"><a href={sml.url_path}>{sml.name.trim()}</a></li>)
                     })}
-                    </ul>)
-                    
+                    </ul>
+                    </li>)
                 }
-                return <li><a href={menuItem.url_path}>{menuItem.name}</a></li>
+                return <li class="menu-item"><a class="menu-item clickable" href={menuItem.url_path}>{menuItem.name.trim()}</a></li>
             })}  
         </ul>
     </nav>
@@ -81,136 +82,112 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
             }
         }
     /*NAV STYLES*/
+    @media (min-width: 917px) {
     nav {
         margin: 0 auto;
-        padding-right: 3vw;
-        transition: 0.25s;
-        position: relative;
-        top: clamp(10px, -25px + (var(--header-height) / 2), 25px);
+        height: 100%;
+    }
+}
+    nav * {
+        color: white;
+        text-transform: uppercase;
     }
     ul {
         display: flex;
-        font-size: var(--font-size-h5);
+    }
+    li {
         list-style: none;
     }
-    nav a {
-    color: white;
-    font-size: var(--font-size-h5);
-    text-transform: uppercase;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: 0.25s;
-    background-color: var(--banner-color);
+    ul.navlist {
+        height: 100%;
     }
-    nav li {
-        padding: 0 10px;
-    }
-    nav a:hover {
-        transform: scale(1.05);
-    }
-    nav a:focus,
-    nav button:focus,
-    nav input:focus,
-    nav a:focus {
-        color: var(--gunmetal-tint);
-        transform: scale(1.08);
-        outline: none;
-        border: 0;
-    }
-    @media (max-width: 916px) {
-        nav {
-            position: absolute;
-            top: var(--header-height);
-            width: 100%;
-            background-color: var(--banner-color);
-            padding-left: 0;
-            flex-direction: column;
-            display: none;
-        }
-        nav.hidden {
-            display: flex;
-        }
-        ul {
-            flex-direction: column;
-            padding-bottom: 10px;
-            align-items: center;
-        }
-    }
-    /*MENU LIST ITEM STYLES*/
     li.menu-item {
+        height: 100%;
         display: flex;
-        align-items: center;
-        max-height: 50px;
-        padding-right: 20px;
-        flex-shrink: 0;
+    }
+    li.menu-item a.menu-item {
+        align-self: center;
+        width: 100%;
+        padding: 0 20px;
     }
     @media (min-width: 917px) {
-        /* insert '|' spaced in between nav items */
-        li.menu-item:not(:first-of-type):before {
-            padding-right: 20px;
-            content: "|";
-            color: white;
-            z-index: 1;
-        }
-        li.menu-item:last-of-type {
-            padding-right: 20px;
-        }
-    }
-    @media (max-width: 916px) {
-        li.menu-item {
-            padding: 10px 0;
-        }
-    }
-    li.sub-menu-item {
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-        flex-grow: 1;
-        flex-direction: column;
-        position: relative;
-    }
-    ul.dropdown {
-        flex-direction: column;
-        background-color: var(--banner-color);
-        position: relative;
-        transition: 0.25s;
-        width: 100%;
-    }
-    ul.dropdown:hover {
-        display: flex;
-    }
-    /*Button Styling*/
-    /*li.dropdown-toggle {
+    li.menu-item:not(:first-of-type)::before {
+        content: "|";
         color: white;
-        font-size: 10px;
+        z-index: 1;
+        align-self: center;
+    }
+    .clickable:hover { 
+        transform: scale(1.1);
+    }
+    }
+    span {
+        color: white;
         display: inline-block;
         transform: rotate(90deg);
         position: relative;
-        bottom: 3px;
-        left: 3px;
-        transition: 0.25s;
+        left: 7px;
     }
-    li.dropdown-toggle:hover {
-        transform: rotate(-90deg);
-        transition: 0.25s;
-    }*/
     @media (min-width: 917px) {
-        li.sub-menu-item {
-            flex-basis: 50px;
-            align-self: flex-start;
-        }
-        ul.dropdown {
-            /*top: clamp(10px, -25px + (var(--header-height) / 2), 25px);
-            align-items: center;*/
-        }
+    ul.dropdown {
+        flex-direction: column;
+        display: none;
+        position: absolute;
+        top: var(--header-height);
+        background-color: var(--banner-color);
     }
+    }
+    li.dropdown:hover ul.dropdown {
+        display: flex;
+    }
+    li.sub-menu-item {
+        width: 100%;
+    }
+    li.sub-menu-item a {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        padding: 10px 20px 10px 20px;
+    }
+    @media (min-width: 917px) {
+    li.sub-menu-item a:hover {
+        transform: scale(1.05);
+    }
+}
     @media (max-width: 916px) {
-        li.dropdown-toggle {
-            padding: 10px 0;
-        }
-        ul.dropdown {
-            padding-left: 40%;
-        }
+    .hidden {
+        display: none;
+    }
+    nav {
+        position: absolute;
+        top: var(--header-height);
+        background: var(--banner-color);
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+        transition: 0.25s;
+        overflow-y: scroll;
+    }
+    ul.navlist {
+        flex-direction: column;
+    }
+    li.menu-item {
+        flex-direction: column;
+    }
+    li.menu-item:last-of-type {
+        padding-bottom: 20px;
+    }
+    li.menu-item:first-of-type {
+        padding-top: 10px;
+    }
+    ul.dropdown {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        padding-left: 20px;
+    }
+    ul.navlist {
+        margin: 0 auto;
+    }
     }
     /*HAMBURGER AND RESPONSIVE DROPDOWN STYLES*/
     /*remove button default styling*/
@@ -284,10 +261,11 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     }
 </style>
 <script>
-const headerNavToggle = document.querySelector(".headerNavToggle");
-const headerNav = document.querySelector(".headerNav");
 headerNavToggle.addEventListener("click", () => {
+    const headerNavToggle = document.querySelector(".headerNavToggle");
+    const headerNav = document.querySelector(".headerNav");
     console.log("clicked")
+    console.log(headerNav.classList)
     headerNav.classList.toggle("hidden");
     headerNavToggle.classList.toggle("toggled");
 });
