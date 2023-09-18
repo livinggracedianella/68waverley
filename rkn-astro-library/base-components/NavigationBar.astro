@@ -1,18 +1,21 @@
 ---
-const { textLogo, logoAltText } = Astro.props;
 import { fetchPageData } from '../page-components/util.js';
 const site = import.meta.env.THIS_SITE
-const navDetails = await fetchPageData(`/api/menu-entries?filters[key][$eq]=${site}.header-menu&populate[menu_items][populate][0]=sub_menu_links`);
+const strapi = import.meta.env.STRAPI_HOST
+const navDetails = await fetchPageData(`/api/navigations?filters[key][$eq]=${site}.header.menu&populate[menu_items][populate][0]=sub_menu_links`);
 const menuItems = navDetails.data[0].attributes.menu_items
+const logoData = await fetchPageData('/api/navigations?filters[key][$eq]=livinggracedianella.header.menu&populate[logo][fields][1]=url&populate[logo]fields[1]=alter');
+const logoURL = `${strapi}${logoData.data[0].attributes.logo.data[0].attributes.url}`;
+const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternativeText;
 ---
 <header class="header-wrapper">
     <a href="/">
-        <img src={textLogo} alt={logoAltText} />
+        <img src={logoURL} alt={logoAltText} />
     </a>
     <nav class="headerNav">
         <ul>
             {menuItems.map(menuItem => {
-                if (menuItem.sub_menu_links) {
+                if (menuItem.sub_menu_links[0]) {
                     return (<ul class="dropdown">
                     <li class="menu-item dropdown-toggle"><a href={menuItem.url_path}>{menuItem.name}</a></li>
                     {menuItem.sub_menu_links.map(sml => {
@@ -54,39 +57,65 @@ const menuItems = navDetails.data[0].attributes.menu_items
         transition: 0.25s;
         width: 100%;
     }
-
     .scrolled {
         opacity: 1;
     }
     /*LOGO STYLES*/
+    header > a {
+        position: fixed;
+        height: var(--header-height);
+    }
+    header img:hover {
+        transform: scale(1.05);
+    }
     img {
             height: var(--header-height);
             transition: 0.25s;
             padding-left: max(20px, 2vw);
         }
-        @media (max-width: 916px) {
-            img {
+    @media (max-width: 916px) {
+        img {
                 height: var(--header-height);
                 padding: 0.5rem 0;
                 padding-left: 1vw;
             }
         }
-    /*Nav Styles*/
+    /*NAV STYLES*/
     nav {
         margin: 0 auto;
-        display: flex;
         padding-right: 3vw;
-        align-items: center;
         transition: 0.25s;
-        align-self: start;
         position: relative;
         top: clamp(10px, -25px + (var(--header-height) / 2), 25px);
     }
-    /*GENERAL LIST AND BUTTON STYLES*/
     ul {
         display: flex;
         font-size: var(--font-size-h5);
         list-style: none;
+    }
+    nav a {
+    color: white;
+    font-size: var(--font-size-h5);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: 0.25s;
+    background-color: var(--banner-color);
+    }
+    nav li {
+        padding: 0 10px;
+    }
+    nav a:hover {
+        transform: scale(1.05);
+    }
+    nav a:focus,
+    nav button:focus,
+    nav input:focus,
+    nav a:focus {
+        color: var(--gunmetal-tint);
+        transform: scale(1.08);
+        outline: none;
+        border: 0;
     }
     @media (max-width: 916px) {
         nav {
@@ -171,8 +200,8 @@ const menuItems = navDetails.data[0].attributes.menu_items
             align-self: flex-start;
         }
         ul.dropdown {
-            top: clamp(10px, -25px + (var(--header-height) / 2), 25px);
-            align-items: center;
+            /*top: clamp(10px, -25px + (var(--header-height) / 2), 25px);
+            align-items: center;*/
         }
     }
     @media (max-width: 916px) {
@@ -184,6 +213,18 @@ const menuItems = navDetails.data[0].attributes.menu_items
         }
     }
     /*HAMBURGER AND RESPONSIVE DROPDOWN STYLES*/
+    /*remove button default styling*/
+    header button {
+    display: inline-block;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    background-color: var(--banner-color);
+    }
+    header [type="button"]:focus-visible {
+    outline: none;
+    }
     .headerNavToggle {
         display: none;
         flex-direction: column;
@@ -243,12 +284,13 @@ const menuItems = navDetails.data[0].attributes.menu_items
     }
 </style>
 <script>
-    const headerNavToggle = document.querySelector(".headerNavToggle");
-    const headerNav = document.querySelector(".headerNav");
-    headerNavToggle.addEventListener("click", () => {
-        headerNav.classList.toggle("hidden");
-        headerNavToggle.classList.toggle("toggled");
-    });
+const headerNavToggle = document.querySelector(".headerNavToggle");
+const headerNav = document.querySelector(".headerNav");
+headerNavToggle.addEventListener("click", () => {
+    console.log("clicked")
+    headerNav.classList.toggle("hidden");
+    headerNavToggle.classList.toggle("toggled");
+});
 </script>
 
 <script>
