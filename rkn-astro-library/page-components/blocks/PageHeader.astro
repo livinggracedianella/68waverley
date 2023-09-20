@@ -1,7 +1,7 @@
 ---
 import { strapiAsset } from '@rkn/page-components'
-const title = Astro.props.header_title
-const img = Astro.props.header_image.data.attributes
+const title = Astro.props[0].header_title
+const img = Astro.props[0].header_image.data[0].attributes
 const imgUrl = strapiAsset(img.formats.large.url)
 ---
 

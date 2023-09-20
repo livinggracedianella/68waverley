@@ -9,6 +9,7 @@ const logoURL = `${strapi}${logoData.data[0].attributes.logo.data[0].attributes.
 const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternativeText;
 ---
 <header class="header-wrapper">
+    <a class="skip" href="#main">skip to content</a>
     <a href="/">
         <img src={logoURL} alt={logoAltText} />
     </a>
@@ -17,7 +18,7 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
             {menuItems.map(menuItem => {
                 if (menuItem.sub_menu_links[0]) {
                     return (
-                    <li class="menu-item dropdown"><a class="menu-item">{menuItem.name.trim()} <span>❯</span></a>
+                    <li class="menu-item dropdown"><a class="menu-item" href={menuItem.url_path}>{menuItem.name.trim()} <span>❯</span></a>
                     <ul class="dropdown">
                     {menuItem.sub_menu_links.map(sml => {
                     return (<li class="sub-menu-item"><a href={sml.url_path}>{sml.name.trim()}</a></li>)
@@ -61,6 +62,22 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     .scrolled {
         opacity: 1;
     }
+    .opacity {
+        opacity: 1;
+    }
+    /*SKIP TO CONTENT STYLES*/
+    .skip {
+        color: white;
+        padding-left: 6px;
+        background-color: var(--banner-color);
+        z-index: 20;
+        height: auto;
+        opacity: 0;
+    }
+    .skip:focus {
+        opacity: 1;
+        transition: 0.25s;
+    }
     /*LOGO STYLES*/
     header > a {
         position: fixed;
@@ -91,6 +108,7 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     nav * {
         color: white;
         text-transform: uppercase;
+        text-decoration: none;
     }
     ul {
         display: flex;
@@ -117,8 +135,9 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
         z-index: 1;
         align-self: center;
     }
-    .clickable:hover { 
+    .clickable:hover, .clickable:focus-within { 
         transform: scale(1.1);
+        transition: 0.25s;
     }
     }
     span {
@@ -137,7 +156,7 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
         background-color: var(--banner-color);
     }
     }
-    li.dropdown:hover ul.dropdown {
+    li.dropdown:hover ul.dropdown, li.dropdown:focus-within ul.dropdown {
         display: flex;
     }
     li.sub-menu-item {
@@ -167,11 +186,20 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
         transition: 0.25s;
         overflow-y: scroll;
     }
+    nav * {
+        flex-shrink: 0;
+    }
+    nav a:hover, nav a:hover span {
+        background: var(--gunmetal-tint);
+        color: black;
+    }
     ul.navlist {
         flex-direction: column;
     }
     li.menu-item {
         flex-direction: column;
+        height: fit-content;
+        min-width: fit-content;
     }
     li.menu-item:last-of-type {
         padding-bottom: 20px;
@@ -179,11 +207,17 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     li.menu-item:first-of-type {
         padding-top: 10px;
     }
+    li.menu-item a.menu-item {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
     ul.dropdown {
         display: flex;
         flex-direction: column;
         position: relative;
-        padding-left: 20px;
+    }
+    li.sub-menu-item a {
+        padding-left: 40px;
     }
     ul.navlist {
         margin: 0 auto;
@@ -198,10 +232,7 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     cursor: pointer;
     text-align: center;
     background-color: var(--banner-color);
-    }
-    header [type="button"]:focus-visible {
-    outline: none;
-    }
+}       
     .headerNavToggle {
         display: none;
         flex-direction: column;
@@ -212,6 +243,18 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
         transition: 0.25s;
         cursor: pointer;
         font-size: 9px;
+        align-self: center;
+        margin-right: max(10px, 1vw);
+        width: auto;
+        padding: 10px;
+    }
+    
+    .headerNavToggle:focus-within {
+        outline: auto;
+    }
+
+    .headerNavToggle:hover {
+        transform: scale(1.05);
     }
 
     .headerNavToggle div {
@@ -226,11 +269,6 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
         width: 3.5em;
         margin: 0.3em 0.1em 0.3em 0;
         border-radius: 10px;
-    }
-    button {
-        align-self: center;
-        padding-right: max(20px, 2vw);
-        width: auto;
     }
     .toggled div:nth-of-type(1) {
         border-radius: 10px;
@@ -261,17 +299,6 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     }
 </style>
 <script>
-headerNavToggle.addEventListener("click", () => {
-    const headerNavToggle = document.querySelector(".headerNavToggle");
-    const headerNav = document.querySelector(".headerNav");
-    console.log("clicked")
-    console.log(headerNav.classList)
-    headerNav.classList.toggle("hidden");
-    headerNavToggle.classList.toggle("toggled");
-});
-</script>
-
-<script>
     const html = document.documentElement;
     const headerTrigger = document.querySelector("#header-trigger");
     const headerHeightInit = html.style.getPropertyValue("--header-height");
@@ -296,3 +323,15 @@ headerNavToggle.addEventListener("click", () => {
     let headerObserver = new IntersectionObserver(obsCallback, options);
     headerObserver.observe(headerTrigger);
 </script>
+<script>
+    const headerNavToggle = document.querySelector(".headerNavToggle");
+    const headerNav = document.querySelector(".headerNav");
+    const headerWrapper = document.querySelector(".header-wrapper");
+    headerNavToggle.addEventListener("click", (event) => {
+        headerNav.classList.toggle("hidden");
+        event.currentTarget.classList.toggle("toggled");
+        if (headerNav.classList.contains("hidden")) {
+            headerWrapper.classList.remove("opacity")
+        } else { headerWrapper.classList.add("opacity")};
+    });
+    </script>
