@@ -37,11 +37,10 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     </button>
 </header>
 <div id="header-trigger"></div>
-<pre>{JSON.stringify(menuItems, null, 2)}</pre>
 <style>
     /*WRAPPER STYLES*/
     :root {
-        --header-height: calc(100rem / 16);
+        --header-height: calc(80rem / 16);
     }
 
     header {
@@ -50,7 +49,6 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
         position: fixed;
         width: 100%;
         transition: 0.25s;
-        opacity: 0.8;
         display: flex;
         z-index: 10;
     }
@@ -58,12 +56,6 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
         height: var(--header-height);
         transition: 0.25s;
         width: 100%;
-    }
-    .scrolled {
-        opacity: 1;
-    }
-    .opacity {
-        opacity: 1;
     }
     /*SKIP TO CONTENT STYLES*/
     .skip {
@@ -311,7 +303,7 @@ const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternat
     const obsCallback = (entries) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) {
-                html.style.setProperty("--header-height", "calc(70rem / 16)");
+                html.style.setProperty("--header-height", "calc(60rem / 16)");
                 headerWrapper.classList.add("scrolled");
             } else {
                 html.style.setProperty("--header-height", headerHeightInit);
