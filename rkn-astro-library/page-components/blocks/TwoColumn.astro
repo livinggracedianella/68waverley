@@ -1,7 +1,49 @@
 ---
-const props = Astro.props
+import { Markdown } from 'astro-remote';
+import { strapiAsset } from '@rkn/page-components'
+const props = Astro.props;
+const img = props.image.data.attributes;
+const imgURL = strapiAsset(img.formats.medium.url);
+let flexDirection = "row-reverse"
+if (props.imageSide === "right") {flexDirection = "row"}
+const { imageVerticalAlignment, imageHorizontalAlignment } = props;
 ---
-
-<div>
-  <h2>Two column</h2>
+<div class=container>
+  <div class = "item">
+    <div class="inner">
+  <h2>{props.title}</h2>
+  <Markdown content={props.text} />
+    </div>
 </div>
+<div class = "item image" style={`background-image: url("${imgURL}")`}>
+  <img src={imgURL} alt={img.alternativeText} class="sr-only"></img>
+</div>
+</div>
+<style define:vars={{ flexDirection, imageVerticalAlignment, imageHorizontalAlignment }}>
+div.container {
+  display: flex;
+  flex-direction: var(--flexDirection);
+  height: fit-content;
+  width: 100vw;
+}
+div.item {
+  width: 50vw;
+}
+div.inner {
+  padding: 20px;
+}
+div.image {
+  background-position: var(--imageVerticalAlignment) var(--imageHorizontalAlignment);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+@media (max-width: 640px) {
+  div.container {
+    flex-direction: column;
+  }
+  div.item {
+    width: 100vw;
+    min-height: 40vh;
+  }
+}
+</style>

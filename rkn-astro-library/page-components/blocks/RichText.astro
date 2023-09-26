@@ -1,7 +1,9 @@
 ---
+import { Markdown } from 'astro-remote';
 const props = Astro.props
 ---
 
 <div>
-  <h2>Rich Text</h2>
+  <h2>{props.title}</h2>
+  <Markdown content={props.body}/>
 </div>
