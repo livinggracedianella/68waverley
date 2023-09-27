@@ -15,53 +15,6 @@
     padding: 0px;
 }
 
-/*HEADER STYLES*/
-header a,
-header li,
-header button {
-    color: white;
-    font-size: var(--font-size-h5);
-}
-
-header a,
-header button {
-    text-transform: uppercase;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: 0.25s;
-    background-color: var(--banner-color);
-}
-
-header a:hover,
-header button:hover {
-    color: var(--gunmetal-tint);
-    transform: scale(1.05);
-}
-
-header a:focus,
-header button:focus,
-header input:focus,
-header a:focus {
-    color: var(--gunmetal-tint);
-    transform: scale(1.08);
-    outline: none;
-    border: 0;
-}
-
-header [type="button"]:focus-visible {
-    outline: none;
-}
-
-/*remove button default styling*/
-header button {
-    display: inline-block;
-    border: none;
-    text-decoration: none;
-    cursor: pointer;
-    text-align: center;
-    background-color: var(--banner-color);
-}
-
 .link-card h2 {
   font-size: 1.3em;
   margin-top: 0.3em;
@@ -147,4 +100,15 @@ button.color_gunmetal_tint:hover {
 /*borders*/
 .border-radius {
     border-radius: 4px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }

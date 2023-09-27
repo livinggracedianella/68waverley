@@ -1,0 +1,62 @@
+---
+import {
+  GatheringsGrid,
+  FeatureEvent,
+  FeatureMessage,
+  FeatureBlog,
+  FullWidth,
+  TwoColumn,
+  RichText,
+} from '@rkn/page-components'
+const { blocks } = Astro.props
+---
+
+{
+  blocks.map((componentData) => {
+    if (componentData.__component == 'blocks.gatherings') {
+      return (
+        <section>
+          <GatheringsGrid {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.feature-event') {
+      return (
+        <section>
+          <FeatureEvent {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.feature-message') {
+      return (
+        <section>
+          <FeatureMessage {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.feature-blog') {
+      return (
+        <section>
+          <FeatureBlog {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.full-width') {
+      return (
+        <section>
+          <FullWidth {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.two-column') {
+      return (
+        <section>
+          <TwoColumn {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.rich-text') {
+      return (
+        <section>
+          <RichText {...componentData} />
+        </section>
+      )
+    } else {
+      return <section>Unknown content: {componentData.__component}</section>
+    }
+  })
+}

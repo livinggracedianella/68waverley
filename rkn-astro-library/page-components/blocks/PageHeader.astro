@@ -1,0 +1,30 @@
+---
+import { strapiAsset } from '@rkn/page-components'
+const title = Astro.props[0].header_title
+const img = Astro.props[0].header_image.data[0].attributes
+const imgUrl = strapiAsset(img.formats.large.url)
+---
+
+<header class="wrapper" style={`background-image: url("${imgUrl}")`}>
+  <h1>{title}</h1>
+  <img src={imgUrl} alt={img.alternativeText} class="sr-only" />
+</header>
+
+<style>
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 40vh;
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  h1 {
+    color: white;
+    text-shadow: 3px 3px 5px black;
+  }
+</style>
