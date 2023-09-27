@@ -17,35 +17,34 @@ const logoURL = `${strapi}${logoData.url}`
 
 <footer>
   <div class="container">
-    <div><img src={logoURL} alt={logoData.alternativeText} /></div>
-  </div>
-  <div>
-    <ul>
-      <li>Affiliates</li>
-      {
-        footerData.attributes.affiliates.map((item) => {
-          return (
-            <a href={item.url_path}>
-              <li>{item.name}</li>
-            </a>
-          )
-        })
-      }
-    </ul>
-  </div>
-  <div>
-    <div>
-      <a href={footerData.attributes.contact.url_path}
-        >{footerData.attributes.contact.name}</a
-      >
+    <div class="item"><img src={logoURL} alt={logoData.alternativeText} /></div>
+    <div class="item">
+      <ul>
+        <li>Affiliates</li>
+        {
+          footerData.attributes.affiliates.map((item) => {
+            return (
+              <a href={item.url_path}>
+                <li>{item.name}</li>
+              </a>
+            )
+          })
+        }
+      </ul>
     </div>
-    <div set:html={markedHelper(footerData.attributes.address)} />
+    <div class="item">
+      <div>
+        <a href={footerData.attributes.contact.url_path}
+          >{footerData.attributes.contact.name}</a
+        >
+      </div>
+      <div set:html={markedHelper(footerData.attributes.address)} />
+    </div>
+  </div>
+  <div>
+    ABN: {footerData.attributes.abn}
   </div>
 </footer>
-<div>
-  ABN: {footerData.attributes.abn}
-</div>
-
 <style>
   footer {
     display: flex;
@@ -65,6 +64,9 @@ const logoURL = `${strapi}${logoData.url}`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  div.item {
+    margin: 0 1rem;
   }
   img {
     max-height: 120px;

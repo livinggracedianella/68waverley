@@ -16,7 +16,7 @@ export function strapiAsset(uri) {
 export function markedHelper(src) {
   return marked(src, {
     gfm: true,
-    break: true,
+    breaks: true,
     mangle: false,
     headerIds: false,
   })
