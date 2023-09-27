@@ -1,58 +1,71 @@
 ---
-import { marked } from 'marked';
-import { fetchPageData } from '../page-components/util.js';
+import { marked } from 'marked'
+import { fetchPageData } from '../page-components/util.js'
 marked.use({
-    breaks: true,
-    gfm: true,
+  breaks: true,
+  gfm: true,
 })
 const site = import.meta.env.THIS_SITE
 const strapi = import.meta.env.STRAPI_HOST
-const footerDetails = await fetchPageData(`/api/footers?filters[key][$eq]=${site}.footer&populate=*`);
-const footerData = footerDetails.data[0];
-const logoData = footerData.attributes.logo.data.attributes;
-const logoURL = `${strapi}${logoData.url}`;
-
+const footerDetails = await fetchPageData(
+  `/api/footers?filters[key][$eq]=${site}.footer&populate=*`
+)
+const footerData = footerDetails.data[0]
+const logoData = footerData.attributes.logo.data.attributes
+const logoURL = `${strapi}${logoData.url}`
 ---
+
 <footer>
-    <div class="container">
-        <div><img src={logoURL} alt={logoData.alternativeText} ></img></div>
-        <div><ul>
-            <li>Affiliates</li>
-            {footerData.attributes.affiliates.map((item) => {
-                return(<a href={item.url_path}><li>{item.name}</li></a>)
-            })
-            }
-            </ul></div>
-        <div>
-            <div><a href={footerData.attributes.contact.url_path}>{footerData.attributes.contact.name}</a></div>
-            <div set:html={marked.parse(footerData.attributes.address)}></div>
-        </div>
-    </div>
+  <div class="container">
+    <div><img src={logoURL} alt={logoData.alternativeText} /></div>
+  </div>
+  <div>
+    <ul>
+      <li>Affiliates</li>
+      {
+        footerData.attributes.affiliates.map((item) => {
+          return (
+            <a href={item.url_path}>
+              <li>{item.name}</li>
+            </a>
+          )
+        })
+      }
+    </ul>
+  </div>
+  <div>
     <div>
-        ABN: {footerData.attributes.abn}
+      <a href={footerData.attributes.contact.url_path}
+        >{footerData.attributes.contact.name}</a>
     </div>
+    <div set:html={marked.parse(footerData.attributes.address)} />
+  </div>
 </footer>
+<div>
+  ABN: {footerData.attributes.abn}
+</div>
+
 <style>
-    footer {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        background-color: var(--banner-color);
-        min-height: 20vh;
-        font-size: 14px;
-        padding: 2rem;
-    }
-    footer * {
-        color: white;
-        list-style: none;
-    }
-    div.container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    img {
-        max-height: 120px;
-    }
+  footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--banner-color);
+    min-height: 20vh;
+    font-size: 14px;
+    padding: 2rem;
+  }
+  footer * {
+    color: white;
+    list-style: none;
+  }
+  div.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    max-height: 120px;
+  }
 </style>
