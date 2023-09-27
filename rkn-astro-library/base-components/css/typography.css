@@ -38,12 +38,12 @@
   --line-height-h1: calc(var(--font-size-h1) + 0.625rem);
   --font-size-h2: calc(26rem / 16);
   --line-height-h2: calc(var(--font-size-h2) + 0.625rem);
-  --font-size-h3: calc(20rem / 16);
-  --line-height-h3: calc((20rem / 16) + 0.625rem);
-  --font-size-h4: calc(20rem / 16);
-  --line-height-h4: calc((20rem / 16) + 0.625rem);
-  --font-size-h5: calc(18rem / 16);
-  --line-height-h6: calc((18rem / 16) + 0.625rem);
+  --font-size-h3: calc(21rem / 16);
+  --line-height-h3: calc((21rem / 16) + 0.625rem);
+  --font-size-h4: calc(18rem / 16);
+  --line-height-h4: calc((18rem / 16) + 0.625rem);
+  --bold: 'magallanescondregular-bold', sans-serif;
+  --italic: 'magallanescondregular-italic', sans-serif;
 }
 
 h1,
@@ -70,7 +70,7 @@ h2 {
 }
 
 h3 {
-  font-family: 'magallanescondregular-italic', sans-serif;
+  font-family: 'magallanescondbold', sans-serif;
   font-size: var(--font-size-h3);
   line-height: var(--line-height-h3);
   font-weight: normal;
@@ -81,13 +81,6 @@ h4 {
   font-weight: normal;
   line-height: var(--line-height-h4);
   font-size: var(--font-size-h4)
-}
-
-h5 {
-  font-family: 'magallanescondregular-italic', sans-serif;
-  font-size: var(--font-size-h5);
-  line-height: var(--line-height-h5);
-  font-weight: normal;
 }
 
 p {
