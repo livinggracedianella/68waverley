@@ -6,8 +6,9 @@ const { title, date, slug, providers, feature_image, soundcloud_recording } =
 const { caption } = feature_image
 const { url, width, height } = feature_image.image.data.attributes.formats.small
 const embedCode = soundcloud_recording.embed_code
-const iframeUrl = embedCode?.match(`src="([^"]+)"`)?.[1]
-const soundcloudLink = embedCode?.match(`href="([^"]+)"`)?.[1]
+const iframeUrl = embedCode
+  ?.match(`src="([^"]+)"`)?.[1]
+  .replace('visual=true', 'visual=false')
 ---
 
 <div>
@@ -18,10 +19,11 @@ const soundcloudLink = embedCode?.match(`href="([^"]+)"`)?.[1]
   <div class="soundcloud">
     <iframe
       width="100%"
-      height="300"
+      height="200"
       scrolling="no"
       frameborder="no"
       allow="autoplay"
       src={iframeUrl}></iframe>
   </div>
 </div>
+
