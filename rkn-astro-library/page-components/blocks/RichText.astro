@@ -1,9 +1,9 @@
 ---
-import { marked } from 'marked';
+import { markedHelper } from '../util.js';
 const props = Astro.props
 ---
 
 <div>
   <h2>{props.title}</h2>
-  <div set:html={marked.parse(props.body)}/>
+  <div set:html={markedHelper(props.body)}/>
 </div>

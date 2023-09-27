@@ -1,4 +1,5 @@
 import qs from 'qs'
+import { marked } from 'marked';
 
 export async function fetchPageData(uri, options) {
   const pageDataUrl =
@@ -11,3 +12,8 @@ export async function fetchPageData(uri, options) {
 export function strapiAsset(uri) {
   return import.meta.env.STRAPI_HOST + uri
 }
+
+export function markedHelper(src) {
+  return marked(src, {gfm: true, break: true, mangle: false, headerIds: false})
+}
+

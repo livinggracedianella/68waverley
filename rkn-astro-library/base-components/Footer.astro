@@ -1,14 +1,13 @@
 ---
-import { marked } from 'marked'
-import { fetchPageData } from '../page-components/util.js'
-marked.use({
-  breaks: true,
-  gfm: true,
-})
+import { fetchPageData, markedHelper } from '../page-components/util.js'
 const site = import.meta.env.THIS_SITE
 const strapi = import.meta.env.STRAPI_HOST
 const footerDetails = await fetchPageData(`/api/footers`, {
-  filters: { key: { $eq: `${site}.footer` } },
+  filters: {
+    key: {
+      $eq: `${site}.footer`,
+    },
+  },
   populate: '*',
 })
 const footerData = footerDetails.data[0]
@@ -36,10 +35,10 @@ const logoURL = `${strapi}${logoData.url}`
   </div>
   <div>
     <div>
-      <a href={footerData.attributes.contact.url_path}></a>
-      {footerData.attributes.contact.name}
+      <a href={footerData.attributes.contact.url_path}
+        >{footerData.attributes.contact.name}</a>
     </div>
-    <div set:html={marked.parse(footerData.attributes.address)} />
+    <div set:html={markedHelper(footerData.attributes.address)} />
   </div>
 </footer>
 <div>
