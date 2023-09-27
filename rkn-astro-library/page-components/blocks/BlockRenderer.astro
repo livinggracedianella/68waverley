@@ -3,7 +3,7 @@ import {
   GatheringsGrid,
   FeatureEvent,
   FeatureMessage,
-  FeatureBlog,
+  FeaturePost,
   FullWidth,
   TwoColumn,
   RichText,
@@ -31,10 +31,10 @@ const { blocks } = Astro.props
           <FeatureMessage {...componentData} />
         </section>
       )
-    } else if (componentData.__component == 'blocks.feature-blog') {
+    } else if (componentData.__component == 'blocks.feature-post') {
       return (
         <section>
-          <FeatureBlog {...componentData} />
+          <FeaturePost {...componentData} />
         </section>
       )
     } else if (componentData.__component == 'blocks.full-width') {
@@ -60,3 +60,4 @@ const { blocks } = Astro.props
     }
   })
 }
+

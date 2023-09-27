@@ -3,14 +3,16 @@ import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
 import { BlockRenderer, PageHeader, fetchPageData } from '@rkn/page-components'
 
 const pageData = await fetchPageData('/api/pages/1', {
-  populate: {
-    header: {
-      populate: '*',
-    },
-    blocks: {
-      populate: ['image', 'gatherings', 'message'],
-    },
-  },
+  populate: [
+    'header.header_image',
+    'blocks.image',
+    'blocks.gatherings',
+    'blocks.message',
+    'blocks.message.feature_image',
+    'blocks.message.feature_image.image',
+    'blocks.message.soundcloud_recording',
+    'blocks.message.providers',
+  ],
 })
 const blocks = pageData.data.attributes.blocks
 const header = pageData.data.attributes.header
@@ -39,3 +41,4 @@ const header = pageData.data.attributes.header
     }
   </style>
 </BaseLayout>
+
