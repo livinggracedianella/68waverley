@@ -12,6 +12,7 @@ const pageData = await fetchPageData('/api/pages/1', {
     'blocks.message.feature_image.image',
     'blocks.message.soundcloud_recording',
     'blocks.message.providers',
+    'blocks.event',
   ],
 })
 const blocks = pageData.data.attributes.blocks
@@ -41,4 +42,3 @@ const header = pageData.data.attributes.header
     }
   </style>
 </BaseLayout>
-
