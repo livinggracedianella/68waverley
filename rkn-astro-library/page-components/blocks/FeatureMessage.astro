@@ -12,7 +12,7 @@ const iframeUrl = embedCode
 ---
 
 <div>
-  <h2><a href={`/messages/${slug}/`}>{title}</a></h2>
+  <h2>Featured Message: <a href={`/messages/${slug}/`}>{title}</a></h2>
   <p>{date}</p>
   <p>{providers.data.map((p) => p.attributes.name)}</p>
   <img src={strapiAsset(url)} width={width} height={height} alt={caption} />

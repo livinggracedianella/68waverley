@@ -1,7 +1,14 @@
 ---
+import { markedHelper } from '../util.js'
+
 const props = Astro.props
+const { title, one_liner, date, providers } = props.post.data.attributes
 ---
 
-<div>
-  <h2>Feature Blog</h2>
-</div>
+<article>
+  <h2>Featured Post: {title}</h2>
+  <p>{providers.data.map((p) => p.attributes.name)}</p>
+  <div>{date}</div>
+  <div set:html={markedHelper(one_liner)} />
+</article>
+
