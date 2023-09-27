@@ -2,25 +2,28 @@
 import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
 import { BlockRenderer, PageHeader, fetchPageData } from '@rkn/page-components'
 
-const pageData = await fetchPageData('/api/pages/1', {
-  populate: [
-    'header.header_image',
-    'blocks.image',
-    'blocks.gatherings',
-    'blocks.message',
-    'blocks.message.feature_image',
-    'blocks.message.feature_image.image',
-    'blocks.message.soundcloud_recording',
-    'blocks.message.providers',
-    'blocks.post',
-    'blocks.post.providers',
-    'blocks.post.featured_image',
-    'blocks.post.featured_image.image',
-    'blocks.event',
-  ],
+export async function getStaticPaths() {
+  const pages = await fetchPageData(`/api/pages`)
+  return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
+}
+const { page } = Astro.params
+const pageData = await fetchPageData(`/api/pages`, {
+  filters: {
+    slug: {
+      $eq: page,
+    },
+  },
+  populate: {
+    header: {
+      populate: '*',
+    },
+    blocks: {
+      populate: ['image', 'gatherings', 'message'],
+    },
+  },
 })
-const blocks = pageData.data.attributes.blocks
-const header = pageData.data.attributes.header
+const blocks = pageData.data[0].attributes.blocks
+const header = pageData.data[0].attributes.header
 ---
 
 <BaseLayout title="Styleguide">
@@ -46,4 +49,3 @@ const header = pageData.data.attributes.header
     }
   </style>
 </BaseLayout>
-

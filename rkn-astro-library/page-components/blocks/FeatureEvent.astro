@@ -1,7 +1,12 @@
 ---
 const props = Astro.props
+const event = props.event.data.attributes
+console.log(event)
 ---
 
 <div>
-  <h2>Feature Event</h2>
+  <h2>Featured Event: {event.title}</h2>
+  <p>When: {event.date}</p>
+  <p>Where: {event.venue}</p>
+  <a href=`/events/${event.slug}`>Find out more!</a>
 </div>
