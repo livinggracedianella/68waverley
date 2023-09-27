@@ -1,8 +1,6 @@
 ---
-import { fetchPageData } from '@rkn/page-components'
-const gatherings = await fetchPageData('/api/gatherings/?populate=*')
-const { title, overview } = Astro.props
-const firstItemSpan = (3 - (gatherings.data.length % 3)).toString();
+const { title, overview, gatherings } = Astro.props
+const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
 ---
 
 <div class="grid-wrapper">
