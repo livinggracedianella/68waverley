@@ -1,329 +1,374 @@
 ---
-import { fetchPageData } from '../page-components/util.js';
+import { fetchPageData } from '../page-components/util.js'
 const site = import.meta.env.THIS_SITE
 const strapi = import.meta.env.STRAPI_HOST
-const navDetails = await fetchPageData(`/api/navigations?filters[key][$eq]=${site}.header.menu&populate[menu_items][populate][0]=sub_menu_links`);
+const navDetails = await fetchPageData(`/api/navigations`, {
+  filters: {
+    key: {
+      $eq: `${site}.header.menu`,
+    },
+  },
+  populate: {
+    menu_items: {
+      populate: ['sub_menu_links'],
+    },
+  },
+})
 const menuItems = navDetails.data[0].attributes.menu_items
-const logoData = await fetchPageData(`/api/navigations?filters[key][$eq]=${site}.header.menu&populate[logo][fields][1]=url&populate[logo]fields[1]=alter`);
-const logoURL = `${strapi}${logoData.data[0].attributes.logo.data[0].attributes.url}`;
-const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternativeText;
+const logoData = await fetchPageData('/api/navigations', {
+  filters: {
+    key: {
+      $eq: `${site}.header.menu`,
+    },
+  },
+  populate: {
+    logo: {
+      fields: ['url', 'alter'],
+    },
+  },
+})
+const logoURL = `${strapi}${logoData.data[0].attributes.logo.data[0].attributes.url}`
+const logoAltText =
+  logoData.data[0].attributes.logo.data[0].attributes.alternativeText
 ---
+
 <header class="header-wrapper">
-    <a class="skip" href="#main">skip to content</a>
-    <a href="/">
-        <img src={logoURL} alt={logoAltText} />
-    </a>
-    <nav class="headerNav hidden">
-        <ul class="navlist">
-            {menuItems.map(menuItem => {
-                if (menuItem.sub_menu_links[0]) {
+  <a class="skip" href="#main">skip to content</a>
+  <a href="/">
+    <img src={logoURL} alt={logoAltText} />
+  </a>
+  <nav class="headerNav hidden">
+    <ul class="navlist">
+      {
+        menuItems.map((menuItem) => {
+          if (menuItem.sub_menu_links[0]) {
+            return (
+              <li class="menu-item dropdown">
+                <a class="menu-item" href={menuItem.url_path}>
+                  {menuItem.name.trim()} <span>❯</span>
+                </a>
+                <ul class="dropdown">
+                  {menuItem.sub_menu_links.map((sml) => {
                     return (
-                    <li class="menu-item dropdown"><a class="menu-item" href={menuItem.url_path}>{menuItem.name.trim()} <span>❯</span></a>
-                    <ul class="dropdown">
-                    {menuItem.sub_menu_links.map(sml => {
-                    return (<li class="sub-menu-item"><a href={sml.url_path}>{sml.name.trim()}</a></li>)
-                    })}
-                    </ul>
-                    </li>)
-                }
-                return <li class="menu-item"><a class="menu-item clickable" href={menuItem.url_path}>{menuItem.name.trim()}</a></li>
-            })}  
-        </ul>
-    </nav>
-    <button type="button" class="headerNavToggle hamburger">
-        <div></div>
-        <div></div>
-        <div></div>
-    </button>
+                      <li class="sub-menu-item">
+                        <a href={sml.url_path}>{sml.name.trim()}</a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </li>
+            )
+          }
+          return (
+            <li class="menu-item">
+              <a class="menu-item clickable" href={menuItem.url_path}>
+                {menuItem.name.trim()}
+              </a>
+            </li>
+          )
+        })
+      }
+    </ul>
+  </nav>
+  <button type="button" class="headerNavToggle hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </button>
 </header>
 <div id="header-trigger"></div>
 <style>
-    /*WRAPPER STYLES*/
-    :root {
-        --header-height: calc(80rem / 16);
-    }
+  /*WRAPPER STYLES*/
+  :root {
+    --header-height: calc(80rem / 16);
+  }
 
-    header {
-        height: var(--header-height);
-        background-color: var(--banner-color);
-        position: fixed;
-        width: 100%;
-        transition: 0.25s;
-        display: flex;
-        z-index: 10;
-    }
-    #header-trigger {
-        height: var(--header-height);
-        transition: 0.25s;
-        width: 100%;
-    }
-    /*SKIP TO CONTENT STYLES*/
-    .skip {
-        color: white;
-        padding-left: 6px;
-        background-color: var(--banner-color);
-        z-index: 20;
-        height: auto;
-        opacity: 0;
-    }
-    .skip:focus {
-        opacity: 1;
-        transition: 0.25s;
-    }
-    /*LOGO STYLES*/
-    header > a {
-        position: fixed;
-        height: var(--header-height);
-    }
-    header img:hover {
-        transform: scale(1.05);
-    }
+  header {
+    height: var(--header-height);
+    background-color: var(--banner-color);
+    position: fixed;
+    width: 100%;
+    transition: 0.25s;
+    display: flex;
+    z-index: 10;
+  }
+  #header-trigger {
+    height: var(--header-height);
+    transition: 0.25s;
+    width: 100%;
+  }
+  /*SKIP TO CONTENT STYLES*/
+  .skip {
+    color: white;
+    padding-left: 6px;
+    background-color: var(--banner-color);
+    z-index: 20;
+    height: auto;
+    opacity: 0;
+  }
+  .skip:focus {
+    opacity: 1;
+    transition: 0.25s;
+  }
+  /*LOGO STYLES*/
+  header > a {
+    position: fixed;
+    height: var(--header-height);
+  }
+  header img:hover {
+    transform: scale(1.05);
+  }
+  img {
+    height: var(--header-height);
+    transition: 0.25s;
+    padding-left: max(20px, 2vw);
+  }
+  @media (max-width: 916px) {
     img {
-            height: var(--header-height);
-            transition: 0.25s;
-            padding-left: max(20px, 2vw);
-        }
-    @media (max-width: 916px) {
-        img {
-                height: var(--header-height);
-                padding: 0.5rem 0;
-                padding-left: 1vw;
-            }
-        }
-    /*NAV STYLES*/
-    @media (min-width: 917px) {
+      height: var(--header-height);
+      padding: 0.5rem 0;
+      padding-left: 1vw;
+    }
+  }
+  /*NAV STYLES*/
+  @media (min-width: 917px) {
     nav {
-        margin: 0 auto;
-        height: 100%;
+      margin: 0 auto;
+      height: 100%;
     }
-}
-    nav * {
-        color: white;
-        text-transform: uppercase;
-        text-decoration: none;
-    }
-    ul {
-        display: flex;
-    }
-    li {
-        list-style: none;
-    }
-    ul.navlist {
-        height: 100%;
-    }
-    li.menu-item {
-        height: 100%;
-        display: flex;
-    }
-    li.menu-item a.menu-item {
-        align-self: center;
-        width: 100%;
-        padding: 0 20px;
-    }
-    @media (min-width: 917px) {
+  }
+  nav * {
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  ul {
+    display: flex;
+  }
+  li {
+    list-style: none;
+  }
+  ul.navlist {
+    height: 100%;
+  }
+  li.menu-item {
+    height: 100%;
+    display: flex;
+  }
+  li.menu-item a.menu-item {
+    align-self: center;
+    width: 100%;
+    padding: 0 20px;
+  }
+  @media (min-width: 917px) {
     li.menu-item:not(:first-of-type)::before {
-        content: "|";
-        color: white;
-        z-index: 1;
-        align-self: center;
+      content: '|';
+      color: white;
+      z-index: 1;
+      align-self: center;
     }
-    .clickable:hover, .clickable:focus-within { 
-        transform: scale(1.1);
-        transition: 0.25s;
+    .clickable:hover,
+    .clickable:focus-within {
+      transform: scale(1.1);
+      transition: 0.25s;
     }
-    }
-    span {
-        color: white;
-        display: inline-block;
-        transform: rotate(90deg);
-        position: relative;
-        left: 7px;
-    }
-    @media (min-width: 917px) {
+  }
+  span {
+    color: white;
+    display: inline-block;
+    transform: rotate(90deg);
+    position: relative;
+    left: 7px;
+  }
+  @media (min-width: 917px) {
     ul.dropdown {
-        flex-direction: column;
-        display: none;
-        position: absolute;
-        top: var(--header-height);
-        background-color: var(--banner-color);
+      flex-direction: column;
+      display: none;
+      position: absolute;
+      top: var(--header-height);
+      background-color: var(--banner-color);
     }
-    }
-    li.dropdown:hover ul.dropdown, li.dropdown:focus-within ul.dropdown {
-        display: flex;
-    }
-    li.sub-menu-item {
-        width: 100%;
-    }
-    li.sub-menu-item a {
-        display: inline-block;
-        height: 100%;
-        width: 100%;
-        padding: 10px 20px 10px 20px;
-    }
-    @media (min-width: 917px) {
+  }
+  li.dropdown:hover ul.dropdown,
+  li.dropdown:focus-within ul.dropdown {
+    display: flex;
+  }
+  li.sub-menu-item {
+    width: 100%;
+  }
+  li.sub-menu-item a {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+  }
+  @media (min-width: 917px) {
     li.sub-menu-item a:hover {
-        transform: scale(1.05);
+      transform: scale(1.05);
     }
-}
-    @media (max-width: 916px) {
+  }
+  @media (max-width: 916px) {
     .hidden {
-        display: none;
+      display: none;
     }
     nav {
-        position: absolute;
-        top: var(--header-height);
-        background: var(--banner-color);
-        width: 100%;
-        height: calc(100vh - var(--header-height));
-        transition: 0.25s;
-        overflow-y: scroll;
+      position: absolute;
+      top: var(--header-height);
+      background: var(--banner-color);
+      width: 100%;
+      height: calc(100vh - var(--header-height));
+      transition: 0.25s;
+      overflow-y: scroll;
     }
     nav * {
-        flex-shrink: 0;
+      flex-shrink: 0;
     }
-    nav a:hover, nav a:hover span {
-        background: var(--gunmetal-tint);
-        color: black;
+    nav a:hover,
+    nav a:hover span {
+      background: var(--gunmetal-tint);
+      color: black;
     }
     ul.navlist {
-        flex-direction: column;
+      flex-direction: column;
     }
     li.menu-item {
-        flex-direction: column;
-        height: fit-content;
-        min-width: fit-content;
+      flex-direction: column;
+      height: fit-content;
+      min-width: fit-content;
     }
     li.menu-item:last-of-type {
-        padding-bottom: 20px;
+      padding-bottom: 20px;
     }
     li.menu-item:first-of-type {
-        padding-top: 10px;
+      padding-top: 10px;
     }
     li.menu-item a.menu-item {
-        padding-top: 10px;
-        padding-bottom: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
     ul.dropdown {
-        display: flex;
-        flex-direction: column;
-        position: relative;
+      display: flex;
+      flex-direction: column;
+      position: relative;
     }
     li.sub-menu-item a {
-        padding-left: 40px;
+      padding-left: 40px;
     }
     ul.navlist {
-        margin: 0 auto;
+      margin: 0 auto;
     }
-    }
-    /*HAMBURGER AND RESPONSIVE DROPDOWN STYLES*/
-    /*remove button default styling*/
-    header button {
+  }
+  /*HAMBURGER AND RESPONSIVE DROPDOWN STYLES*/
+  /*remove button default styling*/
+  header button {
     display: inline-block;
     border: none;
     text-decoration: none;
     cursor: pointer;
     text-align: center;
     background-color: var(--banner-color);
-}       
+  }
+  .headerNavToggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--banner-color);
+    border: 0px;
+    transition: 0.25s;
+    cursor: pointer;
+    font-size: 9px;
+    align-self: center;
+    margin-right: max(10px, 1vw);
+    width: auto;
+    padding: 10px;
+  }
+
+  .headerNavToggle:focus-within {
+    outline: auto;
+  }
+
+  .headerNavToggle:hover {
+    transform: scale(1.05);
+  }
+
+  .headerNavToggle div {
+    background-color: #fff;
+    height: 0.4em;
+    transition: 0.4s;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  .headerNavToggle.hamburger div {
+    width: 3.5em;
+    margin: 0.3em 0.1em 0.3em 0;
+    border-radius: 10px;
+  }
+  .toggled div:nth-of-type(1) {
+    border-radius: 10px;
+    transform: rotate(45deg);
+    position: relative;
+    top: 0.85em;
+  }
+
+  .toggled div:nth-of-type(2) {
+    width: 3.1em;
+    margin: 0.15em 0.4em 0.15em 0;
+    border-radius: 10px;
+    transform: rotate(405deg);
+    opacity: 0;
+  }
+
+  .toggled div:nth-of-type(3) {
+    border-radius: 10px;
+    transform: rotate(-45deg);
+    position: relative;
+    bottom: 0.85em;
+  }
+  @media (max-width: 916px) {
     .headerNavToggle {
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--banner-color);
-        border: 0px;
-        transition: 0.25s;
-        cursor: pointer;
-        font-size: 9px;
-        align-self: center;
-        margin-right: max(10px, 1vw);
-        width: auto;
-        padding: 10px;
+      display: flex;
+      margin-left: auto;
     }
-    
-    .headerNavToggle:focus-within {
-        outline: auto;
-    }
-
-    .headerNavToggle:hover {
-        transform: scale(1.05);
-    }
-
-    .headerNavToggle div {
-        background-color: #fff;
-        height: 0.4em;
-        transition: 0.4s;
-        flex-shrink: 0;
-        flex-grow: 0;
-    }
-
-    .headerNavToggle.hamburger div {
-        width: 3.5em;
-        margin: 0.3em 0.1em 0.3em 0;
-        border-radius: 10px;
-    }
-    .toggled div:nth-of-type(1) {
-        border-radius: 10px;
-        transform: rotate(45deg);
-        position: relative;
-        top: 0.85em;
-    }
-
-    .toggled div:nth-of-type(2) {
-        width: 3.1em;
-        margin: 0.15em 0.4em 0.15em 0;
-        border-radius: 10px;
-        transform: rotate(405deg);
-        opacity: 0;
-    }
-
-    .toggled div:nth-of-type(3) {
-        border-radius: 10px;
-        transform: rotate(-45deg);
-        position: relative;
-        bottom: 0.85em;
-    }
-    @media (max-width: 916px) {
-        .headerNavToggle {
-            display: flex;
-            margin-left: auto;
-        }
-    }
+  }
 </style>
 <script>
-    const html = document.documentElement;
-    const headerTrigger = document.querySelector("#header-trigger");
-    const headerHeightInit = html.style.getPropertyValue("--header-height");
-    const headerWrapper = document.querySelector(".header-wrapper");
-    let options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1,
-    };
-    const obsCallback = (entries) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) {
-                html.style.setProperty("--header-height", "calc(60rem / 16)");
-                headerWrapper.classList.add("scrolled");
-            } else {
-                html.style.setProperty("--header-height", headerHeightInit);
-                headerWrapper.classList.remove("scrolled");
-            }
-        });
-    };
+  const html = document.documentElement
+  const headerTrigger = document.querySelector('#header-trigger')
+  const headerHeightInit = html.style.getPropertyValue('--header-height')
+  const headerWrapper = document.querySelector('.header-wrapper')
+  let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1,
+  }
+  const obsCallback = (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        html.style.setProperty('--header-height', 'calc(60rem / 16)')
+        headerWrapper.classList.add('scrolled')
+      } else {
+        html.style.setProperty('--header-height', headerHeightInit)
+        headerWrapper.classList.remove('scrolled')
+      }
+    })
+  }
 
-    let headerObserver = new IntersectionObserver(obsCallback, options);
-    headerObserver.observe(headerTrigger);
+  let headerObserver = new IntersectionObserver(obsCallback, options)
+  headerObserver.observe(headerTrigger)
 </script>
 <script>
-    const headerNavToggle = document.querySelector(".headerNavToggle");
-    const headerNav = document.querySelector(".headerNav");
-    const headerWrapper = document.querySelector(".header-wrapper");
-    headerNavToggle.addEventListener("click", (event) => {
-        headerNav.classList.toggle("hidden");
-        event.currentTarget.classList.toggle("toggled");
-        if (headerNav.classList.contains("hidden")) {
-            headerWrapper.classList.remove("opacity")
-        } else { headerWrapper.classList.add("opacity")};
-    });
-    </script>
+  const headerNavToggle = document.querySelector('.headerNavToggle')
+  const headerNav = document.querySelector('.headerNav')
+  const headerWrapper = document.querySelector('.header-wrapper')
+  headerNavToggle.addEventListener('click', (event) => {
+    headerNav.classList.toggle('hidden')
+    event.currentTarget.classList.toggle('toggled')
+    if (headerNav.classList.contains('hidden')) {
+      headerWrapper.classList.remove('opacity')
+    } else {
+      headerWrapper.classList.add('opacity')
+    }
+  })
+</script>

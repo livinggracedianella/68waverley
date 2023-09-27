@@ -7,9 +7,10 @@ marked.use({
 })
 const site = import.meta.env.THIS_SITE
 const strapi = import.meta.env.STRAPI_HOST
-const footerDetails = await fetchPageData(
-  `/api/footers?filters[key][$eq]=${site}.footer&populate=*`
-)
+const footerDetails = await fetchPageData(`/api/footers`, {
+  filters: { key: { $eq: `${site}.footer` } },
+  populate: '*',
+})
 const footerData = footerDetails.data[0]
 const logoData = footerData.attributes.logo.data.attributes
 const logoURL = `${strapi}${logoData.url}`
@@ -35,8 +36,8 @@ const logoURL = `${strapi}${logoData.url}`
   </div>
   <div>
     <div>
-      <a href={footerData.attributes.contact.url_path}
-        >{footerData.attributes.contact.name}</a>
+      <a href={footerData.attributes.contact.url_path}></a>
+      {footerData.attributes.contact.name}
     </div>
     <div set:html={marked.parse(footerData.attributes.address)} />
   </div>
