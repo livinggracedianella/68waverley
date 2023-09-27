@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
+import { BlockRenderer, PageHeader, fetchPageData } from '@rkn/page-components'
+
+export async function getStaticPaths() {
+  const pages = await fetchPageData(`/api/pages`)
+  return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
+}
+const { page } = Astro.params
+const pageData = await fetchPageData(`/api/pages`, {
+  filters: {
+    slug: {
+      $eq: page,
+    },
+  },
+  populate: {
+    header: {
+      populate: '*',
+    },
+    blocks: {
+      populate: ['image', 'gatherings', 'message'],
+    },
+  },
+})
+const blocks = pageData.data[0].attributes.blocks
+const header = pageData.data[0].attributes.header
+---
+
+<BaseLayout title="Styleguide">
+  <div class="outer">
+    <div class="inner">
+      <PageHeader {...header} />
+      <BlockRenderer blocks={blocks} />
+    </div>
+  </div>
+  <style>
+    div.outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    div.inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 700px;
+    }
+  </style>
+</BaseLayout>
