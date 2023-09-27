@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
 import { BlockRenderer, PageHeader, fetchPageData } from '@rkn/page-components'
 
 const pageData = await fetchPageData(
-  '/api/pages/1?populate[blocks][populate][0]=image&populate[header][populate]=*'
+  '/api/pages/1?populate[header][populate]=*&populate[blocks][populate][0]=image&populate[blocks][populate][1]=gatherings'
 )
 const blocks = pageData.data.attributes.blocks
 const header = pageData.data.attributes.header

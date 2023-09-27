@@ -13,7 +13,6 @@ const logoData = footerData.attributes.logo.data.attributes;
 const logoURL = `${strapi}${logoData.url}`;
 
 ---
-<pre>{JSON.stringify(footerData, null, 2)}</pre>
 <footer>
     <div class="container">
         <div><img src={logoURL} alt={logoData.alternativeText} ></img></div>
