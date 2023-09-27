@@ -1,22 +1,20 @@
 ---
 import { strapiAsset } from '@rkn/page-components'
 const { message } = Astro.props
-const { title, date, slug } = message
-// const { title, soundcloudEmbedCode, date, speaker, featureImage, slug } =
-//   Astro.props
-// const iframeUrl = soundcloudEmbedCode?.match(`src="(.+)"`)?.[1]
-// const soundcloudLink = soundcloudEmbedCode?.match(`href="(.+)"`)?.[1]
-
-// console.log('PROPS', Astro.props.message.data.attributes)
-
-// const img = Astro.props[0].header_image.data[0].attributes
-// const imgUrl = strapiAsset(img.formats.large.url)
+const { title, date, slug, providers, feature_image, soundcloud_recording } =
+  message.data.attributes
+const { caption } = feature_image
+const { url, width, height } = feature_image.image.data.attributes.formats.small
+const embedCode = soundcloud_recording.embed_code
+const iframeUrl = embedCode?.match(`src="([^"]+)"`)?.[1]
+const soundcloudLink = embedCode?.match(`href="([^"]+)"`)?.[1]
 ---
 
 <div>
-  <!-- <h2><a href={`/sermons/${slug}/`}>{title}</a></h2>
+  <h2><a href={`/messages/${slug}/`}>{title}</a></h2>
   <p>{date}</p>
-  <p>{speaker}</p>
+  <p>{providers.data.map((p) => p.attributes.name)}</p>
+  <img src={strapiAsset(url)} width={width} height={height} alt={caption} />
   <div class="soundcloud">
     <iframe
       width="100%"
@@ -25,6 +23,5 @@ const { title, date, slug } = message
       frameborder="no"
       allow="autoplay"
       src={iframeUrl}></iframe>
-    <a href={soundcloudLink}>Soundcloud</a>
-  </div> -->
+  </div>
 </div>
