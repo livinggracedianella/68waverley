@@ -1,16 +1,18 @@
 ---
-import AnchorageBaseLayout from "../layouts/AnchorageBaseLayout.astro";
+import AnchorageBaseLayout from '../layouts/AnchorageBaseLayout.astro'
 // import { HeroBannerShallow } from "@rkn/page-components";
-import LessHeroicBanner from "../components/LessHeroicBanner.astro";
-import Grid from "../components/Grid.astro";
-import GridItem from "../components/GridItem.astro";
-import { formatDistance, format } from "date-fns";
+import LessHeroicBanner from '../components/LessHeroicBanner.astro'
+import Grid from '../components/Grid.astro'
+import GridItem from '../components/GridItem.astro'
+import { formatDistance, format } from 'date-fns'
 
 const manpages = (
-  await fetch(`http://127.0.0.1:1337/api/manual-pages`).then((res) => res.json())
-).data;
-console.log(manpages);
-const { attributes: mainpage } = manpages.shift() || {};
+  await fetch(`http://127.0.0.1:1337/api/manual-pages`).then((res) =>
+    res.json()
+  )
+).data
+console.log(manpages)
+const { attributes: mainpage } = manpages.shift() || {}
 ---
 
 <AnchorageBaseLayout title={mainpage.title}>
@@ -56,14 +58,14 @@ const { attributes: mainpage } = manpages.shift() || {};
     }
 
     .man-title {
-      font-family: "Magallanes";
+      font-family: 'Magallanes';
       padding-bottom: 18px;
       color: #00629b;
     }
 
     .man-body {
       font-size: 1.2rem;
-      font-family: "magallanescondregular-italic";
+      font-family: 'magallanescondregular-italic';
       padding-bottom: 24px;
     }
   }

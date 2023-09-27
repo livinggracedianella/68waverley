@@ -1,280 +1,276 @@
 ---
 import {
-    BaseLayout,
-    SidebarToggle,
-    Header,
-    DocControlTable,
-    VersionControlTable,
-    TableofContents,
-} from "@rkn/shared-components";
+  BaseLayout,
+  SidebarToggle,
+  Header,
+  DocControlTable,
+  VersionControlTable,
+  TableofContents,
+} from '@rkn/shared-components'
 
-const { headings } = Astro.props;
-const { frontmatter } = Astro.props;
-const { title } = Astro.props.frontmatter || Astro.props;
-const top = 0;
+const { headings } = Astro.props
+const { frontmatter } = Astro.props
+const { title } = Astro.props.frontmatter || Astro.props
+const top = 0
 ---
 
 <BaseLayout title>
-    <div id="header-trigger"></div>
-    <div class="toggle-wrapper">
-        <SidebarToggle />
+  <div id="header-trigger"></div>
+  <div class="toggle-wrapper">
+    <SidebarToggle />
+  </div>
+  <div class="header-wrapper">
+    <Header />
+  </div>
+  <nav class="sidebar-wrapper">
+    <TableofContents headings={headings} />
+  </nav>
+  <main>
+    <div class="main-wrapper-inner">
+      <h1>{title}</h1>
+      <DocControlTable frontmatter={frontmatter} />
+      <slot />
+      <VersionControlTable frontmatter={frontmatter} />
     </div>
-    <div class="header-wrapper">
-        <Header />
-    </div>
-    <nav class="sidebar-wrapper">
-        <TableofContents headings={headings} />
-    </nav>
-    <main>
-        <div class="main-wrapper-inner">
-            <h1>{title}</h1>
-            <DocControlTable frontmatter={frontmatter} />
-            <slot />
-            <VersionControlTable frontmatter={frontmatter} />
-        </div>
-    </main>
+  </main>
 
-    <style is:global>
-        /* LAYOUT STYLEING */
-        html {
-            font-size: 10px;
-            --header-height: 15em;
-            --main-left-offset: 200px;
-            scroll-padding-top: 10em;
-        }
-        body {
-            display: grid;
-            grid-template-rows: var(--header-height) 1fr auto;
-            grid-template-columns: var(--main-left-offset) 1fr;
-            min-height: 100vh;
-            transition: 0.25s;
-        }
-        .toggle-wrapper {
-            grid-row: 1/2;
-            grid-column: 1/2;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-start;
-            z-index: 12;
-            position: sticky;
-            top: 0;
-            min-width: fit-content;
-        }
+  <style is:global>
+    /* LAYOUT STYLEING */
+    html {
+      font-size: 10px;
+      --header-height: 15em;
+      --main-left-offset: 200px;
+      scroll-padding-top: 10em;
+    }
+    body {
+      display: grid;
+      grid-template-rows: var(--header-height) 1fr auto;
+      grid-template-columns: var(--main-left-offset) 1fr;
+      min-height: 100vh;
+      transition: 0.25s;
+    }
+    .toggle-wrapper {
+      grid-row: 1/2;
+      grid-column: 1/2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      z-index: 12;
+      position: sticky;
+      top: 0;
+      min-width: fit-content;
+    }
 
-        .toggle-wrapper.scrolled {
-            font-size: 9px;
-        }
+    .toggle-wrapper.scrolled {
+      font-size: 9px;
+    }
 
-        #header-trigger {
-            grid-row: 1 / 2;
-            grid-column: 1 / -1;
-        }
-        .header-wrapper {
-            grid-row: 1 / 2;
-            grid-column: 1 / -1;
-            background-color: #51534a;
-            position: sticky;
-            top: 0;
-            overflow: hidden;
-            z-index: 3;
-            font-size: 12.5px;
-            transition: 0.25s;
-            box-shadow: var(--main-left-offset) 1px #fff;
-        }
-        .header-wrapper.scrolled {
-            font-size: 7.5px;
-        }
-        .sidebar-wrapper {
-            grid-row: 2 / -1;
-            grid-column: 1 / 2;
-            background-color: #702082;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            max-height: calc(100vh - var(--header-height));
-            transition: 0.25s;
-            position: sticky;
-            top: var(--header-height);
-            overflow-y: scroll;
-        }
-        main {
-            grid-row: 2 / -1;
-            grid-column: 2 / -1;
-            background-color: #fff;
-            font-size: 1.6em;
-        }
-        .main-wrapper-inner {
-            max-width: 750px;
-            padding: 0 2vw;
-            margin: 20px auto;
-            background-color: #faf9f5;
-            height: calc(100% - 40px);
-        }
-        .exit-left {
-            transform: translateX(-100%);
-            transition: 0.25s;
-        }
-        @media (min-width: 640px) {
-            .sidebar-wrapper {
-                /*position: sticky;
+    #header-trigger {
+      grid-row: 1 / 2;
+      grid-column: 1 / -1;
+    }
+    .header-wrapper {
+      grid-row: 1 / 2;
+      grid-column: 1 / -1;
+      background-color: #51534a;
+      position: sticky;
+      top: 0;
+      overflow: hidden;
+      z-index: 3;
+      font-size: 12.5px;
+      transition: 0.25s;
+      box-shadow: var(--main-left-offset) 1px #fff;
+    }
+    .header-wrapper.scrolled {
+      font-size: 7.5px;
+    }
+    .sidebar-wrapper {
+      grid-row: 2 / -1;
+      grid-column: 1 / 2;
+      background-color: #702082;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: calc(100vh - var(--header-height));
+      transition: 0.25s;
+      position: sticky;
+      top: var(--header-height);
+      overflow-y: scroll;
+    }
+    main {
+      grid-row: 2 / -1;
+      grid-column: 2 / -1;
+      background-color: #fff;
+      font-size: 1.6em;
+    }
+    .main-wrapper-inner {
+      max-width: 750px;
+      padding: 0 2vw;
+      margin: 20px auto;
+      background-color: #faf9f5;
+      height: calc(100% - 40px);
+    }
+    .exit-left {
+      transform: translateX(-100%);
+      transition: 0.25s;
+    }
+    @media (min-width: 640px) {
+      .sidebar-wrapper {
+        /*position: sticky;
                 top: var(--header-height);*/
-            }
+      }
+    }
+
+    @media (max-width: 639px) {
+      .header-wrapper {
+        box-shadow: 1px 1px #fff;
+      }
+
+      .sidebar-wrapper {
+        grid-column: 1 / -1;
+        z-index: 2;
+      }
+      .toggle-wrapper,
+      .toggle-wrapper.scrolled {
+        font-size: 7.5px;
+      }
+      main {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+  <style is:global>
+    /* MAIN TEXT STYLING */
+    :root {
+      color: #51534a;
+    }
+
+    main h1 {
+      font-weight: 700;
+      font-size: clamp(26px, 20.537px + 0.597vw, 32px);
+      color: #702082;
+      grid-row: 2;
+      margin: 0;
+      padding: 2rem 0 2rem 0;
+      text-transform: uppercase;
+    }
+
+    main h2 {
+      font-weight: 500;
+      font-size: clamp(26px, 20.537px + 0.597vw, 32px);
+      color: #702082;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      margin-top: 3rem;
+    }
+
+    main h2 ~ p {
+      line-height: 150%;
+      margin: 0 0 15px 0;
+    }
+
+    main ul {
+      margin: 0 auto 0 auto;
+    }
+
+    main h3 {
+      color: #00629b;
+      margin-left: 20px;
+      text-transform: uppercase;
+      margin-top: 1.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    main h3 ~ p {
+      margin-left: 20px;
+    }
+
+    main h4 {
+      /* Always nest in an ordered list */
+      color: #702082;
+      margin-left: 20px;
+      margin-top: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+
+    main h4 ~ p {
+    }
+
+    main h4 ~ ul > li {
+      list-style: none;
+    }
+
+    main li {
+      padding-bottom: 1rem;
+    }
+    main li ul {
+      padding-top: 1rem;
+    }
+  </style>
+
+  <script>
+    //MAKE HEADER SHRINK ON SCROLL
+
+    const html = document.documentElement
+    const headerTrigger = document.querySelector('#header-trigger')
+    const headerHeightInit = html.style.getPropertyValue('--header-height')
+    const headerWrapper = document.querySelector('.header-wrapper')
+    const toggleWrapper = document.querySelector('.toggle-wrapper')
+
+    let options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1,
+    }
+
+    const obsCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          html.style.setProperty('--header-height', '9em')
+          console.log('not intersecting')
+          headerWrapper.classList.add('scrolled')
+          toggleWrapper.classList.add('scrolled')
+        } else {
+          html.style.setProperty('--header-height', headerHeightInit)
+          console.log('intersecting')
+          headerWrapper.classList.remove('scrolled')
+          toggleWrapper.classList.remove('scrolled')
         }
+      })
+    }
 
-        @media (max-width: 639px) {
-            .header-wrapper {
-                box-shadow: 1px 1px #fff;
-            }
+    let headerObserver = new IntersectionObserver(obsCallback, options)
+    headerObserver.observe(headerTrigger)
 
-            .sidebar-wrapper {
-                grid-column: 1 / -1;
-                z-index: 2;
-            }
-            .toggle-wrapper,
-            .toggle-wrapper.scrolled {
-                font-size: 7.5px;
-            }
-            main {
-                grid-column: 1 / -1;
-            }
-        }
-    </style>
-    <style is:global>
-        /* MAIN TEXT STYLING */
-        :root {
-            color: #51534a;
-        }
+    //TOGGLE SIDEBAR ON CLICK
 
-        main h1 {
-            font-weight: 700;
-            font-size: clamp(26px, 20.537px + 0.597vw, 32px);
-            color: #702082;
-            grid-row: 2;
-            margin: 0;
-            padding: 2rem 0 2rem 0;
-            text-transform: uppercase;
-        }
+    const sidebarToggle = document.querySelector('#sidebar-toggle')
+    const sidebarWrapper = document.querySelector('.sidebar-wrapper')
+    const mainLeftOffsetInit = html.style.getPropertyValue('--main-left-offset')
 
-        main h2 {
-            font-weight: 500;
-            font-size: clamp(26px, 20.537px + 0.597vw, 32px);
-            color: #702082;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            margin-top: 3rem;
-        }
+    const collapseSidebar = () => {
+      console.log('collapse sidebar', sidebarToggle.classList)
+      sidebarToggle.classList.toggle('arrow')
+      sidebarToggle.classList.toggle('hamburger')
+      sidebarWrapper.classList.toggle('exit-left')
+      console.log('end of function', sidebarToggle.classList)
+    }
+    const adjustColumnTwo = () => {
+      let offset = html.style.getPropertyValue('--main-left-offset')
+      if (offset === '0px') {
+        html.style.setProperty('--main-left-offset', mainLeftOffsetInit)
+      } else {
+        html.style.setProperty('--main-left-offset', '0px')
+      }
+    }
 
-        main h2 ~ p {
-            line-height: 150%;
-            margin: 0 0 15px 0;
-        }
+    sidebarToggle.addEventListener('click', () => {
+      collapseSidebar()
+      adjustColumnTwo()
+    })
 
-        main ul {
-            margin: 0 auto 0 auto;
-        }
-
-        main h3 {
-            color: #00629b;
-            margin-left: 20px;
-            text-transform: uppercase;
-            margin-top: 1.4rem;
-            margin-bottom: 0.4rem;
-        }
-
-        main h3 ~ p {
-            margin-left: 20px;
-        }
-
-        main h4 {
-            /* Always nest in an ordered list */
-            color: #702082;
-            margin-left: 20px;
-            margin-top: 1.2rem;
-            margin-bottom: 0.3rem;
-        }
-
-        main h4 ~ p {
-        }
-
-        main h4 ~ ul > li {
-            list-style: none;
-        }
-
-        main li {
-            padding-bottom: 1rem;
-        }
-        main li ul {
-            padding-top: 1rem;
-        }
-    </style>
-
-    <script>
-        //MAKE HEADER SHRINK ON SCROLL
-
-        const html = document.documentElement;
-        const headerTrigger = document.querySelector("#header-trigger");
-        const headerHeightInit = html.style.getPropertyValue("--header-height");
-        const headerWrapper = document.querySelector(".header-wrapper");
-        const toggleWrapper = document.querySelector(".toggle-wrapper");
-
-        let options = {
-            root: null,
-            rootMargin: "0px",
-            threshold: 1,
-        };
-
-        const obsCallback = (entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) {
-                    html.style.setProperty("--header-height", "9em");
-                    console.log("not intersecting");
-                    headerWrapper.classList.add("scrolled");
-                    toggleWrapper.classList.add("scrolled");
-                } else {
-                    html.style.setProperty("--header-height", headerHeightInit);
-                    console.log("intersecting");
-                    headerWrapper.classList.remove("scrolled");
-                    toggleWrapper.classList.remove("scrolled");
-                }
-            });
-        };
-
-        let headerObserver = new IntersectionObserver(obsCallback, options);
-        headerObserver.observe(headerTrigger);
-
-        //TOGGLE SIDEBAR ON CLICK
-
-        const sidebarToggle = document.querySelector("#sidebar-toggle");
-        const sidebarWrapper = document.querySelector(".sidebar-wrapper");
-        const mainLeftOffsetInit =
-            html.style.getPropertyValue("--main-left-offset");
-
-        const collapseSidebar = () => {
-            console.log("collapse sidebar", sidebarToggle.classList);
-            sidebarToggle.classList.toggle("arrow");
-            sidebarToggle.classList.toggle("hamburger");
-            sidebarWrapper.classList.toggle("exit-left");
-            console.log("end of function", sidebarToggle.classList);
-        };
-        const adjustColumnTwo = () => {
-            let offset = html.style.getPropertyValue("--main-left-offset");
-            if (offset === "0px") {
-                html.style.setProperty(
-                    "--main-left-offset",
-                    mainLeftOffsetInit
-                );
-            } else {
-                html.style.setProperty("--main-left-offset", "0px");
-            }
-        };
-
-        sidebarToggle.addEventListener("click", () => {
-            collapseSidebar();
-            adjustColumnTwo();
-        });
-
-        //NEED SIDEBAR TO DISMISS IF LINK CLICKED WHEN WIDTH IS LESS THAN 639PX
-        /*const mql = window.matchMedia("(max-width: 639px)");
+    //NEED SIDEBAR TO DISMISS IF LINK CLICKED WHEN WIDTH IS LESS THAN 639PX
+    /*const mql = window.matchMedia("(max-width: 639px)");
         const sideLinks = document.querySelectorAll(".btn-wrapper a");
         console.log(sideLinks);
         mql.addEventListener("change", (e) => {
@@ -285,15 +281,15 @@ const top = 0;
                 });
             }
         });*/
-        const sideLinks = document.querySelectorAll(".btn-wrapper a");
-        sideLinks.forEach((sidelink) => {
-            sidelink.addEventListener("click", () => {
-                let mql = window.matchMedia("(max-width: 639px)");
-                if (mql.matches) {
-                    // collapseSidebar();
-                    // adjustColumnTwo();
-                }
-            });
-        });
-    </script>
+    const sideLinks = document.querySelectorAll('.btn-wrapper a')
+    sideLinks.forEach((sidelink) => {
+      sidelink.addEventListener('click', () => {
+        let mql = window.matchMedia('(max-width: 639px)')
+        if (mql.matches) {
+          // collapseSidebar();
+          // adjustColumnTwo();
+        }
+      })
+    })
+  </script>
 </BaseLayout>

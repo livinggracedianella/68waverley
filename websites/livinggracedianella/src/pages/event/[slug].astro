@@ -1,18 +1,22 @@
 ---
 //import BaseLayout from "../../layout/BaseLayout.astro"
-import Layout from '../../layouts/Layout.astro';
-import SingleEventItem from "../../components/SingleEventItem.astro"
+import Layout from '../../layouts/Layout.astro'
+import SingleEventItem from '../../components/SingleEventItem.astro'
 
 export async function getStaticPaths() {
-  const  { data: events } =  await fetch(`http://127.0.0.1:1337/api/events?populate[organisers][populate][0]=Portrait`).then(res => res.json())
-  return  events.map(event =>  ({params : {slug: event.attributes.slug}}))
+  const { data: events } = await fetch(
+    `http://127.0.0.1:1337/api/events?populate[organisers][populate][0]=Portrait`
+  ).then((res) => res.json())
+  return events.map((event) => ({ params: { slug: event.attributes.slug } }))
 }
 
-const {slug} =  Astro.params
-const { data: eventItem } = await fetch(`http://127.0.0.1:1337/api/events?filters[slug][$eq]=${slug}&populate[organisers][populate][0]=Portrait`).then(x  => x.json())
+const { slug } = Astro.params
+const { data: eventItem } = await fetch(
+  `http://127.0.0.1:1337/api/events?filters[slug][$eq]=${slug}&populate[organisers][populate][0]=Portrait`
+).then((x) => x.json())
 // console.log(eventItem);
 ---
 
 <Layout title={eventItem[0]?.title}>
-<SingleEventItem event={eventItem[0]}/>
+  <SingleEventItem event={eventItem[0]} />
 </Layout>

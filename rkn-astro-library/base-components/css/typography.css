@@ -2,34 +2,31 @@
 @font-face {
   font-family: 'magallanescondblack';
   src: url('/fonts/magallanescondblack-webfont.woff2') format('woff2'),
-       url('/fonts/magallanescondblack-webfont.woff') format('woff');
+    url('/fonts/magallanescondblack-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'magallanescondbold';
   src: url('/fonts/magallanescondbold-webfont.woff2') format('woff2'),
-       url('/fonts/magallanescondbold-webfont.woff') format('woff');
+    url('/fonts/magallanescondbold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'Magallanes';
-  src:  url('/fonts/magallanescondregular.woff2') format('woff2'),
-        url('/fonts/magallanescondregular.woff') format('woff');
+  src: url('/fonts/magallanescondregular.woff2') format('woff2'),
+    url('/fonts/magallanescondregular.woff') format('woff');
 }
 
 @font-face {
   font-family: 'magallanescondregular-italic';
   src: url('/fonts/magallanescondregular-italic-webfont.woff2') format('woff2'),
-       url('/fonts/magallanescondregular-italic-webfont.woff') format('woff');
+    url('/fonts/magallanescondregular-italic-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 /*Global Font Styles*/
@@ -57,7 +54,7 @@ p {
 
 h1 {
   font-size: var(--font-size-h1);
-  font-family: "magallanescondblack", sans-serif;
+  font-family: 'magallanescondblack', sans-serif;
   line-height: var(--line-height-h1);
   font-weight: normal;
 }
@@ -80,7 +77,7 @@ h4 {
   font-family: 'magallanescondbold', sans-serif;
   font-weight: normal;
   line-height: var(--line-height-h4);
-  font-size: var(--font-size-h4)
+  font-size: var(--font-size-h4);
 }
 
 p {
@@ -93,17 +90,17 @@ a {
   line-height: 1.625rem;
 }
 
-@media (max-width:640px) {
+@media (max-width: 640px) {
   :root {
-      --font-size-h1: calc(26rem / 16);
-      --font-size-h2: calc(23rem / 16);
+    --font-size-h1: calc(26rem / 16);
+    --font-size-h2: calc(23rem / 16);
   }
 
   h1 {
-      font-size: var(--font-size-h1);
+    font-size: var(--font-size-h1);
   }
 
   h2 {
-      font-size: var(--font-size-h2);
+    font-size: var(--font-size-h2);
   }
 }

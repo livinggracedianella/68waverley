@@ -36,7 +36,8 @@ const logoURL = `${strapi}${logoData.url}`
   <div>
     <div>
       <a href={footerData.attributes.contact.url_path}
-        >{footerData.attributes.contact.name}</a>
+        >{footerData.attributes.contact.name}</a
+      >
     </div>
     <div set:html={markedHelper(footerData.attributes.address)} />
   </div>

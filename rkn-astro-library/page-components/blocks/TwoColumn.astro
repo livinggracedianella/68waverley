@@ -1,49 +1,60 @@
 ---
-import { markedHelper } from '../util.js';
+import { markedHelper } from '../util.js'
 import { strapiAsset } from '@rkn/page-components'
-const props = Astro.props;
-const img = props.image.data.attributes;
-const imgURL = strapiAsset(img.formats.medium.url);
-let flexDirection = "row-reverse"
-if (props.imageSide === "right") {flexDirection = "row"}
-const { imageVerticalAlignment, imageHorizontalAlignment } = props;
+const props = Astro.props
+const img = props.image.data.attributes
+const imgURL = strapiAsset(img.formats.medium.url)
+let flexDirection = 'row-reverse'
+if (props.imageSide === 'right') {
+  flexDirection = 'row'
+}
+const { imageVerticalAlignment, imageHorizontalAlignment } = props
 ---
-<div class=container>
-  <div class = "item">
+
+<div class="container">
+  <div class="item">
     <div class="inner">
-  <h2>{props.title}</h2>
-  <div set:html={markedHelper(props.text)} />
+      <h2>{props.title}</h2>
+      <div set:html={markedHelper(props.text)} />
     </div>
+  </div>
+  <div class="item image" style={`background-image: url("${imgURL}")`}>
+    <img src={imgURL} alt={img.alternativeText} class="sr-only" />
+  </div>
 </div>
-<div class = "item image" style={`background-image: url("${imgURL}")`}>
-  <img src={imgURL} alt={img.alternativeText} class="sr-only"></img>
-</div>
-</div>
-<style define:vars={{ flexDirection, imageVerticalAlignment, imageHorizontalAlignment }}>
-div.container {
-  display: flex;
-  flex-direction: var(--flexDirection);
-  height: fit-content;
-  width: 100vw;
-}
-div.item {
-  width: 50vw;
-}
-div.inner {
-  padding: 20px;
-}
-div.image {
-  background-position: var(--imageVerticalAlignment) var(--imageHorizontalAlignment);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-@media (max-width: 640px) {
+
+<style
+  define:vars={{
+    flexDirection,
+    imageVerticalAlignment,
+    imageHorizontalAlignment,
+  }}
+>
   div.container {
-    flex-direction: column;
+    display: flex;
+    flex-direction: var(--flexDirection);
+    height: fit-content;
+    width: 100vw;
   }
   div.item {
-    width: 100vw;
-    min-height: 40vh;
+    width: 50vw;
   }
-}
+  div.inner {
+    padding: 20px;
+  }
+  div.image {
+    background-position: var(--imageVerticalAlignment)
+      var(--imageHorizontalAlignment);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  @media (max-width: 640px) {
+    div.container {
+      flex-direction: column;
+    }
+    div.item {
+      width: 100vw;
+      min-height: 40vh;
+    }
+  }
 </style>

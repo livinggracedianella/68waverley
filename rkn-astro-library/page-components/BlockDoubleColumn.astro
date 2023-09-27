@@ -2,24 +2,24 @@
 ---
 
 <div class="outer-wrapper">
-    <div class="inner-wrapper">
-        <slot />
-    </div>
+  <div class="inner-wrapper">
+    <slot />
+  </div>
 </div>
 <style>
-    div.outer-wrapper {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
+  div.outer-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  div.inner-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1000px;
+  }
+  @media (max-width: 640px) {
     div.inner-wrapper {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        max-width: 1000px;
+      grid-template-columns: 1fr;
     }
-    @media (max-width: 640px) {
-        div.inner-wrapper {
-            grid-template-columns: 1fr;
-        }
-    }
+  }
 </style>

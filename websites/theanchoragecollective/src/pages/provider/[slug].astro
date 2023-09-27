@@ -1,16 +1,22 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import SingleProvider from "../../components/SingleProvider.astro"
+import Layout from '../../layouts/Layout.astro'
+import SingleProvider from '../../components/SingleProvider.astro'
 
 export async function getStaticPaths() {
-  const  { data: providers } =  await fetch(`http://127.0.0.1:1337/api/providers`).then(res => res.json())
-  return providers.map(provider =>  ({params : {slug: provider.attributes.slug}}))
+  const { data: providers } = await fetch(
+    `http://127.0.0.1:1337/api/providers`
+  ).then((res) => res.json())
+  return providers.map((provider) => ({
+    params: { slug: provider.attributes.slug },
+  }))
 }
 
-const {slug} =  Astro.params
-const { data: providerList } = await fetch(`http://127.0.0.1:1337/api/providers?filters[slug][$eq]=${slug}&populate=*`).then(x  => x.json())
+const { slug } = Astro.params
+const { data: providerList } = await fetch(
+  `http://127.0.0.1:1337/api/providers?filters[slug][$eq]=${slug}&populate=*`
+).then((x) => x.json())
 ---
 
 <Layout title={providerList[0]?.name}>
-  <SingleProvider provider={providerList[0]}/>
+  <SingleProvider provider={providerList[0]} />
 </Layout>

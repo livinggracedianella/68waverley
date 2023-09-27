@@ -1,9 +1,9 @@
 ---
-import AnchorageBaseLayout from "../../layouts/AnchorageBaseLayout.astro";
-import { HeroBanner } from "@rkn/page-components";
-import { IconEmail } from "@rkn/base-components";
-const allProfiles = await Astro.glob("./*.mdx");
-const title = "Profiles";
+import AnchorageBaseLayout from '../../layouts/AnchorageBaseLayout.astro'
+import { HeroBanner } from '@rkn/page-components'
+import { IconEmail } from '@rkn/base-components'
+const allProfiles = await Astro.glob('./*.mdx')
+const title = 'Profiles'
 ---
 
 <AnchorageBaseLayout title={title}>
@@ -20,14 +20,17 @@ const title = "Profiles";
       allProfiles.map((profile) => (
         <li>
           <a href={profile.url}>
-            <img src={profile.frontmatter.image.split(".").join("-thumb.")} />
+            <img src={profile.frontmatter.image.split('.').join('-thumb.')} />
           </a>
           <a href={profile.url}>
             <h3>{profile.frontmatter.name}</h3>
           </a>
           <p>{profile.frontmatter.excerpt}</p>
           <div class="profile_icon_container">
-            <IconEmail iconemail={profile.frontmatter.email} class="profile_icon" />
+            <IconEmail
+              iconemail={profile.frontmatter.email}
+              class="profile_icon"
+            />
           </div>
         </li>
       ))

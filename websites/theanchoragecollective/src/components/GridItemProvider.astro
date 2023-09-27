@@ -1,15 +1,14 @@
 ---
-import CardProvider from './CardProvider.astro';
+import CardProvider from './CardProvider.astro'
 export interface Props {
-  itemType: string;
-  item: object;
-};
+  itemType: string
+  item: object
+}
 
-const { itemType, item } = Astro.props;
-const { attributes: { name, bio_short, slug } } = item;
+const { itemType, item } = Astro.props
+const {
+  attributes: { name, bio_short, slug },
+} = item
 ---
-<CardProvider
-  href={`/${itemType}/${slug}`}
-  name={name}
-  bio_short={bio_short}
-/>
+
+<CardProvider href={`/${itemType}/${slug}`} name={name} bio_short={bio_short} />

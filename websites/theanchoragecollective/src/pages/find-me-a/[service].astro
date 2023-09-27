@@ -1,31 +1,31 @@
 ---
-import AnchorageBaseLayout from "../../layouts/AnchorageBaseLayout.astro";
-import { HeroBanner } from "@rkn/page-components";
-import { IconEmail } from "@rkn/base-components";
+import AnchorageBaseLayout from '../../layouts/AnchorageBaseLayout.astro'
+import { HeroBanner } from '@rkn/page-components'
+import { IconEmail } from '@rkn/base-components'
 export async function getStaticPaths() {
-  const allProfiles = await Astro.glob("../the-collective/*.mdx");
+  const allProfiles = await Astro.glob('../the-collective/*.mdx')
 
   return [
-    { params: { service: "supervisor" }, props: { profiles: allProfiles } },
-    { params: { service: "mentor" }, props: { profiles: allProfiles } },
+    { params: { service: 'supervisor' }, props: { profiles: allProfiles } },
+    { params: { service: 'mentor' }, props: { profiles: allProfiles } },
     {
-      params: { service: "spiritual director" },
+      params: { service: 'spiritual director' },
       props: { profiles: allProfiles },
     },
-    { params: { service: "counsellor" }, props: { profiles: allProfiles } },
-    { params: { service: "trainer" }, props: { profiles: allProfiles } },
-    { params: { service: "mentor" }, props: { profiles: allProfiles } },
-  ];
+    { params: { service: 'counsellor' }, props: { profiles: allProfiles } },
+    { params: { service: 'trainer' }, props: { profiles: allProfiles } },
+    { params: { service: 'mentor' }, props: { profiles: allProfiles } },
+  ]
 }
 
-const { service } = Astro.params;
-const { profiles } = Astro.props;
+const { service } = Astro.params
+const { profiles } = Astro.props
 const filteredProfiles = profiles.filter((profile) =>
   profile.frontmatter.services.includes(service)
-);
-const role = service[0].toUpperCase() + service.substring(1);
-const rolePlural = role + "s";
-const title = "Find a " + role;
+)
+const role = service[0].toUpperCase() + service.substring(1)
+const rolePlural = role + 's'
+const title = 'Find a ' + role
 ---
 
 <AnchorageBaseLayout title={title}>
@@ -35,14 +35,17 @@ const title = "Find a " + role;
       filteredProfiles.map((profile) => (
         <li>
           <a href={profile.url}>
-            <img src={profile.frontmatter.image.split(".").join("-thumb.")} />
+            <img src={profile.frontmatter.image.split('.').join('-thumb.')} />
           </a>
           <a href={profile.url}>
             <h3>{profile.frontmatter.name}</h3>
           </a>
           <p>{profile.frontmatter.excerpt}</p>
           <div class="profile_icon_container">
-            <IconEmail iconemail={profile.frontmatter.email} class="profile_icon" />
+            <IconEmail
+              iconemail={profile.frontmatter.email}
+              class="profile_icon"
+            />
           </div>
         </li>
       ))

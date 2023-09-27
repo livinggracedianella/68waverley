@@ -1,15 +1,14 @@
 ---
-import Card from './Card.astro';
+import Card from './Card.astro'
 export interface Props {
-  itemType: string;
-  item: object;
-};
+  itemType: string
+  item: object
+}
 
-const { itemType, item } = Astro.props;
-const { attributes: { title, summary, slug } } = item;
+const { itemType, item } = Astro.props
+const {
+  attributes: { title, summary, slug },
+} = item
 ---
-<Card
-  href={`/${itemType}/${slug}`}
-  title={title}
-  body={summary}
-/>
+
+<Card href={`/${itemType}/${slug}`} title={title} body={summary} />

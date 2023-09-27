@@ -3,45 +3,45 @@
 
 <hr />
 <footer>
-    <nav>
-        <slot />
-        <ul class="links">
-            <slot name="links" />
-        </ul>
-        <ul class="socials">
-            <slot name="socials" />
-        </ul>
-        <p>© 2021 The Anchorage</p>
-    </nav>
+  <nav>
+    <slot />
+    <ul class="links">
+      <slot name="links" />
+    </ul>
+    <ul class="socials">
+      <slot name="socials" />
+    </ul>
+    <p>© 2021 The Anchorage</p>
+  </nav>
 </footer>
 <style>
-    footer {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        background-color: var(--banner-color);
-        min-height: 20vh;
-        font-size: 14px;
-        padding: 2rem;
-    }
-    footer ul {
-        list-style: none;
-        display: flex;
-        padding: 1rem 0;
-        justify-content: center;
-    }
-    hr {
-        border: solid #fff 1px;
-        width: 100%;
-        border-left: 0;
-        border-right: 0;
-    }
-    p {
-        text-align: center;
-        font-family: Magallanes;
-        color: var(--gunmetal-tint);
-        font-size: 12px;
-        padding-top: 0;
-    }
+  footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--banner-color);
+    min-height: 20vh;
+    font-size: 14px;
+    padding: 2rem;
+  }
+  footer ul {
+    list-style: none;
+    display: flex;
+    padding: 1rem 0;
+    justify-content: center;
+  }
+  hr {
+    border: solid #fff 1px;
+    width: 100%;
+    border-left: 0;
+    border-right: 0;
+  }
+  p {
+    text-align: center;
+    font-family: Magallanes;
+    color: var(--gunmetal-tint);
+    font-size: 12px;
+    padding-top: 0;
+  }
 </style>

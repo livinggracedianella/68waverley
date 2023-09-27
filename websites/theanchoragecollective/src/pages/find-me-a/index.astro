@@ -1,10 +1,12 @@
 ---
-import AnchorageBaseLayout from "../../layouts/AnchorageBaseLayout.astro";
-import { HeroBanner } from "@rkn/page-components";
-import FindMeADropdown from "../../components/FindMeADropdown.astro";
-const title = "Find Me A";
-const allRoles = await Astro.glob("../the-collective/*.mdx");
-const roles = [...new Set(allRoles.map((role) => role.frontmatter.services).flat())];
+import AnchorageBaseLayout from '../../layouts/AnchorageBaseLayout.astro'
+import { HeroBanner } from '@rkn/page-components'
+import FindMeADropdown from '../../components/FindMeADropdown.astro'
+const title = 'Find Me A'
+const allRoles = await Astro.glob('../the-collective/*.mdx')
+const roles = [
+  ...new Set(allRoles.map((role) => role.frontmatter.services).flat()),
+]
 /* FOR IF YOU EVER WANT TO GENERATE THIS DYNAMICALLY
 { 
             roles.map((role) => (
@@ -42,26 +44,26 @@ const roles = [...new Set(allRoles.map((role) => role.frontmatter.services).flat
       <h2>Training and Facilitation</h2>
       <p>Are you looking for a vibrant and skilled trainer or facilitator?</p>
       <p>
-        The Anchorage Collective bring you grounded and effective encounters for your
-        group. Talk to us about your needs.
+        The Anchorage Collective bring you grounded and effective encounters for
+        your group. Talk to us about your needs.
       </p>
     </div>
     <div class="grid-item">
       <h2>Supervision</h2>
       <p>
-        “In a nutshell, pastoral supervision is a relationship between two or more
-        disciples who meet to consider the ministry of one or more of them in an
-        intentional and disciplined way.”
+        “In a nutshell, pastoral supervision is a relationship between two or
+        more disciples who meet to consider the ministry of one or more of them
+        in an intentional and disciplined way.”
       </p>
       <p>Jane Leach and Michael Paterson.</p>
     </div>
     <div class="grid-item">
       <h2>Spiritual Direction</h2>
       <p>
-        Spiritual direction is a form of soul care where one or more people meet to pay
-        attention to what God is saying and doing. It typically involves deep listening,
-        some experimentation with different forms of prayer, and soul strengthening
-        exercises.
+        Spiritual direction is a form of soul care where one or more people meet
+        to pay attention to what God is saying and doing. It typically involves
+        deep listening, some experimentation with different forms of prayer, and
+        soul strengthening exercises.
       </p>
     </div>
     <div class="grid-item">
@@ -75,15 +77,15 @@ const roles = [...new Set(allRoles.map((role) => role.frontmatter.services).flat
     <div class="grid-item">
       <h2>Coaching</h2>
       <p>
-        Coaching is an intentional relationship where a person seeks someone to assist
-        them with setting and reaching goals in their life and/ or work.
+        Coaching is an intentional relationship where a person seeks someone to
+        assist them with setting and reaching goals in their life and/ or work.
       </p>
     </div>
     <div class="grid-item">
       <h2>Counselling</h2>
       <p>
-        Counselling is a therapeutic relationship for the healing and development of an
-        individual, couple, family or group.
+        Counselling is a therapeutic relationship for the healing and
+        development of an individual, couple, family or group.
       </p>
     </div>
   </div>

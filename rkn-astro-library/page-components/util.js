@@ -1,5 +1,5 @@
 import qs from 'qs'
-import { marked } from 'marked';
+import { marked } from 'marked'
 
 export async function fetchPageData(uri, options) {
   const pageDataUrl =
@@ -14,6 +14,10 @@ export function strapiAsset(uri) {
 }
 
 export function markedHelper(src) {
-  return marked(src, {gfm: true, break: true, mangle: false, headerIds: false})
+  return marked(src, {
+    gfm: true,
+    break: true,
+    mangle: false,
+    headerIds: false,
+  })
 }
-

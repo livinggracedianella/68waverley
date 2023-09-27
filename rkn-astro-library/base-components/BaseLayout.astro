@@ -1,25 +1,23 @@
 ---
-import "./css/normalize.css";
-import "./css/global.css";
-import "@rkn/base-components/css/typography.css";
-const { title } = Astro.props;
-import NavigationBar from "./NavigationBar.astro";
-import Footer from "./Footer.astro";
+import './css/normalize.css'
+import './css/global.css'
+import '@rkn/base-components/css/typography.css'
+const { title } = Astro.props
+import NavigationBar from './NavigationBar.astro'
+import Footer from './Footer.astro'
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
-    </head>
-    <NavigationBar />
-    <slot />
-    <Footer />
-    <style is:global>
-    
-    </style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <NavigationBar />
+  <slot />
+  <Footer />
+  <style is:global></style>
 </html>

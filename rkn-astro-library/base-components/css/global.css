@@ -1,18 +1,18 @@
 :root {
-    font-size: 16px;
-    font-family: "Magallanes", sans-serif;
-    --banner-color: #51534a;
-    --gunmetal: #51534a;
-    --gunmetal-tint: #d9dbd0;
-    --anchorage-blue: #00629b;
-    --chapel-purple: #702082;
-    scroll-padding-top: calc(var(--header-height)*0.6);
+  font-size: 16px;
+  font-family: 'Magallanes', sans-serif;
+  --banner-color: #51534a;
+  --gunmetal: #51534a;
+  --gunmetal-tint: #d9dbd0;
+  --anchorage-blue: #00629b;
+  --chapel-purple: #702082;
+  scroll-padding-top: calc(var(--header-height) * 0.6);
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
 }
 
 .link-card h2 {
@@ -23,13 +23,13 @@
 .link-card p:first-of-type {
   width: 90%;
   overflow: hidden;
-/*
+  /*
   white-space: nowrap;
 */
   text-overflow: ellipsis;
   display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .link-card p:not(:first-of-type) {
@@ -38,77 +38,77 @@
 
 /*ICON STYLES*/
 svg {
-    fill: white;
-    height: 3rem;
-    width: auto;
-    margin: 1rem;
+  fill: white;
+  height: 3rem;
+  width: auto;
+  margin: 1rem;
 }
 
 svg:focus,
 svg:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 /*UTILITY CLASSES*/
 /*positioning*/
 .flex_center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /*colors*/
 .bg_gunmetal {
-    background-color: var(--gunmetal);
+  background-color: var(--gunmetal);
 }
 
 .bg_blue {
-    background-color: var(--anchorage-blue);
+  background-color: var(--anchorage-blue);
 }
 
 .color_white {
-    color: white;
+  color: white;
 }
 
 a.color_white:focus,
 a.color_white:hover,
 button.color_white:focus,
 button.color_white:hover {
-    color: var(--gunmetal-tint);
+  color: var(--gunmetal-tint);
 }
 
 .color_gunmetal {
-    color: var(--gunmetal);
+  color: var(--gunmetal);
 }
 
 .color_gunmetal_tint {
-    color: var(--gunmetal-tint);
+  color: var(--gunmetal-tint);
 }
 
 a.color_gunmetal_tint:focus,
 a.color_gunmetal_tint:hover,
 button.color_gunmetal_tint:focus,
 button.color_gunmetal_tint:hover {
-    color: white;
+  color: white;
 }
 
 .text_shadow_black {
-    text-shadow: 0 0 black 8px;
+  text-shadow: 0 0 black 8px;
 }
 
 /*borders*/
 .border-radius {
-    border-radius: 4px;
+  border-radius: 4px;
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
