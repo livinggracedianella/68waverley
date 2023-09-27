@@ -1,5 +1,5 @@
 ---
-import { Markdown } from 'astro-remote';
+import { marked } from 'marked';
 import { strapiAsset } from '@rkn/page-components'
 const props = Astro.props;
 const img = props.image.data.attributes;
@@ -12,7 +12,7 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props;
   <div class = "item">
     <div class="inner">
   <h2>{props.title}</h2>
-  <Markdown content={props.text} />
+  <div set:html={marked.parse(props.text)} />
     </div>
 </div>
 <div class = "item image" style={`background-image: url("${imgURL}")`}>

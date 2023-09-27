@@ -1,12 +1,12 @@
 ---
-import { Markdown } from 'astro-remote';
+import { marked } from 'marked';
 const props = Astro.props
 ---
 
 <div class="full-width">
   <h2>{props.title}</h2>
   <div class="inner">
-  <Markdown content={props.summary} />
+  <div set:html={marked.parse(props.summary)} />
   </div>
 </div>
 <style>

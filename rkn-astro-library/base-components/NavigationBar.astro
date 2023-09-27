@@ -4,7 +4,7 @@ const site = import.meta.env.THIS_SITE
 const strapi = import.meta.env.STRAPI_HOST
 const navDetails = await fetchPageData(`/api/navigations?filters[key][$eq]=${site}.header.menu&populate[menu_items][populate][0]=sub_menu_links`);
 const menuItems = navDetails.data[0].attributes.menu_items
-const logoData = await fetchPageData('/api/navigations?filters[key][$eq]=livinggracedianella.header.menu&populate[logo][fields][1]=url&populate[logo]fields[1]=alter');
+const logoData = await fetchPageData(`/api/navigations?filters[key][$eq]=${site}.header.menu&populate[logo][fields][1]=url&populate[logo]fields[1]=alter`);
 const logoURL = `${strapi}${logoData.data[0].attributes.logo.data[0].attributes.url}`;
 const logoAltText = logoData.data[0].attributes.logo.data[0].attributes.alternativeText;
 ---
