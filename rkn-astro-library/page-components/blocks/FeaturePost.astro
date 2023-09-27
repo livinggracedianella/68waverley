@@ -1,13 +1,18 @@
 ---
-import { markedHelper } from '../util.js'
+import { markedHelper, strapiAsset } from '../util.js'
 
 const props = Astro.props
-const { title, one_liner, date, providers } = props.post.data.attributes
+const { title, one_liner, date, providers, featured_image } =
+  props.post.data.attributes
+const { caption } = featured_image
+const { url, width, height } =
+  featured_image.image.data.attributes.formats.small
 ---
 
 <article>
   <h2>Featured Post: {title}</h2>
   <p>{providers.data.map((p) => p.attributes.name)}</p>
+  <img src={strapiAsset(url)} width={width} height={height} alt={caption} />
   <div>{date}</div>
   <div set:html={markedHelper(one_liner)} />
 </article>

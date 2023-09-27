@@ -14,6 +14,8 @@ const pageData = await fetchPageData('/api/pages/1', {
     'blocks.message.providers',
     'blocks.post',
     'blocks.post.providers',
+    'blocks.post.featured_image',
+    'blocks.post.featured_image.image',
   ],
 })
 const blocks = pageData.data.attributes.blocks
