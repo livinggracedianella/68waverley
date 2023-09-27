@@ -1,5 +1,5 @@
 ---
-import { strapiAsset } from '@rkn/page-components'
+import { strapiAsset, parseDate } from '@rkn/page-components'
 const { message } = Astro.props
 const { title, date, slug, providers, feature_image, soundcloud_recording } =
   message.data.attributes
@@ -12,8 +12,10 @@ const iframeUrl = embedCode
 ---
 
 <div>
-  <h2>Featured Message: <a href={`/messages/${slug}/`}>{title}</a></h2>
-  <p>{date}</p>
+  <h2>
+    Featured Message: <a class="heading" href={`/messages/${slug}/`}>{title}</a>
+  </h2>
+  <p>{parseDate(date)}</p>
   <p>{providers.data.map((p) => p.attributes.name)}</p>
   <img src={strapiAsset(url)} width={width} height={height} alt={caption} />
   <div class="soundcloud">
@@ -23,7 +25,13 @@ const iframeUrl = embedCode
       scrolling="no"
       frameborder="no"
       allow="autoplay"
-      src={iframeUrl}></iframe>
+      src={iframeUrl}
+      show_artwork="false"></iframe>
   </div>
 </div>
 
+<style>
+  a.heading {
+    font-size: var(--font-size-h2);
+  }
+</style>

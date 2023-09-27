@@ -14,8 +14,10 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
 <div class="container">
   <div class="item">
     <div class="inner">
-      <h2>{props.title}</h2>
-      <div set:html={markedHelper(props.text)} />
+      <div>
+        <h2>{props.title}</h2>
+        <div set:html={markedHelper(props.text)} />
+      </div>
     </div>
   </div>
   <div class="item image" style={`background-image: url("${imgURL}")`}>
@@ -35,12 +37,23 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
     flex-direction: var(--flexDirection);
     height: fit-content;
     width: 100vw;
+    background: #702082;
+  }
+  div.container * {
+    color: white;
   }
   div.item {
     width: 50vw;
   }
   div.inner {
-    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+  }
+  h2 {
+    margin-top: 0;
   }
   div.image {
     background-position: var(--imageVerticalAlignment)

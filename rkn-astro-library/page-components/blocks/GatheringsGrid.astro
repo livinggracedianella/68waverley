@@ -25,6 +25,9 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
           )}
         </h4>
         <p>{gathering.attributes.short_description}</p>
+        <a class="cta" href={gathering.attributes.slug}>
+          Find out more
+        </a>
       </div>
     ))
   }
@@ -34,11 +37,19 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
     display: grid;
     gap: 10px;
     grid-template-columns: 1fr 1fr 1fr;
-    width: 90vw;
+    padding: 20px 40px;
+    width: 100vw;
+    background: #f1f1f1;
   }
   div.inner {
     border-radius: 10px;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 1px 1px 1px #51534a;
   }
   div.first {
     grid-column: span var(--firstItemSpan);
@@ -48,6 +59,13 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
   }
   h4 {
     font-family: var(--italic);
+  }
+  .cta {
+    margin-top: auto;
+  }
+  h2,
+  h3 {
+    margin-top: 0;
   }
   @media (max-width: 1024px) {
     div.grid-wrapper {

@@ -21,3 +21,24 @@ export function markedHelper(src) {
     headerIds: false,
   })
 }
+
+export function parseDate(givenDate) {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const date = new Date(givenDate);
+  const fullDate =
+    date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear();
+  return fullDate;
+}
