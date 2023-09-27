@@ -8,7 +8,9 @@
     "rkn-astro-library/*",
     "websites/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "format": "npm exec prettier -- --write websites rkn-astro-library"
+  },
   "dependencies": {
     "@astrojs/react": "^2.1.3",
     "@rkn/base-components": "^1.0.0",
