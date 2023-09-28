@@ -3,15 +3,15 @@ import BlogLayout from '../../layouts/Layout.astro'
 import SinglePostItem from '../../components/SinglePostItem.astro'
 
 export async function getStaticPaths() {
-  const { data: posts } = await fetch(`http://127.0.0.1:1337/api/posts`).then(
-    (res) => res.json()
-  )
+  const { data: posts } = await fetch(
+    `${import.meta.env.STRAPI_HOST}/api/posts`
+  ).then((res) => res.json())
   return posts.map((post) => ({ params: { slug: post.attributes.slug } }))
 }
 
 const { slug } = Astro.params
 const { data: postItem } = await fetch(
-  `http://127.0.0.1:1337/api/posts?filters[slug][$eq]=${slug}`
+  `${import.meta.env.STRAPI_HOST}/api/posts?filters[slug][$eq]=${slug}`
 ).then((x) => x.json())
 ---
 

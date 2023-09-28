@@ -1,0 +1,13 @@
+---
+import Card from './Card.astro'
+export interface Props {
+  itemType: string
+  item: object
+}
+const { itemType, item } = Astro.props
+const {
+  attributes: { title, summary, slug },
+} = item
+---
+
+<Card href={`/${itemType}/${slug}`} title={title} body={summary} />

@@ -1,27 +1,34 @@
 ---
 import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
 import { BlockRenderer, PageHeader, fetchPageData } from '@rkn/page-components'
+import qs from 'qs'
 
 export async function getStaticPaths() {
-  const pages = await fetchPageData(`/api/pages`)
+  const pages = await fetch(`${import.meta.env.STRAPI_HOST}/api/pages`).then(
+    (res) => res.json()
+  )
+  console.log(pages.data)
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
 const { page } = Astro.params
-const pageData = await fetchPageData(`/api/pages`, {
-  filters: {
-    slug: {
-      $eq: page,
+const pageData = await fetch(
+  `${import.meta.env.STRAPI_HOST}/api/pages?${qs.stringify({
+    filters: {
+      slug: {
+        $eq: page,
+      },
     },
-  },
-  populate: {
-    header: {
-      populate: '*',
+    populate: {
+      header: {
+        populate: '*',
+      },
+      blocks: {
+        populate: ['image', 'gatherings', 'message'],
+      },
     },
-    blocks: {
-      populate: ['image', 'gatherings', 'message'],
-    },
-  },
-})
+  })}`
+).then((res) => res.json())
+console.log(pageData)
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
 ---

@@ -1,0 +1,92 @@
+---
+import { formatDistance, format } from 'date-fns'
+import { marked } from 'marked'
+import Grid from './Grid.astro'
+export interface Props {
+  post: object
+}
+const { post } = Astro.props
+const {
+  attributes: { title, summary, body, date },
+} = post || {}
+const content = marked.parse(body)
+//console.log(marked.lexer(body))
+const paragraphs = marked.lexer(body).filter((t) => t.type !== 'space')
+const spans = ['leftside', 'leftmiddle', 'rightmiddle', 'rightside']
+//console.log(paragraphs);
+const randomSpan = () => {
+  const spanIndex = Math.floor(Math.random() * spans.length)
+  return spans[spanIndex]
+}
+const itemClasses = (itemIndex) => {
+  let classes
+  if (itemIndex === 0) {
+    classes = 'column-2-5 highlight'
+  } else {
+    classes = randomSpan()
+  }
+  return classes
+}
+---
+
+<div style="position: relative">
+  <div class="rounded-md h-56 w-full overflow-hidden column-1 row-1">
+    <img
+      className="object-cover w-full h-full"
+      style="width: 100%;"
+      src={// featuredImage
+      //    ? `http://localhost:1337${featuredImage.url}`
+      //    : 'https://via.placeholder.com/1080'
+      // 'https://dummyimage.com/1080x180/dddddd/111111&text=banner+image'
+      '/images/whites-beach-2048x827.jpg'}
+    />
+  </div>
+  <Grid class="layout-2-1-1-2">
+    <p class="mockup column-1"></p>
+    <p class="mockup column-2"></p>
+    <p class="mockup column-3"></p>
+    <p class="mockup column-4"></p>
+    <div class="my-4 text-center column-2-5 row-1">
+      <h1
+        class="text-center text-4xl leading-tight text-gray-900 my-4 font-bold"
+      >
+        {title}
+      </h1>
+      <div class="text-gray-500 flex justify-center items-center space-x-2">
+        <span>&middot;</span>
+        <span>{format(new Date(date), 'MM/dd/yyyy')}</span>
+        <span>&middot;</span>
+        <span>{/*readingTime*/}</span>
+      </div>
+    </div>
+    {
+      paragraphs && paragraphs.length > 0
+        ? paragraphs.map((paragraph, index) => (
+            <div
+              set:html={marked.parse(paragraph.text)}
+              class={`${itemClasses(index)}`}
+              style={`grid-row: ${index + 2};`}
+            />
+          ))
+        : 'No posts found'
+    }
+  </Grid>
+</div>
+
+<style>
+  .highlight {
+    font-weight: 700;
+    font-size: 150%;
+  }
+
+  @media screen and (min-width: 48em) {
+    .layout-2-1-1-2 {
+      grid-template-rows: 180px auto auto;
+    }
+
+    .grid.layout-2-1-1-2 {
+      margin: 0 2vw;
+      gap: 3.5vh 3.25vw;
+    }
+  }
+</style>

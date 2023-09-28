@@ -3,7 +3,7 @@ import { marked } from 'marked'
 
 export async function fetchPageData(uri, options) {
   const pageDataUrl =
-    import.meta.env.STRAPI_HOST + uri + '?' + qs.stringify(options)
+  import.meta.env.STRAPI_HOST + uri + '?' + qs.stringify(options)
   const response = await fetch(pageDataUrl)
   const pageData = await response.json()
   return pageData
