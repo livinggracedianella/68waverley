@@ -34,15 +34,14 @@ const pageData = await fetch(
     ],
   })}`
 ).then((res) => res.json())
-console.log(pageData.data[0].attributes.blocks)
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
 ---
 
 <BaseLayout title="Styleguide">
   <div class="outer">
+    <PageHeader {...header} />
     <div class="inner">
-      <PageHeader {...header} />
       <BlockRenderer blocks={blocks} />
     </div>
   </div>

@@ -25,8 +25,8 @@ const header = pageData.data.attributes.header
 
 <BaseLayout title="Styleguide">
   <div class="outer">
+    <PageHeader {...header} />
     <div class="inner">
-      <PageHeader {...header} />
       <BlockRenderer blocks={blocks} />
     </div>
   </div>
@@ -46,4 +46,3 @@ const header = pageData.data.attributes.header
     }
   </style>
 </BaseLayout>
-
