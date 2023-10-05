@@ -34,7 +34,7 @@ const header = gathering.header
         <h3>{gathering.time_slot}</h3>
         <h3>{gathering.location}</h3>
       </div>
-      <section set:html={markedHelper(gathering.full_description)} />
+      <section set:html={markedHelper(gathering.full_description ?? '')} />
     </class="inner">
   </div>
   <style>
