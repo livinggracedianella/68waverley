@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
+import { PageHeader, fetchPageData, markedHelper } from '@rkn/page-components'
+
+
+const data = await fetchPageData('/api/pages', {
+  filters: {
+    slug: {
+      $eq: 'gatherings',
+    },
+  },
+  populate: ['header.header_image', 'blocks.gatherings'],
+})
+
+const pageData = data.data[0].attributes
+const blocks = pageData.blocks
+const header = pageData.header
+---
+
+<BaseLayout title="Gatherings">
+  <div class="outer">
+    <PageHeader {...header} subtitle={pageData.subtitle}/>
+    {
+        blocks.map((block) => {
+          let gatherings = block.gatherings.data
+          console.log(gatherings)
+          return (
+            <div class="gathering-type">
+            <h4>
+              <h2>{block.title}</h2>
+              <p>{block.overview}</p>
+              <div class="grid">
+              {gatherings.map((gathering) => {
+                return (
+                    <div class="grid-item">
+                        <h3>{gathering.attributes.title}</h3>
+                        <p>{gathering.attributes.short_description}</p>
+                        <div class="flex-row">
+                        <h4>{gathering.attributes.time_slot}</h4>
+                        <h4>{gathering.attributes.location}</h4>
+                        </div>
+                        <section set:html={markedHelper(gathering.attributes.full_description ?? "")}/>
+                    </div>
+                )
+              })}
+              </div>
+            </div>
+          )
+        })
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    flex-grow: 0;
+    text-wrap: wrap;
+  }
+  div.flex-row {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+  }
+  section {
+    max-width: 700px;
+    padding-bottom: 1rem;
+  }
+  div.gathering-type {
+    width: 100vw;
+    padding: 0 2rem 2rem 2rem;
+    border-bottom: 2px dotted black;
+  }
+  div.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  div.grid-item {
+    background: #51534a;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 0;
+  }
+  div.grid-item * {
+    color: white;
+  }
+</style>
