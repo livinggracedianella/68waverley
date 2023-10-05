@@ -2,50 +2,36 @@
 import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
 import { Header, fetchPageData, markedHelper } from '@rkn/page-components'
 
-
 const data = await fetchPageData('/api/pages', {
   filters: {
     slug: {
-      $eq: 'gatherings',
+      $eq: 'events',
     },
   },
-  populate: ['header.header_image', 'blocks.gatherings'],
+  populate: ['header.header_image', 'blocks.event', 'blocks.event.featureImage'],
 })
 
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
+
 ---
 
-<BaseLayout title="Gatherings">
+<BaseLayout title="events">
   <div class="outer">
-    <Header {...header} subtitle={pageData.subtitle}/>
+    <Header {...header} subtitle={pageData.subtitle} />
     {
-        blocks.map((block) => {
-          let gatherings = block.gatherings.data
-          return (
-            <div class="gathering-type">
-            <h4>
-              <h2>{block.title}</h2>
-              <p>{block.overview}</p>
-              <div class="grid">
-              {gatherings.map((gathering) => {
-                return (
-                    <div class="grid-item">
-                        <h3>{gathering.attributes.title}</h3>
-                        <p>{gathering.attributes.short_description}</p>
-                        <div class="flex-row">
-                        <h4>{gathering.attributes.time_slot}</h4>
-                        <h4>{gathering.attributes.location}</h4>
-                        </div>
-                        <section set:html={markedHelper(gathering.attributes.full_description ?? "")}/>
-                    </div>
-                )
-              })}
-              </div>
-            </div>
-          )
-        })
+      blocks.map((block) => {
+        let event = block.event.data.attributes
+        console.log(event.featureImage)
+        return (
+        <h2>{event.title}</h2>
+        <h3>{event.date}</h3>
+        <h3>{event.venue ?? "Venue TBC"}</h3>
+        <p>{event.summary}</p>
+        <p>Cost: {event.cost ?? "free"}</p>
+        )
+      })
     }
   </div>
 </BaseLayout>
@@ -74,7 +60,7 @@ const header = pageData.header
     max-width: 700px;
     padding-bottom: 1rem;
   }
-  div.gathering-type {
+  div.event-type {
     width: 100vw;
     padding: 0 2rem 2rem 2rem;
     border-bottom: 2px dotted black;

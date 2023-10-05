@@ -1,41 +1,38 @@
 ---
 import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
-import { Header, fetchPageData } from '@rkn/page-components'
+import { Header, strapiAsset } from '@rkn/page-components'
 import qs from 'qs'
-import { markedHelper } from '@rkn/page-components'
 
 export async function getStaticPaths() {
-  const pages = await fetch(
-    `${import.meta.env.STRAPI_HOST}/api/gatherings`
-  ).then((res) => res.json())
+  const pages = await fetch(`${import.meta.env.STRAPI_HOST}/api/events`).then(
+    (res) => res.json()
+  )
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
 const { page } = Astro.params
 const pageData = await fetch(
-  `${import.meta.env.STRAPI_HOST}/api/gatherings?${qs.stringify({
+  `${import.meta.env.STRAPI_HOST}/api/events?${qs.stringify({
     filters: {
       slug: {
         $eq: page,
       },
     },
-    populate: ['header.header_image'],
+    populate: ['header.header_image', 'featureImage'],
   })}`
 ).then((res) => res.json())
-const gathering = pageData.data[0].attributes
-const header = gathering.header
+const event = pageData.data[0].attributes
+const header = event.header
+const featureImage = event.featureImage
+console.log(featureImage)
 ---
 
-<BaseLayout title={gathering.title}>
+<BaseLayout title={event.title}>
   <div class="outer">
-    <Header {...header} subtitle={gathering.soul_value} />
-    <class="inner">
-      <p>{gathering.short_description}</p>
-      <div class="flex-row">
-        <h3>{gathering.time_slot}</h3>
-        <h3>{gathering.location}</h3>
-      </div>
-      <section set:html={markedHelper(gathering.full_description ?? '')} />
-    </class="inner">
+    <Header {...header} subtitle={event.date} />
+    <div class="inner">
+      <p>{event.location}</p>
+      <p>{event.summary}</p>
+    </div>
   </div>
 </BaseLayout>
 <style>

@@ -25,7 +25,7 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
           )}
         </h4>
         <p>{gathering.attributes.short_description}</p>
-        <a class="cta" href={gathering.attributes.slug}>
+        <a class="cta" href={`/gatherings/${gathering.attributes.slug}`}>
           Find out more
         </a>
       </div>

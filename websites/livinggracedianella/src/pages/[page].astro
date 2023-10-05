@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
-import { BlockRenderer, PageHeader, fetchPageData } from '@rkn/page-components'
+import { BlockRenderer, Header, fetchPageData } from '@rkn/page-components'
 import qs from 'qs'
 
 export async function getStaticPaths() {
@@ -40,7 +40,7 @@ const header = pageData.data[0].attributes.header
 
 <BaseLayout title="Styleguide">
   <div class="outer">
-    <PageHeader {...header} />
+    <Header {...header} />
     <div class="inner">
       <BlockRenderer blocks={blocks} />
     </div>
