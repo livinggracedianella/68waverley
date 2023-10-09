@@ -7,6 +7,9 @@ import {
   FullWidth,
   TwoColumn,
   RichText,
+  ProfilesGrid,
+  ContactUs,
+  ContactForm,
 } from '@rkn/page-components'
 const { blocks } = Astro.props
 ---
@@ -55,7 +58,28 @@ const { blocks } = Astro.props
           <RichText {...componentData} />
         </section>
       )
-    } else {
+    } else if (
+        componentData.__component == 'blocks.profiles') {
+          return (
+            <section>
+              <ProfilesGrid {...componentData} />
+            </section>
+          )
+      } else if (
+        componentData.__component == 'blocks.google-maps') {
+          return (
+            <section>
+              <ContactUs {...componentData} />
+            </section>
+          )
+      } else if (
+        componentData.__component == 'blocks.contact-form') {
+          return (
+            <section>
+              <ContactForm {...componentData} />
+            </section>
+          )
+      } else {
       return <section>Unknown content: {componentData.__component}</section>
     }
   })

@@ -3,7 +3,8 @@ import { markedHelper } from '../util.js'
 import { strapiAsset } from '@rkn/page-components'
 const props = Astro.props
 const img = props.image.data.attributes
-const imgURL = strapiAsset(img.formats.medium.url)
+console.log(img)
+const imgURL = strapiAsset(img.formats?.medium?.url ?? img.formats?.small?.url ?? img.formats.thumbnail.url)
 let flexDirection = 'row-reverse'
 if (props.imageSide === 'right') {
   flexDirection = 'row'
