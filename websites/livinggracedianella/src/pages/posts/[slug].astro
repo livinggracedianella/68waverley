@@ -1,5 +1,5 @@
 ---
-import BlogLayout from '../../layouts/Layout.astro'
+import Layout from '../../layouts/LivingGraceBaseLayout.astro'
 import SinglePostItem from '../../components/SinglePostItem.astro'
 
 export async function getStaticPaths() {
@@ -15,6 +15,6 @@ const { data: postItem } = await fetch(
 ).then((x) => x.json())
 ---
 
-<BlogLayout title={postItem[0]?.title}>
+<Layout title={postItem[0]?.title}>
   <SinglePostItem post={postItem[0]} />
-</BlogLayout>
+</Layout>

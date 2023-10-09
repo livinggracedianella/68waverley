@@ -1,5 +1,6 @@
 ---
 import { formatDistance, format } from 'date-fns'
+import { Header } from '@rkn/page-components'
 import { marked } from 'marked'
 import Grid from './Grid.astro'
 export interface Props {
@@ -28,19 +29,8 @@ const itemClasses = (itemIndex) => {
   return classes
 }
 ---
-
-<div style="position: relative">
-  <div class="rounded-md h-56 w-full overflow-hidden column-1 row-1">
-    <img
-      className="object-cover w-full h-full"
-      style="width: 100%;"
-      src={// featuredImage
-      //    ? `http://localhost:1337${featuredImage.url}`
-      //    : 'https://via.placeholder.com/1080'
-      // 'https://dummyimage.com/1080x180/dddddd/111111&text=banner+image'
-      '/images/whites-beach-2048x827.jpg'}
-    />
-  </div>
+<Header header_title={title} />
+<div style="position: relative; z-index: 0;">
   <Grid class="layout-2-1-1-2">
     <p class="mockup column-1"></p>
     <p class="mockup column-2"></p>
