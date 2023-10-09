@@ -11,9 +11,9 @@ const { url, width, height } =
 ---
 
 <article>
-  <h2>Featured Post: {title}</h2>
+  <h2>Post: {title}</h2>
   <p>{providers.data.map((p) => p.attributes.name)}</p>
-  <img src={strapiAsset(url)} width={width} height={height} alt={caption} />
+  <img src={strapiAsset(url)} width={width/2} height={height/2} alt={caption} />
   <div>{date}</div>
   <div set:html={markedHelper(one_liner)} />
 </article>

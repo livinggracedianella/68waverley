@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
+import { Header, fetchPageData, markedHelper, BlockRenderer, Message } from '@rkn/page-components'
+
+const data = await fetchPageData('/api/pages', {
+  filters: {
+    slug: {
+      $eq: 'messages',
+    },
+  },
+  populate: ['header.header_image', 'blocks.message',
+    'blocks.message.feature_image',
+    'blocks.message.feature_image.image',
+    'blocks.message.soundcloud_recording',
+    'blocks.message.providers',
+  ],
+})
+
+const pageData = data.data[0].attributes
+const blocks = pageData.blocks
+const header = pageData.header
+
+const {data: messages} = await fetchPageData('/api/sermons', {
+  populate: [
+    'feature_image',
+    'feature_image.image',
+    'soundcloud_recording',
+    'providers',
+  ]
+})
+---
+
+<BaseLayout title="Messages">
+  <div class="outer">
+    <Header {...header} />
+    <div class="inner">
+      <BlockRenderer blocks={blocks} />
+      {messages.map(message => {
+        return <Message {message}/>
+      })}
+    </div>
+  </div>
+</BaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    flex-grow: 0;
+    text-wrap: wrap;
+  }
+  div.flex-row {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+  }
+  section {
+    max-width: 700px;
+    padding-bottom: 1rem;
+  }
+  div.event-type {
+    width: 100vw;
+    padding: 0 2rem 2rem 2rem;
+    border-bottom: 2px dotted black;
+  }
+  div.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  div.grid-item {
+    background: #51534a;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 0;
+  }
+  div.grid-item * {
+    color: white;
+  }
+</style>

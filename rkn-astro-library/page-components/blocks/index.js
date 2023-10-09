@@ -7,4 +7,5 @@ export { default as GatheringsGrid } from './GatheringsGrid.astro'
 export { default as Header } from './Header.astro'
 export { default as RichText } from './RichText.astro'
 export { default as TwoColumn } from './TwoColumn.astro'
-
+export { default as Message } from './Message.astro'
+export { default as Post } from './Post.astro'
