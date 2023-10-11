@@ -4,8 +4,7 @@ import {
   Header,
   strapiAsset,
   markedHelper,
-  site,
-  fetchPageData,
+  fetchFilterPopulate,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -16,20 +15,13 @@ export async function getStaticPaths() {
   ).then((res) => res.json())
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
+
 const { page } = Astro.params
-const pageData = await fetchPageData(`/api/providers`, {
-  filters: {
-    slug: {
-      $eq: page,
-    },
-    websites: {
-      key: {
-        $eq: site,
-      },
-    },
-  },
-  populate: ['header.header_image', 'featureImage'],
-})
+const pageData = await fetchFilterPopulate(`/api/providers`, page, [
+  'header.header_image',
+  'featureImage',
+])
+
 const provider = pageData.data[0].attributes
 const header = provider.header
 const featureImage = provider.featureImage

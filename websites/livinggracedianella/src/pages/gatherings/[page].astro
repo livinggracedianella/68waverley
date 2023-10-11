@@ -1,7 +1,7 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
 import { Header } from '@rkn/page-components'
-import { markedHelper, site, fetchPageData } from '@rkn/page-components'
+import { markedHelper, site, fetchFilterPopulate } from '@rkn/page-components'
 
 export async function getStaticPaths() {
   const pages = await fetch(
@@ -12,20 +12,11 @@ export async function getStaticPaths() {
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
 const { page } = Astro.params
-const pageData = await fetchPageData(`/api/gatherings`, {
-  filters: {
-    slug: {
-      $eq: page,
-    },
-    websites: {
-      key: {
-        $eq: site(),
-      },
-    },
-  },
-  populate: ['header.header_image'],
-})
-console.log('pageData', pageData)
+
+const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
+  'header.header_image',
+])
+
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
 const header = gathering.header
 ---

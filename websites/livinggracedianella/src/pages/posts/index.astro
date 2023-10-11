@@ -2,47 +2,29 @@
 import { BaseLayout } from '@rkn/base-components'
 import {
   Header,
-  fetchPageData,
+  fetchFilterPopulate,
   markedHelper,
   BlockRenderer,
   Post,
-  site,
 } from '@rkn/page-components'
 
-const data = await fetchPageData('/api/pages', {
-  filters: {
-    slug: {
-      $eq: 'posts',
-    },
-    websites: {
-      key: {
-        $eq: site(),
-      },
-    },
-  },
-  populate: [
-    'header.header_image',
-    'blocks.post',
-    'blocks.post.providers',
-    'blocks.post.featured_image',
-    'blocks.post.featured_image.image',
-  ],
-})
+const data = await fetchFilterPopulate('/api/pages', 'posts', [
+  'header.header_image',
+  'blocks.post',
+  'blocks.post.providers',
+  'blocks.post.featured_image',
+  'blocks.post.featured_image.image',
+])
 
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
 
-const { data: posts } = await fetchPageData('/api/posts', {
-  filters: {
-    websites: {
-      key: {
-        $eq: site(),
-      },
-    },
-  },
-  populate: ['featured_image', 'featured_image.image', 'providers'],
-})
+const { data: posts } = await fetchFilterPopulate('/api/posts', '*', [
+  'featured_image',
+  'featured_image.image',
+  'providers',
+])
 ---
 
 <BaseLayout title="Posts">

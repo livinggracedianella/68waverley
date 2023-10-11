@@ -13,6 +13,39 @@ export async function fetchPageData(uri, options) {
   return pageData
 }
 
+export async function fetchFilter(uri, slug) {
+  const data = await fetchPageData(uri, {
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+      websites: {
+        key: {
+          $eq: site(),
+        },
+      },
+    },
+  })
+  return data
+}
+
+export async function fetchFilterPopulate(uri, slug, populate) {
+  const data = await fetchPageData(uri, {
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+      websites: {
+        key: {
+          $eq: site(),
+        },
+      },
+    },
+    populate,
+  })
+  return data
+}
+
 export function strapiAsset(uri) {
   return import.meta.env.STRAPI_HOST + uri
 }
