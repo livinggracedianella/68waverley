@@ -1,10 +1,12 @@
 ---
-import Layout from '../../layouts/LivingGraceBaseLayout.astro'
+import { BaseLayout } from '@rkn/base-components'
 import SinglePostItem from '../../components/SinglePostItem.astro'
 
 export async function getStaticPaths() {
   const { data: posts } = await fetch(
-    `${import.meta.env.STRAPI_HOST}/api/posts`
+    `${import.meta.env.STRAPI_HOST}/api/posts?filters[websites][key][$eq]=${
+      import.meta.env.THIS_SITE
+    }`
   ).then((res) => res.json())
   return posts.map((post) => ({ params: { slug: post.attributes.slug } }))
 }
@@ -15,6 +17,6 @@ const { data: postItem } = await fetch(
 ).then((x) => x.json())
 ---
 
-<Layout title={postItem[0]?.title}>
+<BaseLayout title={postItem[0]?.title}>
   <SinglePostItem post={postItem[0]} />
-</Layout>
+</BaseLayout>

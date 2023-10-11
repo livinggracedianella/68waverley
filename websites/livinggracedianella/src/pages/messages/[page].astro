@@ -1,8 +1,13 @@
 ---
-import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
-import { Header, strapiAsset, FeatureMessage } from '@rkn/page-components'
-import qs from 'qs'
-
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  strapiAsset,
+  FeatureMessage,
+  fetchPageData,
+  site,
+} from '@rkn/page-components'
+//deliberately not filtered by site as all messages should be applicable to living grace.
 export async function getStaticPaths() {
   const pages = await fetch(`${import.meta.env.STRAPI_HOST}/api/sermons`).then(
     (res) => res.json()
@@ -10,21 +15,19 @@ export async function getStaticPaths() {
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
 const { page } = Astro.params
-const pageData = await fetch(
-  `${import.meta.env.STRAPI_HOST}/api/sermons?${qs.stringify({
-    filters: {
-      slug: {
-        $eq: page,
-      },
+const pageData = await fetchPageData(`/api/sermons`, {
+  filters: {
+    slug: {
+      $eq: page,
     },
-    populate: [    
+  },
+  populate: [
     'feature_image',
     'feature_image.image',
     'soundcloud_recording',
     'providers',
-],
-  })}`
-).then((res) => res.json())
+  ],
+})
 const message = pageData.data[0].attributes
 const header = message?.header ?? { header_title: message.title }
 const featureImage = message.featureImage
@@ -34,7 +37,7 @@ const featureImage = message.featureImage
   <div class="outer">
     <Header {...header} subtitle={message.caption} />
     <div class="inner">
-        <FeatureMessage {message} />
+      <FeatureMessage {message} />
     </div>
   </div>
 </BaseLayout>

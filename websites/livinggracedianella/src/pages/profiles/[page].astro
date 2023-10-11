@@ -1,46 +1,49 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
-import { Header } from '@rkn/page-components'
-import { markedHelper, site, fetchPageData } from '@rkn/page-components'
+import {
+  Header,
+  strapiAsset,
+  markedHelper,
+  site,
+  fetchPageData,
+} from '@rkn/page-components'
 
 export async function getStaticPaths() {
   const pages = await fetch(
-    `${
-      import.meta.env.STRAPI_HOST
-    }/api/gatherings?filters[websites][key][$eq]=${import.meta.env.THIS_SITE}`
+    `${import.meta.env.STRAPI_HOST}/api/providers?filters[websites][key][$eq]=${
+      import.meta.env.THIS_SITE
+    }`
   ).then((res) => res.json())
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
 const { page } = Astro.params
-const pageData = await fetchPageData(`/api/gatherings`, {
+const pageData = await fetchPageData(`/api/providers`, {
   filters: {
     slug: {
       $eq: page,
     },
     websites: {
       key: {
-        $eq: site(),
+        $eq: site,
       },
     },
   },
-  populate: ['header.header_image'],
+  populate: ['header.header_image', 'featureImage'],
 })
-console.log('pageData', pageData)
-const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
-const header = gathering.header
+const provider = pageData.data[0].attributes
+const header = provider.header
+const featureImage = provider.featureImage
+console.log(featureImage)
 ---
 
-<BaseLayout title={gathering.title}>
+<BaseLayout title={provider.title}>
   <div class="outer">
-    <Header {...header} />
-    <class="inner">
-      <p>{gathering.short_description}</p>
-      <div class="flex-row">
-        <h3>{gathering.time_slot}</h3>
-        <h3>{gathering.location}</h3>
-      </div>
-      <section set:html={markedHelper(gathering.full_description ?? '')} />
-    </class="inner">
+    <Header {...header} subtitle={provider.date} />
+    <div class="inner">
+      <h2>{provider.name}</h2>
+      <h3>{provider.title}</h3>
+      <article set:html={markedHelper(provider.bio_short)} />
+    </div>
   </div>
 </BaseLayout>
 <style>

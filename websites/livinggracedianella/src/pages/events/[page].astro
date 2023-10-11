@@ -1,25 +1,29 @@
 ---
-import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
-import { Header, strapiAsset } from '@rkn/page-components'
-import qs from 'qs'
+import { BaseLayout } from '@rkn/base-components'
+import { Header, strapiAsset, site, fetchPageData } from '@rkn/page-components'
 
 export async function getStaticPaths() {
-  const pages = await fetch(`${import.meta.env.STRAPI_HOST}/api/events`).then(
-    (res) => res.json()
-  )
+  const pages = await fetch(
+    `${import.meta.env.STRAPI_HOST}/api/events?filters[websites][key][$eq]=${
+      import.meta.env.THIS_SITE
+    }`
+  ).then((res) => res.json())
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
 const { page } = Astro.params
-const pageData = await fetch(
-  `${import.meta.env.STRAPI_HOST}/api/events?${qs.stringify({
-    filters: {
-      slug: {
-        $eq: page,
+const pageData = await fetchPageData(`/api/events?`, {
+  filters: {
+    slug: {
+      $eq: page,
+    },
+    websites: {
+      key: {
+        $eq: site(),
       },
     },
-    populate: ['header.header_image', 'featureImage'],
-  })}`
-).then((res) => res.json())
+  },
+  populate: ['header.header_image', 'featureImage'],
+})
 const event = pageData.data[0].attributes
 const header = event.header
 const featureImage = event.featureImage

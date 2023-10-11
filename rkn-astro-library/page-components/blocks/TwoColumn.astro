@@ -4,7 +4,11 @@ import { strapiAsset } from '@rkn/page-components'
 const props = Astro.props
 const img = props.image.data.attributes
 console.log(img)
-const imgURL = strapiAsset(img.formats?.medium?.url ?? img.formats?.small?.url ?? img.formats.thumbnail.url)
+const imgURL = strapiAsset(
+  img.formats?.medium?.url ??
+    img.formats?.small?.url ??
+    img.formats.thumbnail.url
+)
 let flexDirection = 'row-reverse'
 if (props.imageSide === 'right') {
   flexDirection = 'row'
@@ -61,6 +65,7 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
       var(--imageHorizontalAlignment);
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 33vh;
   }
   @media (max-width: 640px) {
     div.container {

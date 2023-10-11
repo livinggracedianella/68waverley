@@ -1,41 +1,50 @@
 ---
-import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
-import { BlockRenderer, Header, fetchPageData } from '@rkn/page-components'
-import qs from 'qs'
+import { BaseLayout } from '@rkn/base-components'
+import {
+  BlockRenderer,
+  Header,
+  site,
+  fetchPageData,
+} from '@rkn/page-components'
 
 export async function getStaticPaths() {
-  const pages = await fetch(`${import.meta.env.STRAPI_HOST}/api/pages`).then(
-    (res) => res.json()
-  )
+  const pages = await fetch(
+    `${import.meta.env.STRAPI_HOST}/api/pages?filters[websites][key][$eq]=${
+      import.meta.env.THIS_SITE
+    }`
+  ).then((res) => res.json())
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
 const { page } = Astro.params
-const pageData = await fetch(
-  `${import.meta.env.STRAPI_HOST}/api/pages?${qs.stringify({
-    filters: {
-      slug: {
-        $eq: page,
+const pageData = await fetchPageData(`/api/pages`, {
+  filters: {
+    slug: {
+      $eq: page,
+    },
+    websites: {
+      key: {
+        $eq: site(),
       },
     },
-    populate: [
-      'header.header_image',
-      'blocks.image',
-      'blocks.gatherings',
-      'blocks.message',
-      'blocks.message.feature_image',
-      'blocks.message.feature_image.image',
-      'blocks.message.soundcloud_recording',
-      'blocks.message.providers',
-      'blocks.post',
-      'blocks.post.providers',
-      'blocks.post.featured_image',
-      'blocks.post.featured_image.image',
-      'blocks.event',
-      'blocks.profiles',
-      'blocks.profiles.providers',
-    ],
-  })}`
-).then((res) => res.json())
+  },
+  populate: [
+    'header.header_image',
+    'blocks.image',
+    'blocks.gatherings',
+    'blocks.message',
+    'blocks.message.feature_image',
+    'blocks.message.feature_image.image',
+    'blocks.message.soundcloud_recording',
+    'blocks.message.providers',
+    'blocks.post',
+    'blocks.post.providers',
+    'blocks.post.featured_image',
+    'blocks.post.featured_image.image',
+    'blocks.event',
+    'blocks.profiles',
+    'blocks.profiles.providers',
+  ],
+})
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
 ---

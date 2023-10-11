@@ -1,9 +1,13 @@
 import qs from 'qs'
 import { marked } from 'marked'
 
+export function site() {
+  return import.meta.env.THIS_SITE
+}
+
 export async function fetchPageData(uri, options) {
   const pageDataUrl =
-  import.meta.env.STRAPI_HOST + uri + '?' + qs.stringify(options)
+    import.meta.env.STRAPI_HOST + uri + '?' + qs.stringify(options)
   const response = await fetch(pageDataUrl)
   const pageData = await response.json()
   return pageData
@@ -24,21 +28,21 @@ export function markedHelper(src) {
 
 export function parseDate(givenDate) {
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const date = new Date(givenDate);
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+  const date = new Date(givenDate)
   const fullDate =
-    date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear();
-  return fullDate;
+    date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear()
+  return fullDate
 }

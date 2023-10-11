@@ -1,8 +1,23 @@
 ---
-import BaseLayout from '../layouts/LivingGraceBaseLayout.astro'
-import { BlockRenderer, Header, fetchPageData } from '@rkn/page-components'
+import { BaseLayout } from '@rkn/base-components'
+import {
+  BlockRenderer,
+  Header,
+  fetchPageData,
+  site,
+} from '@rkn/page-components'
 
-const pageData = await fetchPageData('/api/pages/1', {
+const pageData = await fetchPageData('/api/pages', {
+  filters: {
+    slug: {
+      $eq: 'home',
+    },
+    websites: {
+      key: {
+        $eq: site(),
+      },
+    },
+  },
   populate: [
     'header.header_image',
     'blocks.image',
@@ -19,8 +34,8 @@ const pageData = await fetchPageData('/api/pages/1', {
     'blocks.event',
   ],
 })
-const blocks = pageData.data.attributes.blocks
-const header = pageData.data.attributes.header
+const blocks = pageData.data[0].attributes.blocks
+const header = pageData.data[0].attributes.header
 ---
 
 <BaseLayout title="Styleguide">

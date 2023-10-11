@@ -1,14 +1,27 @@
 ---
-import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
-import { Header, fetchPageData, markedHelper, BlockRenderer, Post } from '@rkn/page-components'
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  fetchPageData,
+  markedHelper,
+  BlockRenderer,
+  Post,
+  site,
+} from '@rkn/page-components'
 
 const data = await fetchPageData('/api/pages', {
   filters: {
     slug: {
       $eq: 'posts',
     },
+    websites: {
+      key: {
+        $eq: site(),
+      },
+    },
   },
-  populate: ['header.header_image',
+  populate: [
+    'header.header_image',
     'blocks.post',
     'blocks.post.providers',
     'blocks.post.featured_image',
@@ -20,12 +33,15 @@ const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
 
-const {data: posts} = await fetchPageData('/api/posts', {
-  populate: [
-    'featured_image',
-    'featured_image.image',
-    'providers',
-  ]
+const { data: posts } = await fetchPageData('/api/posts', {
+  filters: {
+    websites: {
+      key: {
+        $eq: site(),
+      },
+    },
+  },
+  populate: ['featured_image', 'featured_image.image', 'providers'],
 })
 ---
 
@@ -34,9 +50,11 @@ const {data: posts} = await fetchPageData('/api/posts', {
     <Header {...header} />
     <div class="inner">
       <BlockRenderer blocks={blocks} />
-      {posts.map(post => {
-        return <Post {post}/>
-      })}
+      {
+        posts.map((post) => {
+          return <Post {post} />
+        })
+      }
     </div>
   </div>
 </BaseLayout>

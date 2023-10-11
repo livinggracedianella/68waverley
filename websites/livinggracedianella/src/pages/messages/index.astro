@@ -1,14 +1,23 @@
 ---
-import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
-import { Header, fetchPageData, markedHelper, BlockRenderer, Message } from '@rkn/page-components'
-
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  fetchPageData,
+  markedHelper,
+  BlockRenderer,
+  Message,
+  site,
+} from '@rkn/page-components'
+//deliberately not filtered by site as all messages should be applicable to living grace.
 const data = await fetchPageData('/api/pages', {
   filters: {
     slug: {
       $eq: 'messages',
     },
   },
-  populate: ['header.header_image', 'blocks.message',
+  populate: [
+    'header.header_image',
+    'blocks.message',
     'blocks.message.feature_image',
     'blocks.message.feature_image.image',
     'blocks.message.soundcloud_recording',
@@ -20,13 +29,13 @@ const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
 
-const {data: messages} = await fetchPageData('/api/sermons', {
+const { data: messages } = await fetchPageData('/api/sermons', {
   populate: [
     'feature_image',
     'feature_image.image',
     'soundcloud_recording',
     'providers',
-  ]
+  ],
 })
 ---
 
@@ -35,9 +44,11 @@ const {data: messages} = await fetchPageData('/api/sermons', {
     <Header {...header} />
     <div class="inner">
       <BlockRenderer blocks={blocks} />
-      {messages.map(message => {
-        return <Message {message}/>
-      })}
+      {
+        messages.map((message) => {
+          return <Message {message} />
+        })
+      }
     </div>
   </div>
 </BaseLayout>

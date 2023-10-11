@@ -4,8 +4,10 @@ const site = import.meta.env.THIS_SITE
 const strapi = import.meta.env.STRAPI_HOST
 const navDetails = await fetchPageData(`/api/navigations`, {
   filters: {
-    key: {
-      $eq: `${site}.header.menu`,
+    websites: {
+      key: {
+        $eq: site,
+      },
     },
   },
   populate: {
@@ -14,11 +16,14 @@ const navDetails = await fetchPageData(`/api/navigations`, {
     },
   },
 })
+console.log(navDetails)
 const menuItems = navDetails.data[0].attributes.menu_items
 const logoData = await fetchPageData('/api/navigations', {
   filters: {
-    key: {
-      $eq: `${site}.header.menu`,
+    websites: {
+      key: {
+        $eq: site,
+      },
     },
   },
   populate: {

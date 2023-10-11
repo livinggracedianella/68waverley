@@ -1,12 +1,17 @@
 ---
-import BaseLayout from '../../layouts/LivingGraceBaseLayout.astro'
-import { Header, fetchPageData, markedHelper } from '@rkn/page-components'
+import { BaseLayout } from '@rkn/base-components'
+import { Header, fetchPageData, markedHelper, site } from '@rkn/page-components'
 
 
 const data = await fetchPageData('/api/pages', {
   filters: {
     slug: {
       $eq: 'gatherings',
+    },
+    websites: {
+      key: {
+        $eq: site(),
+      },
     },
   },
   populate: ['header.header_image', 'blocks.gatherings'],
