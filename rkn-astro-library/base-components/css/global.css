@@ -6,6 +6,7 @@
   --gunmetal-tint: #d9dbd0;
   --anchorage-blue: #00629b;
   --chapel-purple: #702082;
+  --waverley-coral: #b04a5a;
   scroll-padding-top: calc(var(--header-height) * 0.6);
 }
 

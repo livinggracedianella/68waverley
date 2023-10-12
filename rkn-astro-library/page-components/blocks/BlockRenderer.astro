@@ -4,9 +4,9 @@ import {
   FeatureEvent,
   FeatureMessage,
   FeaturePost,
-  FullWidth,
+  TextBlock,
   TextImage,
-  RichText,
+  TextBLock,
   ProfilesGrid,
   ContactUs,
   ContactForm,
@@ -43,7 +43,7 @@ const { blocks } = Astro.props
     } else if (componentData.__component == 'blocks.full-width') {
       return (
         <section>
-          <FullWidth {...componentData} />
+          <TextBlock {...componentData} />
         </section>
       )
     } else if (componentData.__component == 'blocks.two-column') {
@@ -55,7 +55,7 @@ const { blocks } = Astro.props
     } else if (componentData.__component == 'blocks.rich-text') {
       return (
         <section>
-          <RichText {...componentData} />
+          <TextBlock {...componentData} />
         </section>
       )
     } else if (componentData.__component == 'blocks.profiles') {
