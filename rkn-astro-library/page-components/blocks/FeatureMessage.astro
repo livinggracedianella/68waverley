@@ -1,11 +1,15 @@
 ---
 import { strapiAsset, parseDate } from '@rkn/page-components'
 const { message } = Astro.props
-console.log(Astro.params)
 const { title, date, slug, providers, feature_image, soundcloud_recording } =
-  message?.data?.attributes ?? message?.attributes ?? message;
-const { caption } = feature_image ?? ""
-const { url, width, height } = feature_image?.image.data.attributes.formats.small ?? { 'url': '/uploads/small_Sermon_Image_Background_ed63796e21.png', 'width': 500, 'height': 375 }
+  message?.data?.attributes ?? message?.attributes ?? message
+const { caption } = feature_image ?? ''
+const { url, width, height } = feature_image?.image.data.attributes.formats
+  .small ?? {
+  url: '/uploads/small_Sermon_Image_Background_ed63796e21.png',
+  width: 500,
+  height: 375,
+}
 const embedCode = soundcloud_recording.embed_code
 const iframeUrl = embedCode
   ?.match(`src="([^"]+)"`)?.[1]
@@ -14,7 +18,10 @@ const iframeUrl = embedCode
 
 <div>
   <h2>
-    {Astro.params.page === slug ? "" : "Featured"} Message: <a class="heading" href={`/messages/${slug}/`}>{title}</a>
+    {Astro.params.page === slug ? '' : 'Featured'} Message: <a
+      class="heading"
+      href={`/messages/${slug}/`}>{title}</a
+    >
   </h2>
   <p>{parseDate(date)}</p>
   <p>{providers.data.map((p) => p.attributes.name)}</p>

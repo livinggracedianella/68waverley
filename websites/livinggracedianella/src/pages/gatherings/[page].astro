@@ -1,7 +1,12 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
 import { Header } from '@rkn/page-components'
-import { markedHelper, site, fetchFilterPopulate } from '@rkn/page-components'
+import {
+  markedHelper,
+  site,
+  fetchFilterPopulate,
+  BlockRenderer,
+} from '@rkn/page-components'
 
 export async function getStaticPaths() {
   const pages = await fetch(
@@ -15,23 +20,37 @@ const { page } = Astro.params
 
 const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
   'header.header_image',
+  'blocks',
+  'blocks.image',
+  'blocks.message',
+  'blocks.message.feature_image',
+  'blocks.message.feature_image.image',
+  'blocks.message.soundcloud_recording',
+  'blocks.message.providers',
+  'blocks.post',
+  'blocks.post.providers',
+  'blocks.post.featured_image',
+  'blocks.post.featured_image.image',
 ])
 
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
 const header = gathering.header
+const blocks = pageData.data[0]?.attributes?.blocks ?? ''
+console.log(pageData.data)
 ---
 
 <BaseLayout title={gathering.title}>
   <div class="outer">
     <Header {...header} />
-    <class="inner">
-      <p>{gathering.short_description}</p>
+    <div class="inner">
+      <p>{gathering.one_liner}</p>
       <div class="flex-row">
         <h3>{gathering.time_slot}</h3>
         <h3>{gathering.location}</h3>
       </div>
-      <section set:html={markedHelper(gathering.full_description ?? '')} />
-    </class="inner">
+      <section set:html={markedHelper(gathering.short_description ?? '')} />
+      {blocks && <BlockRenderer blocks={blocks} />}
+    </div>
   </div>
 </BaseLayout>
 <style>

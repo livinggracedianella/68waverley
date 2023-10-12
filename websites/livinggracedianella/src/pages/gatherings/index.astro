@@ -1,9 +1,8 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
-import { Header, fetchFilterPopulate, markedHelper } from '@rkn/page-components'
+import { Header, fetchFilterPopulate, markedHelper, strapiAsset, site } from '@rkn/page-components'
 
-const data = await fetchFilterPopulate('/api/pages', 'gatherings', ['header.header_image', 'blocks.gatherings'])
-
+const data = await fetchFilterPopulate('/api/pages', 'gatherings', ['header.header_image', 'blocks.gatherings', 'blocks.gatherings.featureImage.image'])
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
@@ -19,19 +18,22 @@ const header = pageData.header
             <div class="gathering-type">
             <h4>
               <h2>{block.title}</h2>
-              <p>{block.overview}</p>
+              <section class="overview" set:html={markedHelper(block.overview ?? "")}/>
               <div class="grid">
               {gatherings.map((gathering) => {
+                let { width, height, url } = gathering.attributes.featureImage?.image.data.attributes.formats.thumbnail ?? { 'width':234, 'height':156, 'url':'/uploads/thumbnail_Michael_Living_Grace_10c3d24f38.jpg' }
                 return (
+                <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
                     <div class="grid-item">
                         <h3>{gathering.attributes.title}</h3>
-                        <p>{gathering.attributes.short_description}</p>
+                        <img class="thumbnail" src={strapiAsset(url)} width={width} height={height}/>
                         <div class="flex-row">
                         <h4>{gathering.attributes.time_slot}</h4>
                         <h4>{gathering.attributes.location}</h4>
                         </div>
-                        <section set:html={markedHelper(gathering.attributes.full_description ?? "")}/>
+                        <section set:html={markedHelper(gathering.attributes.short_description ?? "")}/>
                     </div>
+                  </a>
                 )
               })}
               </div>
@@ -59,12 +61,14 @@ const header = pageData.header
   }
   div.flex-row {
     display: flex;
-    gap: 50px;
+    gap: 0 50px;
     justify-content: center;
+    flex-wrap: wrap;
   }
   section {
     max-width: 700px;
     padding-bottom: 1rem;
+    margin: 0 auto;
   }
   div.gathering-type {
     width: 100vw;
@@ -76,13 +80,37 @@ const header = pageData.header
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
+  a.card {
+    color: white;
+    text-decoration: none;
+  }
+@media (max-width: 916px) {
+  div.grid {
+    grid-template-columns: 1fr;
+  }
+}
+
   div.grid-item {
     background: #51534a;
     border-radius: 10px;
     padding: 20px;
-    padding-top: 0;
+    padding-top: 5px;
+    height: 100%;
   }
-  div.grid-item * {
-    color: white;
+  h2 {
+    width: 100%;
+    text-align: center;
+  }
+  h3 {
+    width: 100%;
+    text-align: center;
+    padding-right: 33%;
+  }
+  img.thumbnail {
+    float: right;
+  }
+  a.card:hover, a.card:focus {
+    transform: scale(101%);
+    transition: 0.25s;
   }
 </style>

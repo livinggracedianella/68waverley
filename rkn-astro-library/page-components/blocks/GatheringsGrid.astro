@@ -1,34 +1,36 @@
 ---
+import { markedHelper } from '../util'
 const { title, overview, gatherings } = Astro.props
 const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
 ---
 
 <div class="grid-wrapper">
-  <div class="inner first">
-    <h2>{title}</h2>
-    {overview}
-  </div>
+  <a class="card" href="/gatherings">
+    <div class="inner first">
+      <h2>{title}</h2>
+      <div set:html={markedHelper(overview)} />
+    </div>
+  </a>
   {
     gatherings.data.map((gathering) => (
-      <div class="inner">
-        <h3>{gathering.attributes.title}</h3>
-        <h4>
-          {gathering.attributes.time_slot && (
-            <span class="gathering-detail">
-              {gathering.attributes.time_slot}
-            </span>
-          )}
-          {gathering.attributes.location && (
-            <span class="gathering-detail">
-              {gathering.attributes.location}
-            </span>
-          )}
-        </h4>
-        <p>{gathering.attributes.short_description}</p>
-        <a class="cta" href={`/gatherings/${gathering.attributes.slug}`}>
-          Find out more
-        </a>
-      </div>
+      <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
+        <div class="inner">
+          <h3>{gathering.attributes.title}</h3>
+          <h4>
+            {gathering.attributes.time_slot && (
+              <span class="gathering-detail">
+                {gathering.attributes.time_slot}
+              </span>
+            )}
+            {gathering.attributes.location && (
+              <span class="gathering-detail">
+                {gathering.attributes.location}
+              </span>
+            )}
+          </h4>
+          <p>{gathering.attributes.one_liner}</p>
+        </div>
+      </a>
     ))
   }
 </div>
@@ -50,6 +52,7 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
     background: #ffffff;
     padding: 20px;
     box-shadow: 1px 1px 1px #51534a;
+    height: 100%;
   }
   div.first {
     grid-column: span var(--firstItemSpan);
@@ -59,9 +62,6 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
   }
   h4 {
     font-family: var(--italic);
-  }
-  .cta {
-    margin-top: auto;
   }
   h2,
   h3 {
@@ -76,5 +76,15 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
     div.grid-wrapper {
       grid-template-columns: 1fr;
     }
+  }
+  a.card {
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    transition: 0.25s;
+  }
+  a.card:hover,
+  a.card:focus {
+    transform: scale(102%);
   }
 </style>
