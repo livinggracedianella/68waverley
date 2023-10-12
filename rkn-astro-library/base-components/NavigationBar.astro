@@ -16,7 +16,6 @@ const navDetails = await fetchPageData(`/api/navigations`, {
     },
   },
 })
-console.log(navDetails)
 const menuItems = navDetails.data[0].attributes.menu_items
 const logoData = await fetchPageData('/api/navigations', {
   filters: {

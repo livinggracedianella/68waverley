@@ -36,7 +36,6 @@ const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
 const header = gathering.header
 const blocks = pageData.data[0]?.attributes?.blocks ?? ''
-console.log(pageData.data)
 ---
 
 <BaseLayout title={gathering.title}>

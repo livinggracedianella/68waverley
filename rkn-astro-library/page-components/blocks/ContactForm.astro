@@ -1,29 +1,29 @@
 ---
 const props = Astro.props
-console.log(props);
 ---
+
 <div class="form-container">
-    <h2>{props.title}</h2>
-    <form id="contact-form">
-      <label for="your-name">Your Name</label>
-      <input id="your-name" type="text" />
-      <label for="your-email">Your Email</label>
-      <input id="your-email" type="email" />
-      <label for="subject">Subject</label>
-      <input id="subject" type="text" />
-      <label for="your-message">Your Message</label>
-      <textarea id="your-message"></textarea>
-      <input id="submit-form" type="submit" value="Submit Form" />
-    </form>
-  </div>
-  <style>
-div.form-container {
+  <h2>{props.title}</h2>
+  <form id="contact-form">
+    <label for="your-name">Your Name</label>
+    <input id="your-name" type="text" />
+    <label for="your-email">Your Email</label>
+    <input id="your-email" type="email" />
+    <label for="subject">Subject</label>
+    <input id="subject" type="text" />
+    <label for="your-message">Your Message</label>
+    <textarea id="your-message"></textarea>
+    <input id="submit-form" type="submit" value="Submit Form" />
+  </form>
+</div>
+<style>
+  div.form-container {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
   @media (min-width: 916px) {
-div.form-container {
+    div.form-container {
       margin-left: 10rem;
     }
   }

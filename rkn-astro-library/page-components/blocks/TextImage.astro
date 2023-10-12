@@ -1,4 +1,5 @@
 ---
+//formerly two-column
 import { markedHelper } from '../util.js'
 import { strapiAsset } from '@rkn/page-components'
 const props = Astro.props
@@ -20,8 +21,12 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
   <div class="item">
     <div class="inner">
       <div>
-        <h2>{props.title}</h2>
-        <div set:html={markedHelper(props.text)} />
+        <h2>{props.title ?? ''}</h2>
+        <div
+          set:html={markedHelper(
+            props.text ?? 'Here is some placeholder text.'
+          )}
+        />
       </div>
     </div>
   </div>
@@ -49,13 +54,14 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
   }
   div.item {
     width: 50vw;
+    min-height: max(200px, 40vh);
   }
   div.inner {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 30px;
+    padding: 50px;
   }
   h2 {
     margin-top: 0;
@@ -65,7 +71,7 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
       var(--imageHorizontalAlignment);
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 33vh;
+    justify-self: flex-end;
   }
   @media (max-width: 640px) {
     div.container {
@@ -73,7 +79,16 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
     }
     div.item {
       width: 100vw;
-      min-height: 40vh;
+      flex-grow: 0;
+    }
+  }
+  @media (min-width: 1024px) {
+    div.image {
+      max-width: 34vw;
+    }
+    div.inner,
+    div.item {
+      width: 66vw;
     }
   }
 </style>
