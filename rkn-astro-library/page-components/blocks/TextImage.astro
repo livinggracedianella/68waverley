@@ -3,7 +3,6 @@
 import { markedHelper } from '../util.js'
 import { strapiAsset } from '@rkn/page-components'
 const props = Astro.props
-console.log(props)
 const img = props.image.data.attributes
 const imgURL = strapiAsset(
   img.formats?.medium?.url ??

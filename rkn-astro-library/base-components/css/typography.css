@@ -39,7 +39,7 @@
   --line-height-h3: calc((21rem / 16) + 0.625rem);
   --font-size-h4: calc(18rem / 16);
   --line-height-h4: calc((18rem / 16) + 0.625rem);
-  --bold: 'magallanescondregular-bold', sans-serif;
+  --bold: 'magallanescondbold', sans-serif;
   --italic: 'magallanescondregular-italic', sans-serif;
 }
 
