@@ -19,13 +19,14 @@ export async function getStaticPaths() {
 const { page } = Astro.params
 const pageData = await fetchFilterPopulate(`/api/profiles`, page, [
   'header.header_image',
-  'featureImage',
+  'portrait',
 ])
 
 const provider = pageData.data[0].attributes
 const header = provider.header
-const featureImage = provider.featureImage
-console.log(featureImage)
+const portrait = provider.portrait
+
+let { url, width, height } = portrait.data.attributes.formats.small
 ---
 
 <BaseLayout title={provider.title}>
@@ -34,6 +35,7 @@ console.log(featureImage)
     <div class="inner">
       <h2>{provider.name}</h2>
       <h3>{provider.title}</h3>
+      <img src={strapiAsset(url)} width={width / 1.5} height={height / 1.5} />
       <article set:html={markedHelper(provider.bio)} />
     </div>
   </div>
@@ -46,10 +48,10 @@ console.log(featureImage)
     justify-content: center;
   }
   div.inner {
-    display: flex;
+    /*display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center;*/
     max-width: 700px;
     flex-grow: 0;
     text-wrap: wrap;
@@ -62,5 +64,8 @@ console.log(featureImage)
   section {
     max-width: 700px;
     padding-bottom: 1rem;
+  }
+  img {
+    float: right;
   }
 </style>

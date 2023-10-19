@@ -7,8 +7,8 @@ export interface Props {
 
 const { itemType, item } = Astro.props
 const {
-  attributes: { name, bio_short, slug },
+  attributes: { name, bio, slug },
 } = item
 ---
 
-<CardProvider href={`/${itemType}/${slug}`} name={name} bio_short={bio_short} />
+<CardProvider href={`/${itemType}/${slug}`} name={name} bio={bio} />

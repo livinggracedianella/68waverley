@@ -10,7 +10,6 @@ const {
   soundcloud_recording,
   one_liner,
 } = message?.data?.attributes ?? message?.attributes ?? message
-console.log(profiles)
 const { caption } = feature_image ?? ''
 const { url, width, height } = feature_image?.image.data.attributes.formats
   .small ?? {

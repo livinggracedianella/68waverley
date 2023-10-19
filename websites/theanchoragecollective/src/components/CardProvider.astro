@@ -5,11 +5,11 @@ marked.use({ mangle: false, headerIds: false, headerPrefix: false })
 export interface Props {
   href: string
   name: string
-  bio_short: string
+  bio: string
 }
 
-const { href, name, bio_short } = Astro.props
-const content = marked.parse(bio_short)
+const { href, name, bio } = Astro.props
+const content = marked.parse(bio)
 ---
 
 <li class="link-card">
