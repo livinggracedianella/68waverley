@@ -5,11 +5,12 @@ const {
   title,
   date,
   slug,
-  providers,
+  profiles,
   feature_image,
   soundcloud_recording,
   one_liner,
 } = message?.data?.attributes ?? message?.attributes ?? message
+console.log(profiles)
 const { caption } = feature_image ?? ''
 const { url, width, height } = feature_image?.image.data.attributes.formats
   .small ?? {
@@ -36,7 +37,7 @@ const iframeUrl = embedCode
         <p class="h3">{parseDate(date)}</p>
         <p class="h3 column">
           {
-            providers.data.map((p) => (
+            profiles.data.map((p) => (
               <a href={`/profiles/${p.attributes.slug}`}>{p.attributes.name}</a>
             ))
           }

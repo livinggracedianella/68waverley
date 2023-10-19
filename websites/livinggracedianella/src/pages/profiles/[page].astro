@@ -9,7 +9,7 @@ import {
 
 export async function getStaticPaths() {
   const pages = await fetch(
-    `${import.meta.env.STRAPI_HOST}/api/providers?filters[websites][key][$eq]=${
+    `${import.meta.env.STRAPI_HOST}/api/profiles?filters[websites][key][$eq]=${
       import.meta.env.THIS_SITE
     }`
   ).then((res) => res.json())
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { page } = Astro.params
-const pageData = await fetchFilterPopulate(`/api/providers`, page, [
+const pageData = await fetchFilterPopulate(`/api/profiles`, page, [
   'header.header_image',
   'featureImage',
 ])
@@ -34,7 +34,7 @@ console.log(featureImage)
     <div class="inner">
       <h2>{provider.name}</h2>
       <h3>{provider.title}</h3>
-      <article set:html={markedHelper(provider.bio_short)} />
+      <article set:html={markedHelper(provider.bio)} />
     </div>
   </div>
 </BaseLayout>

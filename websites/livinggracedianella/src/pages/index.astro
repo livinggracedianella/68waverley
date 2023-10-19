@@ -14,12 +14,13 @@ const pageData = await fetchFilterPopulate('/api/pages', 'home', [
   'blocks.message.feature_image',
   'blocks.message.feature_image.image',
   'blocks.message.soundcloud_recording',
-  'blocks.message.providers',
+  'blocks.message.profiles',
   'blocks.post',
-  'blocks.post.providers',
+  'blocks.post.profiles',
   'blocks.post.featured_image',
   'blocks.post.featured_image.image',
   'blocks.event',
+  'blocks.profiles',
 ])
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
