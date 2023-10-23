@@ -1,35 +1,27 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
-import { BlockRenderer, Header, fetchPageData } from '@rkn/page-components'
-const site = import.meta.env.THIS_SITE
+import {
+  BlockRenderer,
+  Header,
+  fetchFilterPopulate,
+} from '@rkn/page-components'
 
-const pageData = await fetchPageData('/api/pages', {
-  filters: {
-    slug: {
-      $eq: 'home',
-    },
-    websites: {
-      key: {
-        $eq: site,
-      },
-    },
-  },
-  populate: [
-    'header.header_image',
-    'blocks.image',
-    'blocks.gatherings',
-    'blocks.message',
-    'blocks.message.feature_image',
-    'blocks.message.feature_image.image',
-    'blocks.message.soundcloud_recording',
-    'blocks.message.providers',
-    'blocks.post',
-    'blocks.post.providers',
-    'blocks.post.featured_image',
-    'blocks.post.featured_image.image',
-    'blocks.event',
-  ],
-})
+const pageData = await fetchFilterPopulate('/api/pages', 'home', [
+  'header.header_image',
+  'blocks.image',
+  'blocks.gatherings',
+  'blocks.message',
+  'blocks.message.feature_image',
+  'blocks.message.feature_image.image',
+  'blocks.message.soundcloud_recording',
+  'blocks.message.profiles',
+  'blocks.post',
+  'blocks.post.profiles',
+  'blocks.post.featured_image',
+  'blocks.post.featured_image.image',
+  'blocks.event',
+  'blocks.profiles',
+])
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
 ---
