@@ -21,7 +21,7 @@ jobs:
                 # define package to repository map
                 package:
                     -
-                        local_path: ''
+                        local_path: '/'
                         split_repository: 'anchorage-split-repository'
 
         steps:
