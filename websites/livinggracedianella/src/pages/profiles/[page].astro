@@ -37,6 +37,7 @@ let { url, width, height } = portrait.data.attributes.formats.small
       <h3>{provider.title}</h3>
       <img src={strapiAsset(url)} width={width / 1.5} height={height / 1.5} />
       <article set:html={markedHelper(provider.bio)} />
+      <a href=`mailto:${provider.email}`>{provider.email}</a>
     </div>
   </div>
 </BaseLayout>
