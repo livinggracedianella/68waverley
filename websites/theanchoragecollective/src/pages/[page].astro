@@ -6,7 +6,16 @@ import {
   fetchFilterPopulate,
 } from '@rkn/page-components'
 
-const pageData = await fetchFilterPopulate('/api/pages', 'home', [
+export async function getStaticPaths() {
+  const pages = await fetch(
+    `${import.meta.env.STRAPI_HOST}/api/pages?filters[websites][key][$eq]=${
+      import.meta.env.THIS_SITE
+    }`
+  ).then((res) => res.json())
+  return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
+}
+const { page } = Astro.params
+const pageData = await fetchFilterPopulate(`/api/pages`, page, [
   'header.header_image',
   'blocks.image',
   'blocks.gatherings',
@@ -20,15 +29,14 @@ const pageData = await fetchFilterPopulate('/api/pages', 'home', [
   'blocks.post.featured_image',
   'blocks.post.featured_image.image',
   'blocks.event',
-  'blocks.event.featureImage',
-  'blocks.event.featureImage.image',
   'blocks.profiles',
+  'blocks.profiles.portrait',
 ])
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
 ---
 
-<BaseLayout title="Styleguide">
+<BaseLayout title={pageData.data[0].attributes.title}>
   <div class="outer">
     <Header {...header} />
     <div class="inner">
