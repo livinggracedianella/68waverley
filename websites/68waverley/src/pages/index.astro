@@ -1,0 +1,51 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  BlockRenderer,
+  Header,
+  fetchFilterPopulate,
+} from '@rkn/page-components'
+
+const pageData = await fetchFilterPopulate('/api/pages', 'home', [
+  'header.header_image',
+  'blocks.image',
+  'blocks.gatherings',
+  'blocks.message',
+  'blocks.message.feature_image',
+  'blocks.message.feature_image.image',
+  'blocks.message.soundcloud_recording',
+  'blocks.message.profiles',
+  'blocks.post',
+  'blocks.post.profiles',
+  'blocks.post.featured_image',
+  'blocks.post.featured_image.image',
+  'blocks.event',
+  'blocks.profiles',
+])
+const blocks = pageData.data[0].attributes.blocks
+const header = pageData.data[0].attributes.header
+---
+
+<BaseLayout title="Styleguide">
+  <div class="outer">
+    <Header {...header} />
+    <div class="inner">
+      <BlockRenderer blocks={blocks} />
+    </div>
+  </div>
+  <style>
+    div.outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    div.inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 700px;
+    }
+  </style>
+</BaseLayout>
