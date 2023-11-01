@@ -1,0 +1,51 @@
+---
+let { smallSide } = Astro.props
+let flexDirection
+smallSide === 'left' ? (flexDirection = 'row-reverse') : (flexDirection = 'row')
+---
+
+<div class="container">
+  <div class="first">
+    <slot>
+      <p>content goes here by default</p>
+    </slot>
+  </div>
+  <div class="second">
+    <slot name="second">
+      <p>use the attribute slot="second" to put content here</p>
+    </slot>
+  </div>
+</div>
+<style define:vars={{ flexDirection }}>
+  div.container {
+    display: flex;
+    flex-direction: var(--flexDirection);
+    width: 100%;
+    height: 100%;
+  }
+  .first,
+  .second {
+    min-height: max(200px, 30vh);
+  }
+  .first {
+    width: 66%;
+  }
+  .second {
+    width: 34%;
+  }
+  @media (max-width: 1023px) {
+    .first,
+    .second {
+      width: 50%;
+    }
+  }
+  @media (max-width: 640px) {
+    div.container {
+      flex-direction: column;
+    }
+    .first,
+    .second {
+      width: 100%;
+    }
+  }
+</style>

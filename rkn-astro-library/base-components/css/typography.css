@@ -47,10 +47,6 @@
   --italic: 'magallanescondregular-italic', sans-serif;
 }
 
-* {
-  color: var(--gunmetal);
-}
-
 h1,
 h2,
 h3,
