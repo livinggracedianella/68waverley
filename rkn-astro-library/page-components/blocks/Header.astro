@@ -2,8 +2,9 @@
 import { strapiAsset, site } from '@rkn/page-components'
 const props = Astro.props?.[0] ?? Astro.props
 const slug = Astro.props?.slug ?? ''
+const pretitle = Astro.props?.pretitle ?? props.pretitle ?? ''
 const title = props.header_title ?? 'Enter Heading Here'
-const subtitle = props.subtitle ?? ''
+const subtitle = Astro.props?.subtitle ?? props.subtitle ?? ''
 const img = props.header_image?.data?.attributes ?? ''
 let watercolour
 if (site() === 'livinggracedianella') {
@@ -13,7 +14,6 @@ if (site() === 'livinggracedianella') {
 } else if (site() == '68waverley') {
   watercolour = '/uploads/68_waverley_watercolour_banner_1920w_65352bc1af.jpg'
 }
-console.log(watercolour)
 let imgUrl = strapiAsset(img?.formats?.large?.url ?? watercolour)
 let headerHeight
 if (slug === 'home') {
@@ -27,6 +27,7 @@ if (slug === 'home') {
 
 <header class="wrapper" style={`background-image: url("${imgUrl}")`}>
   <div>
+    <div class="pretitle">{pretitle}</div>
     <h1>{title}</h1>
     <div class="subtitle">{subtitle}</div>
   </div>
@@ -49,12 +50,17 @@ if (slug === 'home') {
     color: white;
     text-shadow: 3px 3px 5px black;
     margin: 0;
+    width: 100%;
+    text-align: center;
   }
-  div.subtitle {
+  div.subtitle,
+  div.pretitle {
     font-size: var(--font-size-h2);
     font-family: var(--italic);
     color: white;
     text-shadow: 3px 3px 5px black;
     margin-top: 2px;
+    width: 100%;
+    text-align: center;
   }
 </style>
