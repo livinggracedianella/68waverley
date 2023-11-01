@@ -1,12 +1,28 @@
 ---
-import { strapiAsset } from '@rkn/page-components'
+import { strapiAsset, site } from '@rkn/page-components'
 const props = Astro.props?.[0] ?? Astro.props
+const slug = Astro.props?.slug ?? ''
 const title = props.header_title ?? 'Enter Heading Here'
 const subtitle = props.subtitle ?? ''
-const img = props.header_image?.data?.[0].attributes ?? ''
-const imgUrl = strapiAsset(
-  img?.formats?.large.url ?? '/uploads/whites_beach_2048x827_7ee97d8f2f.jpg'
-)
+const img = props.header_image?.data?.attributes ?? ''
+let watercolour
+if (site() === 'livinggracedianella') {
+  watercolour = '/uploads/living_grace_watercolour_banner_1920w_8ec3fc67b1.jpg'
+} else if (site() == 'anchorage') {
+  watercolour = '/uploads/anchorage_watercolour_banner_1920w_c5af4e4197.jpg'
+} else if (site() == '68waverley') {
+  watercolour = '/uploads/68_waverley_watercolour_banner_1920w_65352bc1af.jpg'
+}
+console.log(watercolour)
+let imgUrl = strapiAsset(img?.formats?.large?.url ?? watercolour)
+let headerHeight
+if (slug === 'home') {
+  headerHeight = '50vh'
+} else if (imgUrl != strapiAsset(watercolour)) {
+  headerHeight = 'max(30vh, 162px)'
+} else {
+  headerHeight = 'max(20vh, 108px)'
+}
 ---
 
 <header class="wrapper" style={`background-image: url("${imgUrl}")`}>
@@ -16,13 +32,13 @@ const imgUrl = strapiAsset(
   </div>
 </header>
 
-<style>
+<style define:vars={{ headerHeight }}>
   .wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100vw;
-    height: 40vh;
+    height: var(--headerHeight);
 
     background-position: center center;
     background-repeat: no-repeat;
