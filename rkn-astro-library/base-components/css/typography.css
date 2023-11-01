@@ -31,14 +31,18 @@
 
 /*Global Font Styles*/
 :root {
-  --font-size-h1: calc(40rem / 16);
+  --font-size-h1: calc(50rem / 16);
   --line-height-h1: calc(var(--font-size-h1) + 0.625rem);
-  --font-size-h2: calc(26rem / 16);
+  --font-size-h2: calc(36rem / 16);
   --line-height-h2: calc(var(--font-size-h2) + 0.625rem);
-  --font-size-h3: calc(21rem / 16);
-  --line-height-h3: calc((21rem / 16) + 0.625rem);
-  --font-size-h4: calc(18rem / 16);
-  --line-height-h4: calc((18rem / 16) + 0.625rem);
+  --font-size-h3: calc(27rem / 16);
+  --line-height-h3: calc((27rem / 16) + 0.625rem);
+  --font-size-h4: calc(24rem / 16);
+  --line-height-h4: calc((24rem / 16) + 0.625rem);
+  --font-size-h5: calc(21rem / 16);
+  --line-height-h5: calc((21rem / 16) + 0.625rem);
+  --font-size-hero-p: calc((18rem / 16))
+  --line-height-hero-p: calc((18rem / 16) + 0.625rem);
   --bold: 'magallanescondbold', sans-serif;
   --italic: 'magallanescondregular-italic', sans-serif;
 }
@@ -78,6 +82,11 @@ h4 {
   font-weight: normal;
   line-height: var(--line-height-h4);
   font-size: var(--font-size-h4);
+}
+
+p.hero {
+  font-size: var(--font-size-hero-p);
+  line-height: var(--line-height-hero-p);
 }
 
 p {
