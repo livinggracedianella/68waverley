@@ -1,5 +1,9 @@
 ---
-import { fetchPageData, markedHelper } from '../page-components/util.js'
+import {
+  fetchPageData,
+  markedHelper,
+  strapiAsset,
+} from '../page-components/util.js'
 const site = import.meta.env.THIS_SITE
 const strapi = import.meta.env.STRAPI_HOST
 const footerDetails = await fetchPageData(`/api/footers`, {
@@ -10,44 +14,72 @@ const footerDetails = await fetchPageData(`/api/footers`, {
       },
     },
   },
-  populate: '*',
+  populate: [
+    'logo',
+    'affiliates',
+    'affiliates',
+    'affiliates.affiliateLogo',
+    'websites',
+    'contact',
+  ],
 })
 const footerData = footerDetails.data[0]
 const logoData = footerData.attributes.logo.data.attributes
 const logoURL = `${strapi}${logoData.url}`
+const primaryColour = `var(--${footerDetails.data[0].attributes.websites.data.attributes.primary_colour})`
 ---
 
 <footer>
   <div class="container">
-    <div class="item"><img src={logoURL} alt={logoData.alternativeText} /></div>
+    <div class="flex">
+      <div class="item">
+        <img src={logoURL} alt={logoData.alternativeText} />
+      </div>
+      <div class="item">
+        <div
+          class="footerAddress"
+          set:html={markedHelper(footerData.attributes.address)}
+        />
+        <div class="contactContainer">
+          <a class="contact" href={footerData.attributes.contact.url_path}
+            >{footerData.attributes.contact.name}</a
+          >
+        </div>
+      </div>
+    </div>
     <div class="item">
       <ul>
-        <li>Affiliates</li>
+        <li class="heading">Affiliates</li>
         {
           footerData.attributes.affiliates.map((item) => {
+            const { url, width, height } =
+              item.affiliateLogo.data.attributes.formats.thumbnail
             return (
-              <a href={item.url_path}>
-                <li>{item.name}</li>
+              <a href={item.affiliateUrl}>
+                <li class="affiliate">
+                  <img
+                    class="affiliateLogo"
+                    src={strapiAsset(url)}
+                    width={width}
+                    height={height}
+                    alt={
+                      item.affiliateLogo.data.attributes?.alternativeText ?? ''
+                    }
+                  />
+                  <div>{item.affiliateName}</div>
+                </li>
               </a>
             )
           })
         }
       </ul>
     </div>
-    <div class="item">
-      <div>
-        <a href={footerData.attributes.contact.url_path}
-          >{footerData.attributes.contact.name}</a
-        >
-      </div>
-      <div set:html={markedHelper(footerData.attributes.address)} />
-    </div>
   </div>
-  <div>
+  <div class="abn">
     ABN: {footerData.attributes.abn}
   </div>
 </footer>
-<style>
+<style define:vars={{ primaryColour }}>
   footer {
     display: flex;
     align-items: center;
@@ -56,7 +88,7 @@ const logoURL = `${strapi}${logoData.url}`
     background-color: var(--banner-color);
     min-height: 20vh;
     font-size: 14px;
-    padding: 2rem;
+    width: 100%;
   }
   footer * {
     color: white;
@@ -65,12 +97,90 @@ const logoURL = `${strapi}${logoData.url}`
   div.container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    margin: 1rem 0;
+    width: 100%;
+    max-width: 850px;
   }
   div.item {
     margin: 0 1rem;
   }
   img {
-    max-height: 120px;
+    max-height: 150px;
+  }
+  div.flex {
+    display: flex;
+    align-items: center;
+  }
+  :global(.footerAddress p) {
+    color: white;
+    font-size: var(--font-size-hero-p);
+  }
+  .contact {
+    text-decoration: none;
+    padding: 0.4rem 1rem;
+    background: var(--primaryColour);
+    font-family: var(--bold);
+    font-size: var(--font-size-h5);
+  }
+  .contactContainer {
+    margin-top: 1.2rem;
+  }
+  li.heading {
+    font-size: var(--font-size-h4);
+    font-family: var(--bold);
+  }
+  img.affiliateLogo {
+    height: 50px;
+    width: auto;
+    margin-right: 1rem;
+  }
+  li.affiliate {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: var(--font-size-hero-p);
+    margin-top: 1rem;
+  }
+  div.abn {
+    background: var(--primaryColour);
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: var(--font-size-hero-p);
+  }
+  a {
+    display: block;
+    transition: 0.25s;
+    width: fit-content;
+  }
+  a:focus,
+  a:hover {
+    transform: scale(1.05);
+  }
+  a.contact:focus,
+  a.contact:hover {
+    transform: scale(1.06);
+  }
+  @media (max-width: 916px) {
+    img {
+      max-height: 120px;
+    }
+    li.affiliate {
+      margin-top: 0.5rem;
+    }
+    div.item {
+      margin: 0 0.5rem;
+    }
+  }
+  @media (max-width: 640px) {
+    div.container {
+      flex-direction: column;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    :global(.footerAddress p) {
+      margin-top: 0;
+    }
   }
 </style>
