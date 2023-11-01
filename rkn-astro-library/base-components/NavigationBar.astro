@@ -10,12 +10,12 @@ const navDetails = await fetchPageData(`/api/navigations`, {
       },
     },
   },
-  populate: {
-    menu_items: {
-      populate: ['sub_menu_links'],
-    },
-  },
+  populate: ['menu_items', 'menu_items.sub_menu_links', 'websites'],
 })
+const primaryColour =
+  `var(--${navDetails.data[0].attributes.websites.data.attributes.primary_colour})` ??
+  'var(--gunmetal)'
+
 const menuItems = navDetails.data[0].attributes.menu_items
 const logoData = await fetchPageData('/api/navigations', {
   filters: {
@@ -37,65 +37,83 @@ const logoAltText =
 ---
 
 <header class="header-wrapper">
-  <a class="skip" href="#main">skip to content</a>
-  <a href="/">
-    <img src={logoURL} alt={logoAltText} />
-  </a>
-  <nav class="headerNav hidden">
-    <ul class="navlist">
-      {
-        menuItems.map((menuItem) => {
-          if (menuItem.sub_menu_links[0]) {
+  <a class="skip" href="#content">skip to content</a>
+  <div class="container">
+    <a class="logoAnchor" href="/">
+      <img src={logoURL} alt={logoAltText} />
+    </a>
+    <nav class="headerNav hidden">
+      <ul class="navlist">
+        {
+          menuItems.map((menuItem) => {
+            if (menuItem.sub_menu_links[0]) {
+              return (
+                <li class="menu-item dropdown">
+                  <a class="menu-item" href={menuItem.url_path}>
+                    {menuItem.name.trim()} <span>&gt;</span>
+                  </a>
+                  <ul class="dropdown">
+                    {menuItem.sub_menu_links.map((sml) => {
+                      return (
+                        <li class="sub-menu-item">
+                          <a href={sml.url_path}>{sml.name.trim()}</a>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </li>
+              )
+            }
             return (
-              <li class="menu-item dropdown">
-                <a class="menu-item" href={menuItem.url_path}>
-                  {menuItem.name.trim()} <span>❯</span>
+              <li class="menu-item">
+                <a class="menu-item clickable" href={menuItem.url_path}>
+                  {menuItem.name.trim()}
                 </a>
-                <ul class="dropdown">
-                  {menuItem.sub_menu_links.map((sml) => {
-                    return (
-                      <li class="sub-menu-item">
-                        <a href={sml.url_path}>{sml.name.trim()}</a>
-                      </li>
-                    )
-                  })}
-                </ul>
               </li>
             )
-          }
-          return (
-            <li class="menu-item">
-              <a class="menu-item clickable" href={menuItem.url_path}>
-                {menuItem.name.trim()}
-              </a>
-            </li>
-          )
-        })
-      }
-    </ul>
-  </nav>
+          })
+        }
+      </ul>
+    </nav>
+  </div>
   <button type="button" class="headerNavToggle hamburger">
     <div></div>
     <div></div>
     <div></div>
   </button>
 </header>
-<div id="header-trigger"></div>
-<style>
+<div id="header-trigger"><a id="content"></a></div>
+<style define:vars={{ primaryColour }}>
   /*WRAPPER STYLES*/
   :root {
     --header-height: calc(80rem / 16);
   }
-
   header {
     height: var(--header-height);
-    background-color: var(--banner-color);
+    background-color: var(--primaryColour);
     position: fixed;
     width: 100%;
     transition: 0.25s;
     display: flex;
     z-index: 10;
+    box-shadow: 0 5px 5px #00000055;
   }
+  .container {
+    display: flex;
+  }
+  @media (min-width: 917px) {
+    .container {
+      min-width: 750px;
+      margin: 0 auto;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 916px) {
+    .container {
+      width: 100%;
+    }
+  }
+
   #header-trigger {
     height: var(--header-height);
     transition: 0.25s;
@@ -104,19 +122,22 @@ const logoAltText =
   /*SKIP TO CONTENT STYLES*/
   .skip {
     color: white;
-    padding-left: 6px;
-    background-color: var(--banner-color);
+    background-color: var(--primaryColour);
     z-index: 20;
-    height: auto;
+    height: 1px;
+    width: 1px;
     opacity: 0;
+    position: fixed;
   }
   .skip:focus {
     opacity: 1;
     transition: 0.25s;
+    height: auto;
+    width: auto;
+    padding: 6px;
   }
   /*LOGO STYLES*/
-  header > a {
-    position: fixed;
+  a.anchorLogo {
     height: var(--header-height);
   }
   header img:hover {
@@ -130,7 +151,6 @@ const logoAltText =
   @media (max-width: 916px) {
     img {
       height: var(--header-height);
-      padding: 0.5rem 0;
       padding-left: 1vw;
     }
   }
@@ -171,10 +191,9 @@ const logoAltText =
       z-index: 1;
       align-self: center;
     }
-    .clickable:hover,
-    .clickable:focus-within {
-      transform: scale(1.1);
-      transition: 0.25s;
+    a.menu-item:hover,
+    a.menu-item:focus {
+      transform: scale(1.05);
     }
   }
   span {
@@ -190,7 +209,7 @@ const logoAltText =
       display: none;
       position: absolute;
       top: var(--header-height);
-      background-color: var(--banner-color);
+      background-color: var(--primaryColour);
     }
   }
   li.dropdown:hover ul.dropdown,
@@ -218,7 +237,7 @@ const logoAltText =
     nav {
       position: absolute;
       top: var(--header-height);
-      background: var(--banner-color);
+      background: var(--primaryColour);
       width: 100%;
       height: calc(100vh - var(--header-height));
       transition: 0.25s;
@@ -229,8 +248,8 @@ const logoAltText =
     }
     nav a:hover,
     nav a:hover span {
-      background: var(--gunmetal-tint);
-      color: black;
+      background: var(--light);
+      color: var(--gunmetal);
     }
     ul.navlist {
       flex-direction: column;
@@ -270,14 +289,14 @@ const logoAltText =
     text-decoration: none;
     cursor: pointer;
     text-align: center;
-    background-color: var(--banner-color);
+    background-color: var(--primaryColour);
   }
   .headerNavToggle {
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--banner-color);
+    background-color: var(--primaryColour);
     border: 0px;
     transition: 0.25s;
     cursor: pointer;
