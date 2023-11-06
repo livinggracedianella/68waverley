@@ -1,6 +1,6 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
-import { Header, fetchFilterPopulate, markedHelper, strapiAsset, site } from '@rkn/page-components'
+import { Header, fetchFilterPopulate, markedHelper, strapiAsset, site, BoxesCard, BoxesWrapper } from '@rkn/page-components'
 
 const data = await fetchFilterPopulate('/api/pages', 'gatherings', ['header.header_image', 'blocks.gatherings', 'blocks.gatherings.featureImage.image'])
 const pageData = data.data[0].attributes
@@ -16,29 +16,24 @@ const header = pageData.header
           let gatherings = block.gatherings.data
           return (
             <div class="gathering-type">
-            <h4>
               <h2>{block.title}</h2>
               <section class="overview" set:html={markedHelper(block.overview ?? "")}/>
-              <div class="grid">
+              <BoxesWrapper>
               {gatherings.map((gathering) => {
-                let { width, height, url } = gathering.attributes.featureImage?.image.data.attributes.formats.thumbnail ?? { 'width':234, 'height':156, 'url':'/uploads/thumbnail_Michael_Living_Grace_10c3d24f38.jpg' }
+                let { width, height, url } = gathering.attributes.featureImage?.image.data.attributes.formats.small ?? { 'width':234, 'height':156, 'url':'/uploads/small_Michael_Living_Grace_10c3d24f38.jpg' }
                 return (
                 <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
-                    <div class="grid-item">
+                    <BoxesCard imageUri={url} description={gathering?.attributes?.short_description ?? ""}>
                         <h3>{gathering.attributes.title}</h3>
-                        <img class="thumbnail" src={strapiAsset(url)} width={width} height={height}/>
-                        <div class="flex-row">
                         <h4>{gathering.attributes.time_slot}</h4>
                         <h4>{gathering.attributes.location}</h4>
-                        </div>
-                        <section set:html={markedHelper(gathering.attributes.short_description ?? "")}/>
-                    </div>
+                    </BoxesCard>
                   </a>
                 )
               })}
-              </div>
-            </div>
-          )
+              </BoxesWrapper>
+          </div>
+              )
         })
     }
   </div>
@@ -50,67 +45,35 @@ const header = pageData.header
     align-items: center;
     justify-content: center;
   }
-  div.inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 700px;
-    flex-grow: 0;
-    text-wrap: wrap;
-  }
-  div.flex-row {
-    display: flex;
-    gap: 0 50px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  section {
-    max-width: 700px;
-    padding-bottom: 1rem;
-    margin: 0 auto;
-  }
   div.gathering-type {
     width: 100vw;
-    padding: 0 2rem 2rem 2rem;
     border-bottom: 2px dotted black;
   }
-  div.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+  section.overview {
+    padding: 0 2rem 2rem 2rem;
+    max-width: 750px;
+    margin: 0 auto;
   }
   a.card {
     color: white;
     text-decoration: none;
   }
-@media (max-width: 916px) {
-  div.grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-  div.grid-item {
-    background: #51534a;
-    border-radius: 10px;
-    padding: 20px;
-    padding-top: 5px;
-    height: 100%;
-  }
   h2 {
     width: 100%;
     text-align: center;
   }
-  h3 {
-    width: 100%;
-    text-align: center;
-    padding-right: 33%;
-  }
-  img.thumbnail {
-    float: right;
-  }
   a.card:hover, a.card:focus {
     transform: scale(101%);
     transition: 0.25s;
+  }
+  /*BOXES LAYOUT STYLES*/
+  h3, h4 {
+    color: white;
+    margin-top: 0;
+    text-align: left;
+  }
+  h4 {
+    font-family: var(--italic);
+    font-size: var(--font-size-h5);
   }
 </style>

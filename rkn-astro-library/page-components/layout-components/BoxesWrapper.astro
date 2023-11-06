@@ -1,0 +1,22 @@
+---
+const backgroundColour = Astro.props?.backgroundColour ?? 'var(--gunmetal)'
+---
+
+<div class="gridContainer">
+  <slot />
+</div>
+<style define:vars={{ backgroundColour }}>
+  div.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--backgroundColour);
+    width: 100%;
+    gap: 20px;
+    padding: 20px 40px;
+  }
+  @media (max-width: 1280px) {
+    div.gridContainer {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

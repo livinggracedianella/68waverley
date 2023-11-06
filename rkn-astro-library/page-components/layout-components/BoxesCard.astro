@@ -1,0 +1,59 @@
+---
+import { strapiAsset, markedHelper } from '../util'
+const width = 234
+const height = 156
+const imageUri =
+  Astro.props.imageUri ?? '/uploads/small_Michael_Living_Grace_10c3d24f38.jpg'
+const image = strapiAsset(imageUri)
+const imageUrl = `url(${image})`
+const alternativeText = 'default alternative text'
+const description =
+  Astro.props.description ??
+  `Placeholder text. You are welcome, whatever your age,
+culture or gender.`
+---
+
+<div class="container">
+  <div class="details">
+    <slot />
+  </div>
+  <div class="description" set:html={markedHelper(description)} />
+  <div class="image"></div>
+</div>
+<style define:vars={{ imageUrl }}>
+  div {
+    width: 100%;
+  }
+  div.container {
+    display: grid;
+    grid-template-columns: minmax(250px, 3fr) 10px 4fr;
+    grid-template-rows: 20px 1fr 10px 3fr 20px;
+    min-height: 30vh;
+    height: 100%;
+  }
+  div.details {
+    background: var(--chapel-purple);
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    z-index: 1;
+    padding: 10px;
+  }
+  div.description {
+    background: white;
+    grid-column: 2/-1;
+    grid-row: 2/-2;
+    padding: 0 10px 10px 25px;
+    color: var(--gunmetal);
+  }
+  div.image {
+    grid-column: 1 / 3;
+    grid-row: 4 / -1;
+    background-image: var(--imageUrl);
+    background-size: cover;
+    background-position: center;
+  }
+  img {
+    width: auto;
+    height: 100%;
+  }
+</style>

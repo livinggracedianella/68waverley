@@ -4,7 +4,6 @@ import {
   BlockRenderer,
   Header,
   fetchFilterPopulate,
-  TwoColumn,
 } from '@rkn/page-components'
 
 const pageData = await fetchFilterPopulate('/api/pages', 'home', [
@@ -32,6 +31,7 @@ const header = pageData.data[0].attributes.header
 <BaseLayout title="Styleguide">
   <div class="outer">
     <Header {...header} slug="home" />
+
     <BlockRenderer blocks={blocks} />
   </div>
   <style>
