@@ -1,0 +1,35 @@
+---
+import { primaryColour } from '@rkn/page-components'
+const primaryColor = await primaryColour()
+---
+
+<div class="gridComponent">
+  <slot />
+</div>
+<style define:vars={{ primaryColor }}>
+  div {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    padding: 20px 40px;
+    width: 100%;
+  }
+  :global(div.gridComponent > a) {
+    border: 2px solid #ffffff00;
+  }
+  :global(div.gridComponent > a:hover, div.gridComponent > a:focus) {
+    transform: scale(1.02);
+    border: 2px solid var(--primaryColor);
+    outline: none;
+  }
+  @media (max-width: 1024px) {
+    div {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    div {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

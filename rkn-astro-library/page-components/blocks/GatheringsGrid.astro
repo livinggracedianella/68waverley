@@ -1,10 +1,11 @@
 ---
 import { markedHelper } from '../util'
+import Grid from '../layout-components/Grid.astro'
 const { title, overview, gatherings } = Astro.props
 const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
 ---
 
-<div class="grid-wrapper">
+<Grid>
   <a class="card" href="/gatherings">
     <div class="inner first">
       <h2>{title}</h2>
@@ -33,7 +34,7 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
       </a>
     ))
   }
-</div>
+</Grid>
 <style define:vars={{ firstItemSpan }}>
   div.grid-wrapper {
     display: grid;
@@ -44,14 +45,12 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
     background: #f1f1f1;
   }
   div.inner {
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    background: #ffffff;
+    background: var(--light);
     padding: 20px;
-    box-shadow: 1px 1px 1px #51534a;
     height: 100%;
   }
   div.first {
@@ -67,24 +66,15 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
   h3 {
     margin-top: 0;
   }
-  @media (max-width: 1024px) {
-    div.grid-wrapper {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  @media (max-width: 640px) {
-    div.grid-wrapper {
-      grid-template-columns: 1fr;
-    }
-  }
   a.card {
     text-decoration: none;
     color: inherit;
     height: 100%;
     transition: 0.25s;
+    grid-column: span 2;
   }
-  a.card:hover,
+  /*  a.card:hover,
   a.card:focus {
     transform: scale(102%);
-  }
+  }*/
 </style>
