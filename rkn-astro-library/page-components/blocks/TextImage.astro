@@ -25,12 +25,10 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
       </div>
     </div>
   </div>
-  <div
-    class="item image"
-    slot="second"
-    style={`background-image: url("${imgURL}")`}
-  >
-    <img src={imgURL} alt={img.alternativeText} class="sr-only" />
+  <div class="backgroundColour" slot="second">
+    <div class="item image" style={`background-image: url("${imgURL}")`}>
+      <img src={imgURL} alt={img.alternativeText} class="sr-only" />
+    </div>
   </div>
 </TwoColumn>
 
@@ -59,6 +57,9 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
   h2 {
     margin-top: 0;
   }
+  div.backgroundColour {
+    background-color: #702082;
+  }
   div.image {
     background-position: var(--imageVerticalAlignment)
       var(--imageHorizontalAlignment);
@@ -67,8 +68,7 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
     width: auto;
     height: 100%;
     min-height: max(200px, 30vh);
-    /*filter: grayscale(1);
-    background-color: #702082;
-    mix-blend-mode: multiply;*/
+    filter: grayscale(100%);
+    mix-blend-mode: multiply;
   }
 </style>

@@ -20,7 +20,7 @@ const header = pageData.header
               <section class="overview" set:html={markedHelper(block.overview ?? "")}/>
               <BoxesWrapper>
               {gatherings.map((gathering) => {
-                let { width, height, url } = gathering.attributes.featureImage?.image.data.attributes.formats.small ?? { 'width':234, 'height':156, 'url':'/uploads/small_Michael_Living_Grace_10c3d24f38.jpg' }
+                let { width, height, url } = gathering.attributes.featureImage?.image?.data?.attributes?.formats?.small ?? { 'width':234, 'height':156, 'url':'/uploads/small_Michael_Living_Grace_10c3d24f38.jpg' }
                 return (
                 <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
                     <BoxesCard imageUri={url} description={gathering?.attributes?.shortDescription ?? ""}>

@@ -3,6 +3,7 @@ import { markedHelper } from '../util'
 import Grid from '../layout-components/Grid.astro'
 const { title, overview, gatherings } = Astro.props
 const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
+console.log(Astro.props)
 ---
 
 <Grid>
@@ -82,8 +83,4 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
     transition: 0.25s;
     grid-column: span 2;
   }
-  /*  a.card:hover,
-  a.card:focus {
-    transform: scale(102%);
-  }*/
 </style>
