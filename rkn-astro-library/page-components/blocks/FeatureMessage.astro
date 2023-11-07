@@ -1,22 +1,8 @@
 ---
-import { strapiAsset, parseDate } from '@rkn/page-components'
+import { strapiAsset, parseDate, Button } from '@rkn/page-components'
 const { message } = Astro.props
-const {
-  title,
-  date,
-  slug,
-  profiles,
-  featureImage,
-  soundcloudRecording,
-  oneLiner,
-} = message?.data?.attributes ?? message?.attributes ?? message
-const { caption } = featureImage ?? ''
-const { url, width, height } = featureImage?.image.data.attributes.formats
-  .small ?? {
-  url: '/uploads/small_Sermon_Image_Background_ed63796e21.png',
-  width: 208,
-  height: 156,
-}
+const { title, date, slug, profiles, soundcloudRecording, oneLiner } =
+  message?.data?.attributes ?? message?.attributes ?? message
 const embedCode = soundcloudRecording.embedCode
 const iframeUrl = embedCode
   ?.match(`src="([^"]+)"`)?.[1]
@@ -25,25 +11,18 @@ const iframeUrl = embedCode
 
 <div class="flex-row full-width">
   <div class="container">
-    <h2>
-      {Astro.params.page === slug ? '' : 'Featured'} Message: <a
-        class="heading"
-        href={`/messages/${slug}/`}>{title}</a
-      >
+    <h2 class="message-title">
+      <span>Featured Message</span>
+      <a href={`/messages/${slug}/`}>{title}</a>
     </h2>
-    <div class="flex-row">
-      <div>
-        <p class="h3">{parseDate(date)}</p>
-        <p class="h3 column">
-          {
-            profiles.data.map((p) => (
-              <a href={`/profiles/${p.attributes.slug}`}>{p.attributes.name}</a>
-            ))
-          }
-        </p>
-      </div>
-      <p class="description">{oneLiner}</p>
-    </div>
+    <p class="message-metadata">
+      {parseDate(date)} | {
+        profiles.data.map((p) => (
+          <a href={`/profiles/${p.attributes.slug}`}>{p.attributes.name}</a>
+        ))
+      }
+    </p>
+    <p class="message-description hero">{oneLiner}</p>
     <div class="soundcloud">
       <iframe
         width="100%"
@@ -54,51 +33,50 @@ const iframeUrl = embedCode
         src={iframeUrl}
         show_artwork="false"></iframe>
     </div>
+    <Button href="/messages" label="More Messages" />
   </div>
-  <img src={strapiAsset(url)} width={width} height={height} alt={caption} />
 </div>
 
 <style>
-  a.heading {
-    font-size: var(--font-size-h2);
-  }
   div.flex-row {
-    display: flex;
-    width: 100%;
+    width: 100vw;
+    background-color: var(--primary-color);
+    padding: 2rem;
   }
   div.container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    width: 100%;
     max-width: 700px;
     margin: 0 auto;
+    color: white;
   }
-  .h3,
-  .h3 a {
-    font-size: var(--font-size-h3);
-    font-family: var(--bold);
+  .message-title {
+    margin-top: 0;
+    text-align: center;
   }
-  div.full-width {
-    width: 100vw;
+  .message-title a {
+    display: block;
+    margin-top: 3rem;
+  }
+  .message-metadata {
+    margin-top: 1rem;
+    text-align: center;
+    line-height: var(--line-height-h4);
+    font-size: var(--font-size-h4);
+    font-style: italic;
+  }
+  .message-title a,
+  .message-metadata a {
+    color: white;
+  }
+  .message-description {
+    margin: 2rem auto;
+    text-align: center;
   }
   .soundcloud {
     width: 100%;
-  }
-  h2 {
-    margin-right: auto;
-  }
-  .description {
-    padding-left: 20px;
-  }
-  .column {
-    display: flex;
-    flex-direction: column;
-  }
-  @media (max-width: 1023px) {
-    img {
-      display: none;
-    }
+    margin: 1rem 0;
   }
 </style>
+

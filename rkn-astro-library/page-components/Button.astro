@@ -1,0 +1,22 @@
+---
+const props = Astro.props
+---
+
+<a class="button" href={props.href}>{props.label}</a>
+<style>
+  .button {
+    font-size: var(--font-size-hero-p);
+    line-height: var(--line-height-hero-p);
+    color: white;
+    background: var(--waverley-coral);
+    padding: 1rem;
+    margin: 1rem;
+    text-decoration: none;
+    transition: transform 0.25s;
+  }
+  .button:hover,
+  .button:active {
+    transform: scale(1.06);
+  }
+</style>
+
