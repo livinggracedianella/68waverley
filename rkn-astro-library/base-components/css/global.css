@@ -10,6 +10,7 @@
   --light: #e7e5e4;
   scroll-padding-top: calc(var(--header-height) * 0.6);
 }
+/*See '../BaseLayout.astro' for primaryColor*/
 
 * {
   box-sizing: border-box;

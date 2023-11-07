@@ -13,17 +13,6 @@ export async function fetchPageData(uri, options) {
   return pageData
 }
 
-export async function primaryColour() {
-  const pageData = await fetchPageData('/api/websites', {
-    filters: {
-      key: {
-        $eq: site(),
-      },
-    },
-  })
-  return `var(--${pageData.data[0].attributes.primary_colour})`
-}
-
 export async function fetchFilter(uri, slug) {
   const data = await fetchPageData(uri, {
     filters: {

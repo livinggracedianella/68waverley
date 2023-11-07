@@ -1,12 +1,10 @@
 ---
-import { primaryColour } from '@rkn/page-components'
-const primaryColor = await primaryColour()
 ---
 
 <div class="gridComponent">
   <slot />
 </div>
-<style define:vars={{ primaryColor }}>
+<style>
   div {
     display: grid;
     grid-template-columns: repeat(6, 1fr);

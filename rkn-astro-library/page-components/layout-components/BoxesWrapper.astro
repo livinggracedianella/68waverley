@@ -11,12 +11,17 @@ const backgroundColour = Astro.props?.backgroundColour ?? 'var(--gunmetal)'
     grid-template-columns: 1fr 1fr;
     background: var(--backgroundColour);
     width: 100%;
-    gap: 20px;
+    gap: 40px 20px;
     padding: 20px 40px;
   }
-  @media (max-width: 1280px) {
+  @media (max-width: 916px) {
     div.gridContainer {
       grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 700px) {
+    div.gridContainer {
+      padding: 20px;
     }
   }
 </style>

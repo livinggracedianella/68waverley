@@ -2,9 +2,18 @@
 import './css/normalize.css'
 import './css/global.css'
 import '@rkn/base-components/css/typography.css'
+import { fetchPageData, site } from '../page-components/util'
 const { title } = Astro.props
 import NavigationBar from './NavigationBar.astro'
 import Footer from './Footer.astro'
+const siteData = await fetchPageData('/api/websites', {
+  filters: {
+    key: {
+      $eq: site(),
+    },
+  },
+})
+const primaryColor = `var(--${siteData.data[0].attributes.primary_colour})`
 ---
 
 <!DOCTYPE html>
@@ -27,7 +36,9 @@ import Footer from './Footer.astro'
     <Footer />
   </body>
 </html>
-<style>
+<style define:vars={{ primaryColor }}>
+  :root {
+  }
   html {
     height: 100%;
   }
