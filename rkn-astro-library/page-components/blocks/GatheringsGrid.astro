@@ -9,7 +9,7 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
   <a class="card" href="/gatherings">
     <div class="inner first">
       <h2>{title}</h2>
-      <div set:html={markedHelper(overview)} />
+      <div class="gatheringDetails" set:html={markedHelper(overview)} />
     </div>
   </a>
   {
@@ -17,7 +17,7 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
       <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
         <div class="inner">
           <h3>{gathering.attributes.title}</h3>
-          <h4>
+          <div class="details">
             {gathering.attributes.time_slot && (
               <span class="gathering-detail">
                 {gathering.attributes.time_slot}
@@ -28,7 +28,7 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
                 {gathering.attributes.location}
               </span>
             )}
-          </h4>
+          </div>
           <p>{gathering.attributes.one_liner}</p>
         </div>
       </a>
@@ -37,26 +37,43 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
 </Grid>
 <style define:vars={{ firstItemSpan }}>
   div.inner {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
     background: var(--light);
-    padding: 20px;
+    padding: 2.5rem 25px 1.2rem 25px;
     height: 100%;
+  }
+  :global(div.gatheringDetails *) {
+    font-size: var(--font-size-hero-p);
+  }
+  div.inner * {
+    color: var(--gunmetal);
   }
   div.first {
     grid-column: span var(--firstItemSpan);
+    background: var(--primaryColor);
+  }
+  div.first * {
+    color: white;
   }
   .gathering-detail:not(:last-of-type)::after {
     content: '|';
   }
-  h4 {
+  div.details {
+    margin-top: 0.2rem;
+  }
+  .gathering-detail {
+    font-size: var(--font-size-h5);
     font-family: var(--italic);
+  }
+  div.inner h3 {
+    color: var(--primaryColor);
+  }
+  h2 {
+    font-size: calc(36rem / 16);
   }
   h2,
   h3 {
     margin-top: 0;
+    line-height: 110%;
   }
   a.card {
     text-decoration: none;
