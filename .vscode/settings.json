@@ -1,3 +1,5 @@
 {
-  "astro.language-server.ls-path": "websites/livinggracedianella/node_modules/.bin/astro-ls"
+  "astro.language-server.ls-path": "websites/livinggracedianella/node_modules/.bin/astro-ls",
+  "gitlens.codeLens.enabled": false
 }
+
