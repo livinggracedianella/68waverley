@@ -9,13 +9,15 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 20px;
-    padding: 20px 40px;
+    padding: 0 40px;
+    margin: 20px 0;
     width: 100%;
   }
-  :global(div.gridComponent > a) {
+  div.gridComponent > :global(a) {
     border: 2px solid #ffffff00;
   }
-  :global(div.gridComponent > a:hover, div.gridComponent > a:focus) {
+  div.gridComponent > :global(a:hover),
+  div.gridComponent > :global(a:focus) {
     transform: scale(1.02);
     border: 2px solid var(--primary-color);
     outline: none;
@@ -23,13 +25,16 @@
   @media (max-width: 1240px) {
     div {
       grid-template-columns: repeat(4, 1fr);
-      padding: 20px 30px;
+      padding: 0 30px;
+      margin: 20px 0;
     }
   }
   @media (max-width: 700px) {
     div {
       grid-template-columns: 1fr 1fr;
-      padding: 20px;
+      padding: 0 20px;
+      margin: 20px 0;
     }
   }
 </style>
+
