@@ -1,16 +1,22 @@
 ---
 import { markedHelper } from '../util'
+import { strapiAsset } from '../util'
 import Grid from '../layout-components/Grid.astro'
-const { title, overview, gatherings } = Astro.props
+const { title, overview, gatherings, cardImage } = Astro.props
 const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
-console.log(Astro.props)
+const imageUrl = `url(${strapiAsset(
+  cardImage.data.attributes.formats.small.url
+)})`
 ---
 
 <Grid>
   <a class="card" href="/gatherings">
-    <div class="inner first">
-      <h2>{title}</h2>
-      <div class="gatheringDetails" set:html={markedHelper(overview)} />
+    <div class="backgroundColour">
+      <div class="inner first"></div>
+      <div class="firstText">
+        <h2>{title}</h2>
+        <div class="gatheringDetails" set:html={markedHelper(overview)} />
+      </div>
     </div>
   </a>
   {
@@ -36,10 +42,13 @@ console.log(Astro.props)
     ))
   }
 </Grid>
-<style define:vars={{ firstItemSpan }}>
+<style define:vars={{ firstItemSpan, imageUrl }}>
+  :root {
+    --grid-card-padding: 2.5rem 25px 2rem 25px;
+  }
   div.inner {
     background: var(--light);
-    padding: 2.5rem 25px 1.2rem 25px;
+    padding: var(--grid-card-padding);
     height: 100%;
   }
   :global(div.gatheringDetails *) {
@@ -48,11 +57,28 @@ console.log(Astro.props)
   div.inner * {
     color: var(--gunmetal);
   }
-  div.first {
-    grid-column: span var(--firstItemSpan);
-    background: var(--primary-color);
+  div.backgroundColour {
+    background-color: var(--primary-color);
+    height: 100%;
+    position: relative;
+    z-index: -2;
   }
-  div.first * {
+  div.first {
+    position: absolute;
+    z-index: -1;
+    grid-column: span var(--firstItemSpan);
+    background-image: var(--imageUrl);
+    filter: grayscale(100%);
+    mix-blend-mode: multiply;
+    height: 100%;
+    width: 100%;
+  }
+  div.firstText {
+    position: relative;
+    z-index: 1;
+    padding: var(--grid-card-padding);
+  }
+  div.firstText * {
     color: white;
   }
   .gathering-detail:not(:last-of-type)::after {
@@ -67,6 +93,9 @@ console.log(Astro.props)
   }
   div.inner h3 {
     color: var(--primary-color);
+  }
+  div.inner p {
+    line-height: 140%;
   }
   h2 {
     font-size: calc(36rem / 16);
@@ -84,4 +113,3 @@ console.log(Astro.props)
     grid-column: span 2;
   }
 </style>
-

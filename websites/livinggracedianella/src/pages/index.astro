@@ -9,8 +9,8 @@ import {
 const pageData = await fetchFilterPopulate('/api/pages', 'home', [
   'header.headerImage',
   'blocks.image',
+  'blocks.cardImage',
   'blocks.gatherings',
-  'blocks.gatherings.cardImage',
   'blocks.message',
   'blocks.message.featureImage',
   'blocks.message.featureImage.image',
