@@ -19,7 +19,7 @@ export async function fetchFilter(uri, slug) {
       slug: {
         $eq: slug,
       },
-      website: {
+      websites: {
         key: {
           $eq: site(),
         },
@@ -35,7 +35,7 @@ export async function fetchFilterPopulate(uri, slug, populate) {
       slug: {
         $eq: slug,
       },
-      website: {
+      websites: {
         key: {
           $eq: site(),
         },
@@ -79,4 +79,3 @@ export function parseDate(givenDate) {
     date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear()
   return fullDate
 }
-
