@@ -6,6 +6,7 @@ import {
   site,
   fetchFilterPopulate,
   BlockRenderer,
+  TwoColumn,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -32,7 +33,7 @@ const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
   'blocks.post.featureImage',
   'blocks.post.featureImage.image',
 ])
-
+console.log(pageData)
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
 const header = gathering.header
 const blocks = pageData.data[0]?.attributes?.blocks ?? ''
@@ -44,7 +45,7 @@ const blocks = pageData.data[0]?.attributes?.blocks ?? ''
     <div class="inner">
       <p>{gathering.oneLiner}</p>
       <div class="flex-row">
-        <h3>{gathering.time_slot}</h3>
+        <h3>{gathering.timeSlot}</h3>
         <h3>{gathering.location}</h3>
       </div>
       <section set:html={markedHelper(gathering.shortDescription ?? '')} />

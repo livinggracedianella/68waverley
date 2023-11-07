@@ -17,7 +17,10 @@ culture or gender.`
   <div class="details">
     <slot />
   </div>
-  <div class="description" set:html={markedHelper(description)} />
+  <div
+    class="description"
+    set:html={markedHelper(description) + '<p class="cta">Find out more</p>'}
+  />
   <div class="image"></div>
 </div>
 <style define:vars={{ imageUrl }}>
@@ -42,8 +45,15 @@ culture or gender.`
     background: white;
     grid-column: 2/-1;
     grid-row: 2/-2;
-    padding: 0 10px 10px 25px;
+    padding: 0 10px 15px 25px;
     color: var(--gunmetal);
+  }
+  :global(div.description *:first-child) {
+    font-size: var(--font-size-hero-p);
+  }
+  :global(div.description .cta) {
+    color: var(--primary-color);
+    font-family: var(--bold);
   }
   div.image {
     grid-column: 1 / 3;
