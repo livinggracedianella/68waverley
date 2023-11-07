@@ -5,7 +5,8 @@ import Grid from '../layout-components/Grid.astro'
 const { title, overview, gatherings, cardImage } = Astro.props
 const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
 const imageUrl = `url(${strapiAsset(
-  cardImage.data.attributes.formats.small.url
+  cardImage?.data?.attributes?.formats?.small?.url ??
+    '/uploads/small_Michael_Living_Grace_10c3d24f38.jpg'
 )})`
 ---
 
