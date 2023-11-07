@@ -1,12 +1,13 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
-import { Header } from '@rkn/page-components'
 import {
+  Header,
   markedHelper,
   site,
   fetchFilterPopulate,
   BlockRenderer,
   TwoColumn,
+  strapiAsset,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -21,6 +22,7 @@ const { page } = Astro.params
 
 const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
   'header.headerImage',
+  'featureImage',
   'blocks',
   'blocks.image',
   'blocks.message',
@@ -31,43 +33,41 @@ const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
   'blocks.post',
   'blocks.post.profiles',
   'blocks.post.featureImage',
-  'blocks.post.featureImage.image',
 ])
-console.log(pageData)
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
 const header = gathering.header
 const blocks = pageData.data[0]?.attributes?.blocks ?? ''
+const imageUrl = `url(${strapiAsset(
+  pageData.data[0]?.attributes?.featureImage?.data?.attributes?.formats?.small
+    ?.url
+)})`
+console.log(imageUrl)
 ---
 
 <BaseLayout title={gathering.title}>
   <div class="outer">
-    <Header {...header} />
-    <div class="inner">
-      <p>{gathering.oneLiner}</p>
-      <div class="flex-row">
-        <h3>{gathering.timeSlot}</h3>
-        <h3>{gathering.location}</h3>
+    <Header
+      {...header}
+      subtitle={`${gathering.timeSlot} | ${gathering.location}`}
+    />
+    <TwoColumn>
+      <div class="containerOuter">
+        <div class="containerInner">
+          <p>{gathering.oneLiner}</p>
+          <section set:html={markedHelper(gathering.shortDescription ?? '')} />
+        </div>
       </div>
-      <section set:html={markedHelper(gathering.shortDescription ?? '')} />
-      {blocks && <BlockRenderer blocks={blocks} />}
-    </div>
+      <div class="image" slot="second"></div>
+    </TwoColumn>
+    {blocks && <BlockRenderer blocks={blocks} />}
   </div>
 </BaseLayout>
-<style>
+<style define:vars={{ imageUrl }}>
   div.outer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  div.inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 700px;
-    flex-grow: 0;
-    text-wrap: wrap;
   }
   div.flex-row {
     display: flex;
@@ -77,5 +77,24 @@ const blocks = pageData.data[0]?.attributes?.blocks ?? ''
   section {
     max-width: 700px;
     padding-bottom: 1rem;
+  }
+  div.image {
+    background-image: var(--imageUrl);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: auto;
+    height: 100%;
+    min-height: max(200px, 30vh);
+  }
+  div.containerOuter {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+  }
+  div.containerInner > p {
+    color: var(--primary-color);
+    font-size: var(--font-size-hero-p);
+    font-family: var(--italic);
+    max-width: 700px;
   }
 </style>
