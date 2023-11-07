@@ -10,13 +10,13 @@ const navDetails = await fetchPageData(`/api/navigations`, {
       },
     },
   },
-  populate: ['menu_items', 'menu_items.sub_menu_links', 'websites'],
+  populate: ['menuItems', 'menuItems.subMenuLinks', 'websites'],
 })
 const primaryColour =
-  `var(--${navDetails.data[0].attributes.websites.data.attributes.primary_colour})` ??
+  `var(--${navDetails.data[0].attributes.websites.data.attributes.primaryColour})` ??
   'var(--gunmetal)'
 
-const menuItems = navDetails.data[0].attributes.menu_items
+const menuItems = navDetails.data[0].attributes.menuItems
 const logoData = await fetchPageData('/api/navigations', {
   filters: {
     websites: {
@@ -46,17 +46,17 @@ const logoAltText =
       <ul class="navlist">
         {
           menuItems.map((menuItem) => {
-            if (menuItem.sub_menu_links[0]) {
+            if (menuItem.subMenuLinks[0]) {
               return (
                 <li class="menu-item dropdown">
-                  <a class="menu-item" href={menuItem.url_path}>
+                  <a class="menu-item" href={menuItem.urlPath}>
                     {menuItem.name.trim()} <span>&gt;</span>
                   </a>
                   <ul class="dropdown">
-                    {menuItem.sub_menu_links.map((sml) => {
+                    {menuItem.subMenuLinks.map((sml) => {
                       return (
                         <li class="sub-menu-item">
-                          <a href={sml.url_path}>{sml.name.trim()}</a>
+                          <a href={sml.urlPath}>{sml.name.trim()}</a>
                         </li>
                       )
                     })}
@@ -66,7 +66,7 @@ const logoAltText =
             }
             return (
               <li class="menu-item">
-                <a class="menu-item clickable" href={menuItem.url_path}>
+                <a class="menu-item clickable" href={menuItem.urlPath}>
                   {menuItem.name.trim()}
                 </a>
               </li>

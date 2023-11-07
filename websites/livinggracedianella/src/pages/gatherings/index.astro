@@ -2,7 +2,7 @@
 import { BaseLayout } from '@rkn/base-components'
 import { Header, fetchFilterPopulate, markedHelper, strapiAsset, site, BoxesCard, BoxesWrapper } from '@rkn/page-components'
 
-const data = await fetchFilterPopulate('/api/pages', 'gatherings', ['header.header_image', 'blocks.gatherings', 'blocks.gatherings.featureImage.image'])
+const data = await fetchFilterPopulate('/api/pages', 'gatherings', ['header.headerImage', 'blocks.gatherings', 'blocks.gatherings.featureImage.image'])
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
@@ -23,7 +23,7 @@ const header = pageData.header
                 let { width, height, url } = gathering.attributes.featureImage?.image.data.attributes.formats.small ?? { 'width':234, 'height':156, 'url':'/uploads/small_Michael_Living_Grace_10c3d24f38.jpg' }
                 return (
                 <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
-                    <BoxesCard imageUri={url} description={gathering?.attributes?.short_description ?? ""}>
+                    <BoxesCard imageUri={url} description={gathering?.attributes?.shortDescription ?? ""}>
                         <h3>{gathering.attributes.title}</h3>
                         <h4>{gathering.attributes.time_slot}</h4>
                         <h4>{gathering.attributes.location}</h4>

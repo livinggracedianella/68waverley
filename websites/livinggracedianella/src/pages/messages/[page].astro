@@ -22,14 +22,14 @@ const pageData = await fetchPageData(`/api/sermons`, {
     },
   },
   populate: [
-    'feature_image',
-    'feature_image.image',
-    'soundcloud_recording',
+    'featureImage',
+    'featureImage.image',
+    'soundcloudRecording',
     'profiles',
   ],
 })
 const message = pageData.data[0].attributes
-const header = message?.header ?? { header_title: message.title }
+const header = message?.header ?? { headerTitle: message.title }
 const featureImage = message.featureImage
 ---
 

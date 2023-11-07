@@ -2,7 +2,7 @@
 import { BaseLayout } from '@rkn/base-components'
 import { Header, fetchFilterPopulate, markedHelper } from '@rkn/page-components'
 
-const data = await fetchFilterPopulate('/api/pages', 'events', ['header.header_image', 'blocks.event', 'blocks.event.featureImage', 'blocks.event.featureImage.image'])
+const data = await fetchFilterPopulate('/api/pages', 'events', ['header.headerImage', 'blocks.event', 'blocks.event.featureImage', 'blocks.event.featureImage.image'])
 
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks

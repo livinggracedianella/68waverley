@@ -1,10 +1,10 @@
 ---
 import { strapiAsset, parseDate } from '@rkn/page-components'
 const { message } = Astro.props
-const { title, date, slug, profiles, feature_image, soundcloud_recording } =
+const { title, date, slug, profiles, featureImage, soundcloudRecording } =
   message?.data?.attributes ?? message.attributes
-const { caption } = feature_image ?? ''
-const embedCode = soundcloud_recording.embed_code
+const { caption } = featureImage ?? ''
+const embedCode = soundcloudRecording.embedCode
 const iframeUrl = embedCode
   ?.match(`src="([^"]+)"`)?.[1]
   .replace('visual=true', 'visual=false')

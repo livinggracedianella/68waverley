@@ -19,18 +19,18 @@ export async function getStaticPaths() {
 const { page } = Astro.params
 
 const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
-  'header.header_image',
+  'header.headerImage',
   'blocks',
   'blocks.image',
   'blocks.message',
-  'blocks.message.feature_image',
-  'blocks.message.feature_image.image',
-  'blocks.message.soundcloud_recording',
+  'blocks.message.featureImage',
+  'blocks.message.featureImage.image',
+  'blocks.message.soundcloudRecording',
   'blocks.message.profiles',
   'blocks.post',
   'blocks.post.profiles',
-  'blocks.post.featured_image',
-  'blocks.post.featured_image.image',
+  'blocks.post.featureImage',
+  'blocks.post.featureImage.image',
 ])
 
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
@@ -42,12 +42,12 @@ const blocks = pageData.data[0]?.attributes?.blocks ?? ''
   <div class="outer">
     <Header {...header} />
     <div class="inner">
-      <p>{gathering.one_liner}</p>
+      <p>{gathering.oneLiner}</p>
       <div class="flex-row">
         <h3>{gathering.time_slot}</h3>
         <h3>{gathering.location}</h3>
       </div>
-      <section set:html={markedHelper(gathering.short_description ?? '')} />
+      <section set:html={markedHelper(gathering.shortDescription ?? '')} />
       {blocks && <BlockRenderer blocks={blocks} />}
     </div>
   </div>

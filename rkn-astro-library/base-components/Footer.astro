@@ -26,7 +26,7 @@ const footerDetails = await fetchPageData(`/api/footers`, {
 const footerData = footerDetails.data[0]
 const logoData = footerData.attributes.logo.data.attributes
 const logoURL = `${strapi}${logoData.url}`
-const primaryColour = `var(--${footerDetails.data[0].attributes.websites.data.attributes.primary_colour})`
+const primaryColour = `var(--${footerDetails.data[0].attributes.websites.data.attributes.primaryColour})`
 ---
 
 <footer>
@@ -41,7 +41,7 @@ const primaryColour = `var(--${footerDetails.data[0].attributes.websites.data.at
           set:html={markedHelper(footerData.attributes.address)}
         />
         <div class="contactContainer">
-          <a class="contact" href={footerData.attributes.contact.url_path}
+          <a class="contact" href={footerData.attributes.contact.urlPath}
             >{footerData.attributes.contact.name}</a
           >
         </div>

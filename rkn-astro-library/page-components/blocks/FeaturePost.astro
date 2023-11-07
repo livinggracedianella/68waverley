@@ -2,11 +2,15 @@
 import { markedHelper, strapiAsset, site } from '../util.js'
 
 const props = Astro.props
-const { title, one_liner, date, profiles, featured_image, slug } =
+const { title, oneLiner, date, profiles, featureImage, slug } =
   props?.post?.data?.attributes ?? props?.post?.attributes ?? props.post
-const { caption } = featured_image
-const { url, width, height } =
-  featured_image.image.data.attributes.formats.small
+const { caption } = featureImage ?? ''
+const { url, width, height } = featureImage?.image?.data?.attributes?.formats
+  ?.small ?? {
+  url: '/uploads/small_Sermon_Image_Background_ed63796e21.png',
+  width: 208,
+  height: 156,
+}
 let prefix
 site() === 'livinggracedianella' ? (prefix = '/posts/') : (prefix = '/blog/')
 ---
@@ -16,7 +20,7 @@ site() === 'livinggracedianella' ? (prefix = '/posts/') : (prefix = '/blog/')
   <p>{profiles.data.map((p) => p.attributes.name)}</p>
   <img src={strapiAsset(url)} width={width} height={height} alt={caption} />
   <div>{date}</div>
-  <div set:html={markedHelper(one_liner)} />
+  <div set:html={markedHelper(oneLiner)} />
 </article>
 
 <style>

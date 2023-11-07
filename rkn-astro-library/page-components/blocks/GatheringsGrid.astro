@@ -18,9 +18,9 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
         <div class="inner">
           <h3>{gathering.attributes.title}</h3>
           <div class="details">
-            {gathering.attributes.time_slot && (
+            {gathering.attributes.timeSlot && (
               <span class="gathering-detail">
-                {gathering.attributes.time_slot}
+                {gathering.attributes.timeSlot}
               </span>
             )}
             {gathering.attributes.location && (
@@ -29,7 +29,7 @@ const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
               </span>
             )}
           </div>
-          <p>{gathering.attributes.one_liner}</p>
+          <p>{gathering.attributes.oneLiner}</p>
         </div>
       </a>
     ))

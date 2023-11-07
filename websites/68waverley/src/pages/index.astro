@@ -7,18 +7,18 @@ import {
 } from '@rkn/page-components'
 
 const pageData = await fetchFilterPopulate('/api/pages', 'home', [
-  'header.header_image',
+  'header.headerImage',
   'blocks.image',
   'blocks.gatherings',
   'blocks.message',
-  'blocks.message.feature_image',
-  'blocks.message.feature_image.image',
-  'blocks.message.soundcloud_recording',
+  'blocks.message.featureImage',
+  'blocks.message.featureImage.image',
+  'blocks.message.soundcloudRecording',
   'blocks.message.profiles',
   'blocks.post',
   'blocks.post.profiles',
-  'blocks.post.featured_image',
-  'blocks.post.featured_image.image',
+  'blocks.post.featureImage',
+  'blocks.post.featureImage.image',
   'blocks.event',
   'blocks.profiles',
 ])

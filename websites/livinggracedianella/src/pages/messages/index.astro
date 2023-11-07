@@ -15,11 +15,11 @@ const data = await fetchPageData('/api/pages', {
     },
   },
   populate: [
-    'header.header_image',
+    'header.headerImage',
     'blocks.message',
-    'blocks.message.feature_image',
-    'blocks.message.feature_image.image',
-    'blocks.message.soundcloud_recording',
+    'blocks.message.featureImage',
+    'blocks.message.featureImage.image',
+    'blocks.message.soundcloudRecording',
     'blocks.message.profiles',
   ],
 })
@@ -30,9 +30,9 @@ const header = pageData.header
 
 const { data: messages } = await fetchPageData('/api/sermons', {
   populate: [
-    'feature_image',
-    'feature_image.image',
-    'soundcloud_recording',
+    'featureImage',
+    'featureImage.image',
+    'soundcloudRecording',
     'profiles',
   ],
 })
