@@ -10,7 +10,7 @@
   --light: #e7e5e4;
   scroll-padding-top: calc(var(--header-height) * 0.6);
 }
-/*See '../BaseLayout.astro' for primaryColor*/
+/*See '../BaseLayout.astro' for definition of var(--primary-color) */
 
 * {
   box-sizing: border-box;
@@ -115,3 +115,4 @@ button.color_gunmetal_tint:hover {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+

@@ -94,11 +94,6 @@ p {
   line-height: 1.625rem;
 }
 
-a {
-  font-size: 1rem;
-  line-height: 1.625rem;
-}
-
 @media (max-width: 640px) {
   :root {
     --font-size-h1: calc(26rem / 16);
@@ -113,3 +108,4 @@ a {
     font-size: var(--font-size-h2);
   }
 }
+
