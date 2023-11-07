@@ -79,3 +79,15 @@ export function parseDate(givenDate) {
     date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear()
   return fullDate
 }
+
+export function contrastingText(backgroundColour) {
+  let textColor = 'white'
+  if (
+    backgroundColour?.colourPicker === 'white' ||
+    backgroundColour?.colourPicker === 'light' ||
+    !backgroundColour?.colourPicker
+  ) {
+    textColor = 'var(--gunmetal)'
+  }
+  return textColor
+}

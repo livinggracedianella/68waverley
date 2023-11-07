@@ -3,10 +3,10 @@ import { markedHelper } from '../util'
 import { strapiAsset } from '../util'
 import Grid from '../layout-components/Grid.astro'
 const { title, overview, gatherings, cardImage } = Astro.props
-const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
+const firstItemSpan = ((3 - (gatherings.data.length % 3)) * 2).toString()
 const imageUrl = `url(${strapiAsset(
   cardImage?.data?.attributes?.formats?.small?.url ??
-    '/uploads/small_Michael_Living_Grace_10c3d24f38.jpg'
+    '/uploads/small_Alpha_Lifeshared_CANADA_18_4_1905609_tomgphoto_be076bc705.jpg'
 )})`
 ---
 
@@ -67,8 +67,9 @@ const imageUrl = `url(${strapiAsset(
   div.first {
     position: absolute;
     z-index: -1;
-    grid-column: span var(--firstItemSpan);
     background-image: var(--imageUrl);
+    background-repeat: no-repeat;
+    background-size: cover;
     filter: grayscale(100%);
     mix-blend-mode: multiply;
     height: 100%;
@@ -112,5 +113,8 @@ const imageUrl = `url(${strapiAsset(
     height: 100%;
     transition: 0.25s;
     grid-column: span 2;
+  }
+  a.card:first-of-type {
+    grid-column: span var(--firstItemSpan);
   }
 </style>

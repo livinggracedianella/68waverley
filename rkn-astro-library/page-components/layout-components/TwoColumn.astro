@@ -17,6 +17,9 @@ smallSide === 'left' ? (flexDirection = 'row-reverse') : (flexDirection = 'row')
   </div>
 </div>
 <style define:vars={{ flexDirection }}>
+  :root {
+    --two-column-min-height: max(200px, 30vh);
+  }
   div.container {
     display: flex;
     flex-direction: var(--flexDirection);
@@ -25,7 +28,7 @@ smallSide === 'left' ? (flexDirection = 'row-reverse') : (flexDirection = 'row')
   }
   .first,
   .second {
-    min-height: max(200px, 30vh);
+    min-height: var(--two-column-min-height);
   }
   .first {
     width: 66%;
@@ -33,13 +36,7 @@ smallSide === 'left' ? (flexDirection = 'row-reverse') : (flexDirection = 'row')
   .second {
     width: 34%;
   }
-  @media (max-width: 1023px) {
-    .first,
-    .second {
-      width: 50%;
-    }
-  }
-  @media (max-width: 640px) {
+  @media (max-width: 750px) {
     div.container {
       flex-direction: column;
     }
