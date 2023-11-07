@@ -36,9 +36,7 @@ const featureImage = message.featureImage
 <BaseLayout title={message.title}>
   <div class="outer">
     <Header {...header} subtitle={message.caption} />
-    <div class="inner">
-      <FeatureMessage {message} />
-    </div>
+    <FeatureMessage {message} />
   </div>
 </BaseLayout>
 <style>
@@ -67,3 +65,4 @@ const featureImage = message.featureImage
     padding-bottom: 1rem;
   }
 </style>
+
