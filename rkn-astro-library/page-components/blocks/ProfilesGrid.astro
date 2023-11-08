@@ -1,10 +1,11 @@
 ---
 const { title, overview, profiles } = Astro.props
-const firstItemSpan = (3 - (profiles.data.length % 3)).toString()
+const firstItemSpan = ((3 - (profiles.data.length % 3)) * 2).toString()
 import { markedHelper, strapiAsset } from '../util'
+import Grid from '../layout-components/Grid.astro'
 ---
 
-<div class="grid-wrapper">
+<Grid>
   <div class="inner first">
     <a id={title.toLowerCase().split(' ').join('-')}></a>
     <h2>{title}</h2>
@@ -39,7 +40,7 @@ import { markedHelper, strapiAsset } from '../util'
       )
     })
   }
-</div>
+</Grid>
 <style define:vars={{ firstItemSpan }}>
   div.grid-wrapper {
     display: grid;
@@ -58,6 +59,7 @@ import { markedHelper, strapiAsset } from '../util'
     background: #ffffff;
     padding: 20px;
     box-shadow: 1px 1px 1px #51534a;
+    grid-column: span 2;
   }
   div.first {
     grid-column: span var(--firstItemSpan);

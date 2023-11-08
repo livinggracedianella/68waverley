@@ -1,0 +1,57 @@
+---
+import { strapiAsset, markedHelper } from '../util'
+const { length, title, overview } = Astro.props
+const cardImage =
+  Astro.props?.cardImage ??
+  '/uploads/small_Alpha_Lifeshared_CANADA_18_4_1905609_tomgphoto_be076bc705.jpg'
+const firstItemSpan = ((3 - (length % 3)) * 2).toString()
+const imageUrl = `url(${strapiAsset(
+  cardImage?.data?.attributes?.formats?.small?.url ?? cardImage
+)})`
+---
+
+<a class="card" href="/gatherings">
+  <div class="backgroundColour">
+    <div class="inner first"></div>
+    <div class="firstText">
+      <h2>{title}</h2>
+      <div class="gatheringDetails" set:html={markedHelper(overview)} />
+    </div>
+  </div>
+</a>
+<style define:vars={{ firstItemSpan, imageUrl }}>
+  a.card {
+    text-decoration: none;
+    color: white;
+    height: 100%;
+    transition: 0.25s;
+    grid-column: span var(--firstItemSpan);
+  }
+  div.backgroundColour {
+    background-color: var(--primary-color);
+    height: 100%;
+    position: relative;
+    z-index: -2;
+  }
+  div.first {
+    position: absolute;
+    z-index: -1;
+    background-image: var(--imageUrl);
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: grayscale(100%);
+    mix-blend-mode: multiply;
+    height: 100%;
+    width: 100%;
+  }
+  div.firstText {
+    position: relative;
+    z-index: 1;
+    padding: var(--grid-card-padding);
+  }
+  h2 {
+    font-size: calc(36rem / 16);
+    margin-top: 0;
+    line-height: 110%;
+  }
+</style>
