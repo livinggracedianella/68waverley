@@ -8,12 +8,18 @@ let catterpillars
 if (!profiles?.data?.[0]) {
   profiles = await fetchPopulate('/api/profiles', ['portrait'])
 }
-console.log(profiles)
+let length = profiles.data.length
+profiles.data.forEach((profile) => {
+  console.log(profile)
+  if (profile.attributes.slug == Astro.params.page) {
+    length -= 1
+  }
+})
 ---
 
 <Grid>
   <GridFeatureCard
-    length={profiles.data.length}
+    length={length}
     title={title}
     overview={overview}
     href="/about-us#our-people"
@@ -21,6 +27,9 @@ console.log(profiles)
   {
     profiles.data.map((profile) => {
       let bio = profile.attributes.bio
+      if (profile.attributes.slug === Astro.params.page) {
+        return
+      }
       return (
         <a href={`/profiles/${profile.attributes.slug}`} class="card">
           <div class="inner">
