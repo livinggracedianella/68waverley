@@ -20,7 +20,6 @@ const pageData = await fetchFilterPopulate(`/api/events`, page, [
 const event = pageData.data[0].attributes
 const header = event.header
 const featureImage = event.featureImage
-console.log(featureImage)
 ---
 
 <BaseLayout title={event.title}>

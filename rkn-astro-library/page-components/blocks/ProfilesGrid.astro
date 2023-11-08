@@ -1,9 +1,14 @@
 ---
-const { title, overview, profiles } = Astro.props
-import { markedHelper, strapiAsset } from '../util'
+let { title, overview, profiles } = Astro.props
+import { markedHelper, strapiAsset, fetchPopulate } from '../util'
 import Grid from '../layout-components/Grid.astro'
 import GridFeatureCard from '../layout-components/GridFeatureCard.astro'
 import GridImageDiv from '../layout-components/GridImageDiv.astro'
+let catterpillars
+if (!profiles?.data?.[0]) {
+  profiles = await fetchPopulate('/api/profiles', ['portrait'])
+}
+console.log(profiles)
 ---
 
 <Grid>
@@ -51,6 +56,7 @@ import GridImageDiv from '../layout-components/GridImageDiv.astro'
     display: grid;
     grid-template-columns: 3fr 2fr;
     grid-column: span 2;
+    height: 100%;
   }
   div.textContainer {
     padding: 20px;

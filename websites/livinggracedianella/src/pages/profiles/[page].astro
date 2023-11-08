@@ -11,6 +11,7 @@ import {
   GridFeatureCard,
   fetchPopulate,
   GridImageDiv,
+  ProfilesGrid,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -48,135 +49,58 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
         <div class="imageContainer">
           <TwoColumnImageDiv image={portrait} />
         </div>
-        <a class="cta" href=`mailto:${provider.email}`>{provider.email}</a>
+        <!--The below line looks wrong in my code editor but works fine RKN-->
+        {provider.email && <a class="cta" href=`mailto:${provider.email}`
+          >{provider.email}</a
+        >}
       </div>
     </TwoColumn>
-    <Grid>
-      <GridFeatureCard
-        title="More People"
-        overview="Who else would you like to meet?"
-        length={(profiles.data.length - 1)}
-        href="/about-us#our-people"
-      />
-      {
-        profiles.data.map((profile) => {
-          let bio = profile.attributes.bio
-          if (profile.attributes.name === provider.name) {return}
-          return (
-            <a class="card" href={`/profiles/${profile.attributes.slug}`} class="card">
-              <div class="inner">
-                <div class="textContainer">
-                  <h3>{profile.attributes.name}</h3>
-                  <h4>
-                    {profile.attributes.title && (
-                      <span class="profile-detail">{profile.attributes.title}</span>
-                    )}
-                  </h4>
-                  <p class="bio">
-                    {bio.length >= 100 && `${bio.substring(0, 100)}...`}
-                    {bio.length < 100 && `${bio}`}
-                  </p>
-                </div>
-                <div class="imageContainer">
-                  <GridImageDiv image={profile.attributes.portrait} />
-                </div>
-              </div>
-            </a>
-          )
-        })
-      }
-    </Grid>
+    <ProfilesGrid
+      title="More People"
+      overview="Who else would you like to meet?"
+    />
   </div>
-  <style>
-    div.outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    div.imageContainer {
-      height: 100%;
-      max-height: max(40vh, 250px);
-    }
-    div.sidePanel {
-      background-color: var(--primary-color);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    a.cta {
-      color: white;
-      padding: 20px;
-      display: block;
-    }
-    div.ProfileTextContainer {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 50px;
-    }
-    :global(div.ProfileTextContainer :is(p, a)) {
-      color: var(--gunmetal);
-    }
-    :global(div.ProfileTextContainer :is(h3, h4)) {
-      color: var(--primary-color);
-    }
-    :global(div.ProfileTextContainer p:first-of-type:first-line) {
-      color: var(--primary-color);
-      font-size: var(--font-size-hero-p);
-    }
-    @media (max-width: 750px) {
-      div.imageContainer {
-        height: 300px;
-      }
-    }
-
-    /*Styles copied from profiles Grid*/
-    a.card {
-    grid-column: span 2;
-    text-decoration: none;
-    color: var(--gunmetal);
-    background: var(--light);
+</BaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
-  a.card div.inner {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-column: span 2;
+  div.imageContainer {
+    height: 100%;
+    max-height: max(40vh, 250px);
   }
-  a.card div.textContainer {
+  div.sidePanel {
+    background-color: var(--primary-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  a.cta {
+    color: white;
     padding: 20px;
+    display: block;
   }
-  @media (max-width: 900px) {
-    a.card div.textContainer {
-      padding: 10px;
-    }
-    a.card h3 {
-      font-size: var(--font-size-h4);
-    }
-    a.card h4 {
-      font-size: var(--font-size-h5);
-    }
+  div.ProfileTextContainer {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 50px;
   }
-  a.card .profile-detail:not(:last-of-type)::after {
-    content: '|';
+  :global(div.ProfileTextContainer :is(p, a)) {
+    color: var(--gunmetal);
   }
-  a.card h4 {
-    font-family: var(--italic);
-    margin-top: 0;
-  }
-  a.card h2,
-  a.card h3 {
-    margin-top: 0;
-  }
-  a.card h3 {
+  :global(div.ProfileTextContainer :is(h3, h4)) {
     color: var(--primary-color);
   }
-  a.card .imageContainer {
-    height: 100%;
+  :global(div.ProfileTextContainer p:first-of-type:first-line) {
+    color: var(--primary-color);
+    font-size: var(--font-size-hero-p);
   }
-  @media (max-width: 420px) {
-    a.card p.bio {
-      display: none;
+  @media (max-width: 750px) {
+    div.imageContainer {
+      height: 300px;
     }
   }
-  </style>
-</BaseLayout>
+</style>
