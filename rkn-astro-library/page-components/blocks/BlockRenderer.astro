@@ -11,6 +11,7 @@ import {
   ContactUs,
   ContactForm,
   StandardsBlock,
+  QuoteBlock,
 } from '@rkn/page-components'
 const { blocks } = Astro.props
 ---
@@ -81,6 +82,12 @@ const { blocks } = Astro.props
       return (
         <section>
           <StandardsBlock {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.quote') {
+      return (
+        <section>
+          <QuoteBlock {...componentData} />
         </section>
       )
     } else {
