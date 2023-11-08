@@ -10,7 +10,6 @@ if (!profiles?.data?.[0]) {
 }
 let length = profiles.data.length
 profiles.data.forEach((profile) => {
-  console.log(profile)
   if (profile.attributes.slug == Astro.params.page) {
     length -= 1
   }
