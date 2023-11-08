@@ -1,10 +1,11 @@
 ---
-//Requires length (number of other cards), title, overview, and cardImage props
+//Requires length (number of other cards), title, overview. cardImage and href props optional (points to gatherings by default).
 import { strapiAsset, markedHelper } from '../util'
 const {
   length,
   title = 'Add title prop',
   overview = 'Add overview prop',
+  href = '/gatherings',
 } = Astro.props
 const cardImage =
   Astro.props?.cardImage ??
@@ -15,7 +16,7 @@ const imageUrl = `url(${strapiAsset(
 )})`
 ---
 
-<a class="card" href="/gatherings">
+<a class="card" href={href}>
   <div class="backgroundColour">
     <div class="inner first"></div>
     <div class="firstText">

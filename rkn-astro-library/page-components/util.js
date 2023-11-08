@@ -46,6 +46,20 @@ export async function fetchFilterPopulate(uri, slug, populate) {
   return data
 }
 
+export async function fetchPopulate(uri, populate) {
+  const data = await fetchPageData(uri, {
+    filters: {
+      websites: {
+        key: {
+          $eq: site(),
+        },
+      },
+    },
+    populate,
+  })
+  return data
+}
+
 export function strapiAsset(uri) {
   return import.meta.env.STRAPI_HOST + uri
 }

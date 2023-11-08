@@ -1,7 +1,13 @@
 ---
+//Takes optional props 'smallSide' to change which side the small column sits on, and 'columnReverse' (boolean) to make the small side appear on top on small devices.
 let { smallSide } = Astro.props
 let flexDirection
 smallSide === 'left' ? (flexDirection = 'row-reverse') : (flexDirection = 'row')
+const columnReverse = Astro.props?.columnReverse ?? false
+let columnDirection
+columnReverse
+  ? (columnDirection = 'column-reverse')
+  : (columnDirection = 'column')
 ---
 
 <div class="container">
@@ -16,7 +22,7 @@ smallSide === 'left' ? (flexDirection = 'row-reverse') : (flexDirection = 'row')
     </slot>
   </div>
 </div>
-<style define:vars={{ flexDirection }}>
+<style define:vars={{ flexDirection, columnDirection }}>
   :root {
     --two-column-min-height: max(200px, 30vh);
   }
@@ -38,7 +44,7 @@ smallSide === 'left' ? (flexDirection = 'row-reverse') : (flexDirection = 'row')
   }
   @media (max-width: 750px) {
     div.container {
-      flex-direction: column;
+      flex-direction: var(--columnDirection);
     }
     .first,
     .second {
