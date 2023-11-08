@@ -43,6 +43,7 @@
   --line-height-h5: calc((21rem / 16) + 0.625rem);
   --font-size-hero-p: calc(18rem / 16);
   --line-height-hero-p: calc((18rem / 16) + 0.625rem);
+  --black: 'magallanescondblack', sans-serif;
   --bold: 'magallanescondbold', sans-serif;
   --italic: 'magallanescondregular-italic', sans-serif;
 }
