@@ -1,68 +1,69 @@
 ---
 const { title, overview, profiles } = Astro.props
-const firstItemSpan = ((3 - (profiles.data.length % 3)) * 2).toString()
 import { markedHelper, strapiAsset } from '../util'
 import Grid from '../layout-components/Grid.astro'
+import GridFeatureCard from '../layout-components/GridFeatureCard.astro'
+import GridImageDiv from '../layout-components/GridImageDiv.astro'
 ---
 
 <Grid>
-  <div class="inner first">
-    <a id={title.toLowerCase().split(' ').join('-')}></a>
-    <h2>{title}</h2>
-    {overview}
-  </div>
+  <GridFeatureCard
+    length={profiles.data.length}
+    title={title}
+    overview={overview}
+  />
   {
     profiles.data.map((profile) => {
       let bio = profile.attributes.bio
-      let { url, width, height } =
-        profile.attributes.portrait.data.attributes.formats.thumbnail
       return (
-        <div class="inner">
-          <img
-            src={strapiAsset(url)}
-            width={width * 0.8}
-            height={height * 0.8}
-          />
-          <h3>{profile.attributes.name}</h3>
-          <h4>
-            {profile.attributes.title && (
-              <span class="profile-detail">{profile.attributes.title}</span>
-            )}
-          </h4>
-          <p>
-            {bio.length >= 500 && `${bio.substring(0, 400)}...`}
-            {bio.length < 500 && `${bio}`}
-          </p>
-          <a class="cta" href={`/profiles/${profile.attributes.slug}`}>
-            Find out more
-          </a>
-        </div>
+        <a href={`/profiles/${profile.attributes.slug}`} class="card">
+          <div class="inner">
+            <div class="textContainer">
+              <h3>{profile.attributes.name}</h3>
+              <h4>
+                {profile.attributes.title && (
+                  <span class="profile-detail">{profile.attributes.title}</span>
+                )}
+              </h4>
+              <p>
+                {bio.length >= 100 && `${bio.substring(0, 100)}...`}
+                {bio.length < 100 && `${bio}`}
+              </p>
+            </div>
+            <div class="imageContainer">
+              <GridImageDiv image={profile.attributes.portrait} />
+            </div>
+          </div>
+        </a>
       )
     })
   }
 </Grid>
-<style define:vars={{ firstItemSpan }}>
-  div.grid-wrapper {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 20px 40px;
-    width: 100vw;
-    background: #f1f1f1;
+<style>
+  a {
+    grid-column: span 2;
+    text-decoration: none;
+    color: var(--gunmetal);
+    background: var(--light);
   }
   div.inner {
-    border-radius: 10px;
-    /*display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;*/
-    background: #ffffff;
-    padding: 20px;
-    box-shadow: 1px 1px 1px #51534a;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
     grid-column: span 2;
   }
-  div.first {
-    grid-column: span var(--firstItemSpan);
+  div.textContainer {
+    padding: 20px;
+  }
+  @media (max-width: 900px) {
+    div.textContainer {
+      padding: 10px;
+    }
+    h3 {
+      font-size: var(--font-size-h4);
+    }
+    h4 {
+      font-size: var(--font-size-h5);
+    }
   }
   .profile-detail:not(:last-of-type)::after {
     content: '|';
@@ -71,24 +72,19 @@ import Grid from '../layout-components/Grid.astro'
     font-family: var(--italic);
     margin-top: 0;
   }
-  .cta {
-    margin-top: auto;
-  }
   h2,
   h3 {
     margin-top: 0;
   }
-  img {
-    float: right;
+  h3 {
+    color: var(--primary-color);
   }
-  @media (max-width: 1024px) {
-    div.grid-wrapper {
-      grid-template-columns: 1fr 1fr;
-    }
+  .imageContainer {
+    height: 100%;
   }
-  @media (max-width: 640px) {
-    div.grid-wrapper {
-      grid-template-columns: 1fr;
+  @media (max-width: 420px) {
+    p {
+      display: none;
     }
   }
 </style>

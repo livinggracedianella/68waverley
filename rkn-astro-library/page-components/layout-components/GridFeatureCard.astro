@@ -1,6 +1,11 @@
 ---
+//Requires length (number of other cards), title, overview, and cardImage props
 import { strapiAsset, markedHelper } from '../util'
-const { length, title, overview } = Astro.props
+const {
+  length,
+  title = 'Add title prop',
+  overview = 'Add overview prop',
+} = Astro.props
 const cardImage =
   Astro.props?.cardImage ??
   '/uploads/small_Alpha_Lifeshared_CANADA_18_4_1905609_tomgphoto_be076bc705.jpg'
