@@ -1,6 +1,6 @@
 ---
-//formerly two-column
-import { markedHelper } from '../util.js'
+//formerly two-column.
+import { markedHelper, contrastingText } from '../util.js'
 import { strapiAsset, TwoColumn } from '@rkn/page-components'
 const props = Astro.props
 const img = props.image.data.attributes
@@ -10,12 +10,16 @@ const imgURL = strapiAsset(
     img.formats.thumbnail.url
 )
 const { imageVerticalAlignment, imageHorizontalAlignment } = props
+const backgroundColour = `var(--${
+  props?.backgroundColour?.colourPicker ?? 'light'
+})`
+const textColour = contrastingText(props.backgroundColour)
 ---
 
-<TwoColumn smallSide={props.imageSide}>
-  <div class="item first">
-    <div class="inner">
-      <div>
+<TwoColumn smallSide={props.imageSide} backgroundColor="backgroundColour}">
+  <div class="item">
+    <div class="outer">
+      <div class="inner">
         <h2>{props.title ?? ''}</h2>
         <div
           set:html={markedHelper(
@@ -25,10 +29,12 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
       </div>
     </div>
   </div>
-  <div class="backgroundColour" slot="second">
-    <div class="item image" style={`background-image: url("${imgURL}")`}>
-      <img src={imgURL} alt={img.alternativeText} class="sr-only" />
-    </div>
+  <div
+    class="item image"
+    slot="second"
+    style={`background-image: url("${imgURL}")`}
+  >
+    <img src={imgURL} alt={img.alternativeText} class="sr-only" />
   </div>
 </TwoColumn>
 
@@ -36,26 +42,33 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
   define:vars={{
     imageVerticalAlignment,
     imageHorizontalAlignment,
+    textColour,
+    backgroundColour,
   }}
 >
   div.item {
+    background: var(--backgroundColour);
+    min-height: var(--two-column-min-height);
     height: 100%;
   }
-  div.first {
-    background: #702082;
+  div.item * {
+    color: var(--textColour);
   }
-  div.first * {
-    color: white;
-  }
-  div.inner {
+  div.outer {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     padding: 50px;
+    height: 100%;
+  }
+  div.inner {
+    height: 100%;
+    max-width: 700px;
   }
   h2 {
     margin-top: 0;
+    font-size: var(--font-size-h3);
   }
   div.image {
     background-position: var(--imageVerticalAlignment)
@@ -63,7 +76,16 @@ const { imageVerticalAlignment, imageHorizontalAlignment } = props
     background-repeat: no-repeat;
     background-size: cover;
     width: auto;
-    height: 100%;
-    min-height: max(200px, 30vh);
+    min-height: var(--two-column-min-height);
+  }
+  @media (max-width: 900px) {
+    div.outer {
+      padding: 40px;
+    }
+  }
+  @media (max-width: 500px) {
+    div.outer {
+      padding: 35px;
+    }
   }
 </style>

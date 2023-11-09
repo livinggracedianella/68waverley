@@ -1,0 +1,20 @@
+---
+//just requires image prop
+import { strapiAsset } from '../util.js'
+const image = Astro.props.image
+const imageUrl = `url(${strapiAsset(
+  image?.data?.attributes?.formats?.small?.url
+)})`
+---
+
+<div class="image"></div>
+<style define:vars={{ imageUrl }}>
+  div.image {
+    background-image: var(--imageUrl);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: auto;
+    height: 100%;
+  }
+</style>

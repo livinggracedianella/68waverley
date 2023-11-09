@@ -1,24 +1,21 @@
 ---
-import { markedHelper } from '../util'
-import { strapiAsset } from '../util'
+import { strapiAsset, markedHelper } from '../util'
 import Grid from '../layout-components/Grid.astro'
+import GridFeatureCard from '../layout-components/GridFeatureCard.astro'
 const { title, overview, gatherings, cardImage } = Astro.props
-const firstItemSpan = (3 - (gatherings.data.length % 3)).toString()
 const imageUrl = `url(${strapiAsset(
-  cardImage.data.attributes.formats.small.url
+  cardImage?.data?.attributes?.formats?.small?.url ??
+    '/uploads/small_Alpha_Lifeshared_CANADA_18_4_1905609_tomgphoto_be076bc705.jpg'
 )})`
 ---
 
 <Grid>
-  <a class="card" href="/gatherings">
-    <div class="backgroundColour">
-      <div class="inner first"></div>
-      <div class="firstText">
-        <h2>{title}</h2>
-        <div class="gatheringDetails" set:html={markedHelper(overview)} />
-      </div>
-    </div>
-  </a>
+  <GridFeatureCard
+    length={gatherings.data.length}
+    cardImage={cardImage}
+    title={title}
+    overview={overview}
+  />
   {
     gatherings.data.map((gathering) => (
       <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
@@ -42,7 +39,7 @@ const imageUrl = `url(${strapiAsset(
     ))
   }
 </Grid>
-<style define:vars={{ firstItemSpan, imageUrl }}>
+<style define:vars={{ imageUrl }}>
   :root {
     --grid-card-padding: 2.5rem 25px 2rem 25px;
   }
@@ -56,30 +53,6 @@ const imageUrl = `url(${strapiAsset(
   }
   div.inner * {
     color: var(--gunmetal);
-  }
-  div.backgroundColour {
-    background-color: var(--primary-color);
-    height: 100%;
-    position: relative;
-    z-index: -2;
-  }
-  div.first {
-    position: absolute;
-    z-index: -1;
-    grid-column: span var(--firstItemSpan);
-    background-image: var(--imageUrl);
-    filter: grayscale(100%);
-    mix-blend-mode: multiply;
-    height: 100%;
-    width: 100%;
-  }
-  div.firstText {
-    position: relative;
-    z-index: 1;
-    padding: var(--grid-card-padding);
-  }
-  div.firstText * {
-    color: white;
   }
   .gathering-detail:not(:last-of-type)::after {
     content: '|';

@@ -1,85 +1,104 @@
 ---
-import { parseDate, strapiAsset } from '../util'
+import {
+  markedHelper,
+  strapiAsset,
+  site,
+  TwoColumn,
+  TwoColumnImageDiv,
+  parseDate,
+  Button,
+  contrastingText,
+} from '@rkn/page-components'
+
 const props = Astro.props
 const event = props.event.data.attributes
 const imageCaption = event.featureImage?.caption ?? ''
-const { url, width, height } = event.featureImage?.image?.data?.attributes
-  ?.formats?.small ?? {
-  url: '/uploads/small_Sermon_Image_Background_ed63796e21.png',
-  width: 208,
-  height: 156,
-}
-const imageSide = props.imageSide
-let direction
-imageSide == 'left' ? (direction = 'row-reverse') : (direction = 'row')
+const { imageSide } = props
+const { title, shortDescription, date, featureImage, venue, slug } =
+  props?.event?.data?.attributes ?? props?.event?.attributes ?? props.event
+const { caption } = featureImage ?? ''
+const image =
+  featureImage?.image ?? '/uploads/small_Sermon_Image_Background_ed63796e21.png'
+let margin
+imageSide == 'left' ? (margin = '1rem auto 0 0') : (margin = '1rem 0 0 auto')
+const backgroundColour = `var(--${
+  props?.backgroundColour?.colourPicker ?? 'light'
+})`
+const textColour = contrastingText(props.backgroundColour)
+let buttonColour
+backgroundColour == 'gunmetal'
+  ? (buttonColour = 'gunmetal')
+  : (buttonColour = 'var(--primary-color)')
+console.log(buttonColour)
 ---
 
-<div class="container">
-  <div class="text">
-    <div class="wrapper">
-      <h2><span>Featured Event:</span> {event.title}</h2>
-      <div class="flex">
-        <p><strong>When:</strong> {parseDate(event.date)}</p>
-        <p><strong>Where:</strong> {event.venue}</p>
+<TwoColumn smallSide={imageSide}>
+  <div class="outer">
+    <div class="inner">
+      <h2>Featured Event</h2>
+      <h3>{title}</h3>
+      <p class="details">
+        {parseDate(date)} |
+        {venue.split(' ').join('\u00A0')}
+      </p>
+      <div class="featureEventBody" set:html={markedHelper(shortDescription)} />
+      <div class="button">
+        <Button
+          href={'/events/' + slug}
+          label="Find Out More"
+          buttonColour={buttonColour}
+        />
       </div>
-      <p>{event.oneLiner}</p>
-      <a href=`/events/${event.slug}`>Find out more!</a>
     </div>
   </div>
-  <div class="image">
-    <img
-      src={strapiAsset(url)}
-      width={width}
-      height={height}
-      alt={imageCaption}
-    />
-  </div>
-</div>
-
-<style define:vars={{ direction }}>
-  .flex {
+  <TwoColumnImageDiv image={image} slot="second" />
+</TwoColumn>
+<style define:vars={{ margin, backgroundColour, textColour }}>
+  div.outer {
+    padding: 1rem 2rem 3rem 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: var(--backgroundColour);
   }
-  .flex p {
-    margin: 0 20px;
+  div.outer * {
+    color: var(--textColour);
   }
-  .container {
-    display: flex;
-    width: 100vw;
-    flex-direction: var(--direction);
-  }
-  .wrapper {
-    padding: 3rem;
+  div.inner {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
-  .text {
-    width: 66vw;
+  div.button,
+  h2 {
+    margin: var(--margin);
   }
-  .image {
-    width: 33vw;
-    margin-left: auto;
+  :global(.featureEventBody *) {
+    font-size: var(--font-size-hero-p);
+    line-height: var(--line-height-hero-p);
   }
-  span {
-    font-family: var(--bold);
+  p.details {
+    font-size: var(--font-size-h4);
+    font-family: var(--italic);
+    margin: 0.8rem 0 1.5rem 0;
+    line-height: var(--line-height-h4);
   }
-  @media (max-width: 1024px) {
-    .text,
-    .image {
-      width: 50vw;
+  div.button {
+    padding-top: 1rem;
+  }
+  @media (max-width: 750px) {
+    div.button,
+    h2 {
+      margin: 0.3rem auto;
     }
-  }
-  @media (max-width: 640px) {
-    .container {
-      flex-direction: column;
+    div.button {
+      padding: 1rem 0 0.2rem 0;
     }
-    .text,
-    .image {
-      width: 100vw;
+    div.outer {
+      padding: 2rem;
+    }
+    p.details {
+      margin: 0 0 1.4rem 0;
+      font-size: var(--font-size-h5);
     }
   }
 </style>

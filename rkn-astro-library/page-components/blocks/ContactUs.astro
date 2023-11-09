@@ -1,40 +1,80 @@
 ---
 import { markedHelper } from '../util.js'
-const props=Astro.props
+const props = Astro.props
 ---
+
 <div class="wrapper">
-  <a id={props.title.toLowerCase().split(" ").join("-")}></a>
-  <div class="column">
-    <h2>{props.title}</h2>
-    <section set:html={markedHelper(props.contactDetails)}/>
-    <img>
+  <div class="maps">
+    <iframe
+      class="responsive-iframe"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d132636.55677041857!2d115.86291794897407!3d-31.92827556295094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2a32b0137c26e495%3A0x1353267079bf9925!2s68%20Waverley%20St%2C%20Dianella%20WA%206059!5e0!3m2!1sen!2sau!4v1675942577477!5m2!1sen!2sau"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    >
+    </iframe>
   </div>
-  <div>
-  <iframe
-  class="responsive-iframe"
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d132636.55677041857!2d115.86291794897407!3d-31.92827556295094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2a32b0137c26e495%3A0x1353267079bf9925!2s68%20Waverley%20St%2C%20Dianella%20WA%206059!5e0!3m2!1sen!2sau!4v1675942577477!5m2!1sen!2sau"
-  style="border:0;"
-  allowfullscreen=""
-  loading="lazy"
-  referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
+  <div class="contactDetails">
+    <a id={props.title.toLowerCase().split(' ').join('-')}></a>
+    <div class="contactColumn">
+      <div class="contactInner">
+        <h3>{props.title}</h3>
+        <section set:html={markedHelper(props.contactDetails)} />
+      </div>
+    </div>
   </div>
 </div>
 <style>
   div.wrapper {
-    display: flex;
+    display: grid;
     margin: 0 auto;
+    grid-template-columns: 1fr 1fr 1fr;
   }
-  div.column {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    width: 33vw;
-    align-items: center;
+  div.contactColumn {
+    padding: 5rem 6rem;
   }
   iframe {
-    aspect-ratio: 4 / 3;
-    height: auto;
-    width: 33vw;
+    height: 100%;
+    width: 100%;
+    max-height: max(50vh, 400px);
+  }
+  h3 {
+    font-family: var(--black);
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: var(--font-size-h2);
+  }
+  :global(div.contactColumn .contactInner p) {
+    color: var(--gunmetal);
+    font-size: var(--font-size-hero-p);
+  }
+  :global(div.contactColumn .contactInner a) {
+    color: var(--primary-color);
+  }
+  @media (max-width: 1240px) {
+    div.wrapper {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 900px) {
+    div.contactColumn {
+      padding: 2.5rem 2.5rem 2.5rem 3.5rem;
+    }
+  }
+  @media (max-width: 700px) {
+    div.wrapper {
+      grid-template-columns: 1fr;
+    }
+    div.contactDetails {
+      grid-row: 1;
+    }
+    iframe {
+      min-height: 50vh;
+    }
+    div.contactColumn {
+      padding: 5vw 10vw 9vw 10vw;
+    }
   }
 </style>

@@ -1,12 +1,11 @@
 ---
 //formerly 'full width'
-import { markedHelper } from '../util.js'
+import { markedHelper, contrastingText } from '../util.js'
 const props = Astro.props
-let textColor = 'white'
-if (props.background === 'white' || !props.background) {
-  textColor = 'black'
-}
-let backgroundColor = `var(--${props.background ?? 'white'})`
+let textColor = contrastingText(props.backgroundColour)
+let backgroundColor = `var(--${
+  props?.backgroundColour?.colourPicker ?? 'white'
+})`
 ---
 
 <div class="full-width">
@@ -21,8 +20,8 @@ let backgroundColor = `var(--${props.background ?? 'white'})`
     flex-direction: column;
     justify-content: center;
     background-color: var(--backgroundColor);
-    width: 100vw;
-    padding: calc(30rem / 16);
+    width: 100%;
+    padding: calc(50rem / 16) 50px;
   }
   div.full-width * {
     color: var(--textColor);
@@ -31,5 +30,15 @@ let backgroundColor = `var(--${props.background ?? 'white'})`
   h2 {
     margin: 0 auto;
     max-width: 700px;
+  }
+  h2 {
+    font-size: var(--font-size-h3);
+  }
+  div.full-width :global(h3) {
+    font-size: var(--font-size-h4);
+  }
+  div.full-width :global(h4) {
+    font-size: var(--font-size-h5);
+    font-family: var(--italic);
   }
 </style>

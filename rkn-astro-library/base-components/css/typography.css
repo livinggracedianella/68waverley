@@ -43,6 +43,7 @@
   --line-height-h5: calc((21rem / 16) + 0.625rem);
   --font-size-hero-p: calc(18rem / 16);
   --line-height-hero-p: calc((18rem / 16) + 0.625rem);
+  --black: 'magallanescondblack', sans-serif;
   --bold: 'magallanescondbold', sans-serif;
   --italic: 'magallanescondregular-italic', sans-serif;
 }
@@ -53,7 +54,7 @@ h3,
 h4,
 h5,
 p {
-  margin-top: 1em;
+  margin-top: 0.5em;
 }
 
 h1 {
@@ -91,13 +92,13 @@ p.hero {
 
 p {
   font-size: 1rem;
-  line-height: 1.625rem;
+  line-height: 1.35rem;
 }
 
 @media (max-width: 640px) {
   :root {
-    --font-size-h1: calc(26rem / 16);
-    --font-size-h2: calc(23rem / 16);
+    --font-size-h1: calc(36rem / 16);
+    --font-size-h2: calc(30rem / 16);
   }
 
   h1 {
@@ -108,4 +109,17 @@ p {
     font-size: var(--font-size-h2);
   }
 }
+@media (max-width: 400px) {
+  :root {
+    --font-size-h1: calc(31rem / 16);
+    --font-size-h2: calc(27rem / 16);
+  }
 
+  h1 {
+    font-size: var(--font-size-h1);
+  }
+
+  h2 {
+    font-size: var(--font-size-h2);
+  }
+}

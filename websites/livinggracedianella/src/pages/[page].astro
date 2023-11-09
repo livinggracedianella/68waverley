@@ -31,6 +31,8 @@ const pageData = await fetchFilterPopulate(`/api/pages`, page, [
   'blocks.event',
   'blocks.profiles',
   'blocks.profiles.portrait',
+  'blocks.backgroundColour',
+  'blocks.standards',
 ])
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
@@ -39,9 +41,7 @@ const header = pageData.data[0].attributes.header
 <BaseLayout title="Styleguide">
   <div class="outer">
     <Header {...header} />
-    <div class="inner">
-      <BlockRenderer blocks={blocks} />
-    </div>
+    <BlockRenderer blocks={blocks} />
   </div>
   <style>
     div.outer {
@@ -49,13 +49,6 @@ const header = pageData.data[0].attributes.header
       flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-    div.inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      max-width: 700px;
     }
   </style>
 </BaseLayout>

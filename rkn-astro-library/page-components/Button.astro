@@ -1,22 +1,24 @@
 ---
+//Takes href and label
 const props = Astro.props
+const buttonColour = props?.buttonColour ?? 'var(--gunmetal)'
 ---
 
 <a class="button" href={props.href}>{props.label}</a>
-<style>
+<style define:vars={{ buttonColour }}>
   .button {
-    font-size: var(--font-size-hero-p);
+    font-size: var(--font-size-h5);
     line-height: var(--line-height-hero-p);
     color: white;
-    background: var(--waverley-coral);
-    padding: 1rem;
-    margin: 1rem;
+    background: var(--buttonColour);
+    padding: 0.5rem 1.2rem;
     text-decoration: none;
     transition: transform 0.25s;
+    font-family: var(--bold);
+    display: inline-block;
   }
   .button:hover,
   .button:active {
     transform: scale(1.06);
   }
 </style>
-

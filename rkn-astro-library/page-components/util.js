@@ -46,6 +46,20 @@ export async function fetchFilterPopulate(uri, slug, populate) {
   return data
 }
 
+export async function fetchPopulate(uri, populate) {
+  const data = await fetchPageData(uri, {
+    filters: {
+      websites: {
+        key: {
+          $eq: site(),
+        },
+      },
+    },
+    populate,
+  })
+  return data
+}
+
 export function strapiAsset(uri) {
   return import.meta.env.STRAPI_HOST + uri
 }
@@ -78,4 +92,16 @@ export function parseDate(givenDate) {
   const fullDate =
     date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear()
   return fullDate
+}
+
+export function contrastingText(backgroundColour) {
+  let textColor = 'white'
+  if (
+    backgroundColour?.colourPicker === 'white' ||
+    backgroundColour?.colourPicker === 'light' ||
+    !backgroundColour?.colourPicker
+  ) {
+    textColor = 'var(--gunmetal)'
+  }
+  return textColor
 }

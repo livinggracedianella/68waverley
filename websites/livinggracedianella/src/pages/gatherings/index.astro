@@ -46,8 +46,7 @@ const header = pageData.header
     justify-content: center;
   }
   div.gathering-type {
-    width: 100vw;
-    border-bottom: 2px dotted black;
+    width: 100%;
   }
   section.overview {
     padding: 0 2rem 2rem 2rem;
@@ -61,6 +60,10 @@ const header = pageData.header
   h2 {
     width: 100%;
     text-align: center;
+    color: var(--gunmetal);
+  }
+  :global(div.gathering-type p) {
+    color: var(--gunmetal);
   }
   a.card:hover, a.card:focus {
     transform: scale(101%);

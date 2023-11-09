@@ -8,6 +8,7 @@ import {
   BlockRenderer,
   TwoColumn,
   strapiAsset,
+  TwoColumnImageDiv,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -33,15 +34,13 @@ const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
   'blocks.post',
   'blocks.post.profiles',
   'blocks.post.featureImage',
+  'blocks.backgroundColour',
+  'blocks.gatherings',
 ])
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
 const header = gathering.header
 const blocks = pageData.data[0]?.attributes?.blocks ?? ''
-const imageUrl = `url(${strapiAsset(
-  pageData.data[0]?.attributes?.featureImage?.data?.attributes?.formats?.small
-    ?.url
-)})`
-console.log(imageUrl)
+const image = pageData.data[0]?.attributes?.featureImage
 ---
 
 <BaseLayout title={gathering.title}>
@@ -57,12 +56,12 @@ console.log(imageUrl)
           <section set:html={markedHelper(gathering.shortDescription ?? '')} />
         </div>
       </div>
-      <div class="image" slot="second"></div>
+      <TwoColumnImageDiv image={image} slot="second" />
     </TwoColumn>
     {blocks && <BlockRenderer blocks={blocks} />}
   </div>
 </BaseLayout>
-<style define:vars={{ imageUrl }}>
+<style>
   div.outer {
     display: flex;
     flex-direction: column;
@@ -76,18 +75,9 @@ console.log(imageUrl)
   }
   section {
     max-width: 700px;
-    padding-bottom: 1rem;
-  }
-  div.image {
-    background-image: var(--imageUrl);
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: auto;
-    height: 100%;
-    min-height: max(200px, 30vh);
   }
   div.containerOuter {
-    padding: 20px 40px;
+    padding: 30px 40px;
     display: flex;
     justify-content: center;
   }

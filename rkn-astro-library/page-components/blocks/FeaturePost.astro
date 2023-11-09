@@ -1,30 +1,119 @@
 ---
-import { markedHelper, strapiAsset, site } from '../util.js'
+import {
+  markedHelper,
+  strapiAsset,
+  site,
+  TwoColumn,
+  TwoColumnImageDiv,
+  parseDate,
+  Button,
+  contrastingText,
+} from '@rkn/page-components'
 
 const props = Astro.props
-const { title, oneLiner, date, profiles, featureImage, slug } =
+const { imageSide } = props
+const { title, body, date, profiles, featureImage, slug } =
   props?.post?.data?.attributes ?? props?.post?.attributes ?? props.post
 const { caption } = featureImage ?? ''
-const { url, width, height } = featureImage?.image?.data?.attributes?.formats
-  ?.small ?? {
-  url: '/uploads/small_Sermon_Image_Background_ed63796e21.png',
-  width: 208,
-  height: 156,
+const image =
+  featureImage?.image?.data?.attributes?.formats?.small ??
+  '/uploads/small_Sermon_Image_Background_ed63796e21.png'
+let prefix, type
+if (site() === 'livinggracedianella') {
+  prefix = '/posts/'
+  type = 'Post'
+} else {
+  prefix = '/blog/'
+  type = 'Blog'
 }
-let prefix
-site() === 'livinggracedianella' ? (prefix = '/posts/') : (prefix = '/blog/')
+let margin
+imageSide == 'left' ? (margin = '1rem auto 0 0') : (margin = '1rem 0 0 auto')
+
+const backgroundColour = `var(--${
+  props?.backgroundColour?.colourPicker ?? 'light'
+})`
+const textColour = contrastingText(props.backgroundColour)
+let buttonColour
+backgroundColour == 'gunmetal'
+  ? (buttonColour = 'var(--primary-color)')
+  : (buttonColour = 'gunmetal')
 ---
 
-<article>
-  <h2>Featured Post: <a href={prefix + slug}>{title}</a></h2>
-  <p>{profiles.data.map((p) => p.attributes.name)}</p>
-  <img src={strapiAsset(url)} width={width} height={height} alt={caption} />
-  <div>{date}</div>
-  <div set:html={markedHelper(oneLiner)} />
-</article>
-
-<style>
-  h2 a {
-    font-size: var(--font-size-h2);
+<TwoColumn smallSide={imageSide}>
+  <div class="outer">
+    <div class="inner">
+      <h2>Featured {type}</h2>
+      <h3>{title}</h3>
+      <p class="details">
+        {parseDate(date)} | {
+          profiles.data.map((p) => (
+            <a href={`/profiles/${p.attributes.slug}`}>
+              {p.attributes.name.split(' ').join('\u00A0')}
+            </a>
+          ))
+        }
+      </p>
+      <div
+        class="featurePostBody"
+        set:html={markedHelper(body.substring(0, 200).trim() + '...')}
+      />
+      <div class="button">
+        <Button
+          href={prefix + slug}
+          label="Read More"
+          butonColour={buttonColour}
+        />
+      </div>
+    </div>
+  </div>
+  <TwoColumnImageDiv image={image} slot="second" />
+</TwoColumn>
+<style define:vars={{ margin, backgroundColour, textColour }}>
+  div.outer {
+    padding: 1rem 2rem 3rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--backgroundColour);
+  }
+  div.outer * {
+    color: var(--textColour);
+  }
+  div.inner {
+    display: flex;
+    flex-direction: column;
+  }
+  div.button,
+  h2 {
+    margin: var(--margin);
+  }
+  :global(.featurePostBody *) {
+    font-size: var(--font-size-hero-p);
+    line-height: var(--line-height-hero-p);
+  }
+  p.details {
+    font-size: var(--font-size-h4);
+    font-family: var(--italic);
+    margin: 0.8rem 0 1.5rem 0;
+    line-height: var(--line-height-h4);
+  }
+  div.button {
+    padding-top: 1rem;
+  }
+  @media (max-width: 750px) {
+    div.button,
+    h2 {
+      margin: 0.3rem auto;
+    }
+    div.button {
+      padding: 1rem 0 0.2rem 0;
+    }
+    div.outer {
+      padding: 2rem;
+    }
+    p.details {
+      margin: 0 0 1.4rem 0;
+      font-size: var(--font-size-h5);
+    }
   }
 </style>

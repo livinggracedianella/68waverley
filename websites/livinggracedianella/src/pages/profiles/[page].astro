@@ -5,6 +5,13 @@ import {
   strapiAsset,
   markedHelper,
   fetchFilterPopulate,
+  TwoColumn,
+  TwoColumnImageDiv,
+  Grid,
+  GridFeatureCard,
+  fetchPopulate,
+  GridImageDiv,
+  ProfilesGrid,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -26,19 +33,32 @@ const provider = pageData.data[0].attributes
 const header = provider.header
 const portrait = provider.portrait
 
-let { url, width, height } = portrait.data.attributes.formats.small
+let { url } = portrait.data.attributes.formats.medium
+
+const profiles = await fetchPopulate('/api/profiles', ['portrait'])
 ---
 
-<BaseLayout title={provider.title}>
+<BaseLayout title={provider.name}>
   <div class="outer">
-    <Header {...header} subtitle={provider.date} />
-    <div class="inner">
-      <h2>{provider.name}</h2>
-      <h3>{provider.title}</h3>
-      <img src={strapiAsset(url)} width={width / 1.5} height={height / 1.5} />
-      <article set:html={markedHelper(provider.bio)} />
-      <a href=`mailto:${provider.email}`>{provider.email}</a>
-    </div>
+    <Header {...header} headerTitle={provider.name} subtitle={provider.title} />
+    <TwoColumn columnReverse="true">
+      <div class="ProfileTextContainer">
+        <article set:html={markedHelper(provider.bio)} />
+      </div>
+      <div class="sidePanel" slot="second">
+        <div class="imageContainer">
+          <TwoColumnImageDiv image={portrait} />
+        </div>
+        <!--The below line looks wrong in my code editor but works fine RKN-->
+        {provider.email && <a class="cta" href=`mailto:${provider.email}`
+          >{provider.email}</a
+        >}
+      </div>
+    </TwoColumn>
+    <ProfilesGrid
+      title="More People"
+      overview="Who else would you like to meet?"
+    />
   </div>
 </BaseLayout>
 <style>
@@ -48,25 +68,39 @@ let { url, width, height } = portrait.data.attributes.formats.small
     align-items: center;
     justify-content: center;
   }
-  div.inner {
-    /*display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;*/
-    max-width: 700px;
-    flex-grow: 0;
-    text-wrap: wrap;
+  div.imageContainer {
+    height: 100%;
+    max-height: max(40vh, 250px);
   }
-  div.flex-row {
+  div.sidePanel {
+    background-color: var(--primary-color);
+    height: 100%;
     display: flex;
-    gap: 50px;
-    justify-content: center;
+    flex-direction: column;
   }
-  section {
+  a.cta {
+    color: white;
+    padding: 20px;
+    display: block;
+  }
+  div.ProfileTextContainer {
     max-width: 700px;
-    padding-bottom: 1rem;
+    margin: 40px auto;
+    padding: 0 50px;
   }
-  img {
-    float: right;
+  :global(div.ProfileTextContainer :is(p, a)) {
+    color: var(--gunmetal);
+  }
+  :global(div.ProfileTextContainer :is(h3, h4)) {
+    color: var(--primary-color);
+  }
+  :global(div.ProfileTextContainer p:first-of-type:first-line) {
+    color: var(--primary-color);
+    font-size: var(--font-size-hero-p);
+  }
+  @media (max-width: 750px) {
+    div.imageContainer {
+      height: 300px;
+    }
   }
 </style>

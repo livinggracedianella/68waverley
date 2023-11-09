@@ -7,7 +7,6 @@ const data = await fetchFilterPopulate('/api/pages', 'events', ['header.headerIm
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
-
 ---
 
 <BaseLayout title="events">
@@ -15,8 +14,9 @@ const header = pageData.header
     <Header {...header} subtitle={pageData.subtitle} />
     {
       blocks.map((block) => {
-        let event = block.event.data.attributes
-        console.log(event.featureImage)
+        console.log(block)
+        let event = block?.event?.data?.attributes ?? ""
+        if (event) {
         return (
         <h2>{event.title}</h2>
         <h3>{event.date}</h3>
@@ -24,6 +24,8 @@ const header = pageData.header
         <p>{event.summary}</p>
         <p>Cost: {event.cost ?? "free"}</p>
         )
+      }
+      return
       })
     }
   </div>
@@ -51,10 +53,9 @@ const header = pageData.header
   }
   section {
     max-width: 700px;
-    padding-bottom: 1rem;
   }
   div.event-type {
-    width: 100vw;
+    width: 100%;
     padding: 0 2rem 2rem 2rem;
     border-bottom: 2px dotted black;
   }
