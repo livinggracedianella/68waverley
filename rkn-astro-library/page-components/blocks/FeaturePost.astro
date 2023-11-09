@@ -7,9 +7,11 @@ import {
   TwoColumnImageDiv,
   parseDate,
   Button,
+  contrastingText,
 } from '@rkn/page-components'
 
 const props = Astro.props
+const { imageSide } = props
 const { title, body, date, profiles, featureImage, slug } =
   props?.post?.data?.attributes ?? props?.post?.attributes ?? props.post
 const { caption } = featureImage ?? ''
@@ -24,9 +26,20 @@ if (site() === 'livinggracedianella') {
   prefix = '/blog/'
   type = 'Blog'
 }
+let margin
+imageSide == 'left' ? (margin = '1rem auto 0 0') : (margin = '1rem 0 0 auto')
+
+const backgroundColour = `var(--${
+  props?.backgroundColour?.colourPicker ?? 'light'
+})`
+const textColour = contrastingText(props.backgroundColour)
+let buttonColour
+backgroundColour == 'gunmetal'
+  ? (buttonColour = 'var(--primary-color)')
+  : (buttonColour = 'gunmetal')
 ---
 
-<TwoColumn>
+<TwoColumn smallSide={imageSide}>
   <div class="outer">
     <div class="inner">
       <h2>Featured {type}</h2>
@@ -45,22 +58,26 @@ if (site() === 'livinggracedianella') {
         set:html={markedHelper(body.substring(0, 200).trim() + '...')}
       />
       <div class="button">
-        <Button href={prefix + slug} label="Read More" />
+        <Button
+          href={prefix + slug}
+          label="Read More"
+          butonColour={buttonColour}
+        />
       </div>
     </div>
   </div>
   <TwoColumnImageDiv image={image} slot="second" />
 </TwoColumn>
-<style>
+<style define:vars={{ margin, backgroundColour, textColour }}>
   div.outer {
     padding: 1rem 2rem 3rem 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--primary-color);
+    background: var(--backgroundColour);
   }
   div.outer * {
-    color: white;
+    color: var(--textColour);
   }
   div.inner {
     display: flex;
@@ -68,7 +85,7 @@ if (site() === 'livinggracedianella') {
   }
   div.button,
   h2 {
-    margin-left: auto;
+    margin: var(--margin);
   }
   :global(.featurePostBody *) {
     font-size: var(--font-size-hero-p);
