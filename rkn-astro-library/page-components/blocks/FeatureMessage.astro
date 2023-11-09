@@ -33,7 +33,9 @@ const iframeUrl = embedCode
         src={iframeUrl}
         show_artwork="false"></iframe>
     </div>
-    <Button href="/messages" label="More Messages" />
+    <div class="button">
+      <Button href="/messages" label="More Messages" />
+    </div>
   </div>
 </div>
 
@@ -78,5 +80,7 @@ const iframeUrl = embedCode
     width: 100%;
     margin: 1rem 0;
   }
+  div.button {
+    margin: 1rem;
+  }
 </style>
-

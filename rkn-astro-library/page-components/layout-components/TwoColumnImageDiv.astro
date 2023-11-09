@@ -1,9 +1,9 @@
 ---
-//just requires image prop
+//just requires image prop, can send through imageUri as fallback
 import { strapiAsset } from '../util.js'
 const image = Astro.props.image
 const imageUrl = `url(${strapiAsset(
-  image?.data?.attributes?.formats?.small?.url
+  image?.data?.attributes?.formats?.small?.url ?? image
 )})`
 ---
 

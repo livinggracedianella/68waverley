@@ -47,7 +47,7 @@ imageSide == 'left' ? (direction = 'row-reverse') : (direction = 'row')
   }
   .container {
     display: flex;
-    width: 100vw;
+    width: 100%;
     flex-direction: var(--direction);
   }
   .wrapper {
@@ -57,13 +57,7 @@ imageSide == 'left' ? (direction = 'row-reverse') : (direction = 'row')
     justify-content: center;
     align-items: center;
   }
-  .text {
-    width: 66vw;
-  }
-  .image {
-    width: 33vw;
-    margin-left: auto;
-  }
+
   span {
     font-family: var(--bold);
   }
@@ -79,7 +73,6 @@ imageSide == 'left' ? (direction = 'row-reverse') : (direction = 'row')
     }
     .text,
     .image {
-      width: 100vw;
     }
   }
 </style>
