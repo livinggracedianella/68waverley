@@ -1,6 +1,12 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
-import { Header, strapiAsset, fetchFilterPopulate } from '@rkn/page-components'
+import {
+  Header,
+  Button,
+  strapiAsset,
+  fetchFilterPopulate,
+  markedHelper,
+} from '@rkn/page-components'
 
 export async function getStaticPaths() {
   const pages = await fetch(
@@ -23,13 +29,34 @@ const featureImage = event.featureImage
 ---
 
 <BaseLayout title={event.title}>
-  <div class="outer">
-    <Header {...header} subtitle={event.date} />
+  <article class="outer">
+    <Header {...header} subtitle={event.oneLiner} />
     <div class="inner">
-      <p>{event.location}</p>
-      <p>{event.summary}</p>
+      <dl class="details">
+        <dt>When</dt>
+        <dd>{event.date} {event.time}</dd>
+        <dt>Where</dt>
+        <dd>{event.venue}</dd>
+        <dt>Cost</dt>
+        <dd>{event.cost}</dd>
+      </dl>
+      <div set:html={markedHelper(event.shortDescription)} />
+      <div class="call-to-action">
+        {
+          event.contact && (
+            <Button
+              href={'mailto:' + event.contact}
+              label={'Email ' + event.contact}
+            />
+          )
+        }
+        {event.register && <Button
+          href={event.register}
+          label="Register"
+        />}
+      </div>
     </div>
-  </div>
+  </article>
 </BaseLayout>
 <style>
   div.outer {
@@ -56,3 +83,4 @@ const featureImage = event.featureImage
     max-width: 700px;
   }
 </style>
+
