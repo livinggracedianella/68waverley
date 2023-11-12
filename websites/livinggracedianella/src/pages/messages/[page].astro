@@ -36,7 +36,7 @@ const featureImage = message.featureImage
 <BaseLayout title={message.title}>
   <div class="outer">
     <Header {...header} subtitle={message.caption} />
-    <FeatureMessage {message} />
+    <FeatureMessage {message} featured={false} />
   </div>
 </BaseLayout>
 <style>
@@ -64,4 +64,3 @@ const featureImage = message.featureImage
     max-width: 700px;
   }
 </style>
-

@@ -7,6 +7,7 @@ import {
   BlockRenderer,
   Message,
   Grid,
+  parseDate,
 } from '@rkn/page-components'
 //deliberately not filtered by site as all messages should be applicable to living grace.
 const data = await fetchPageData('/api/pages', {
@@ -43,14 +44,14 @@ const { data: messages } = await fetchPageData('/api/sermons', {
           const { title, date, slug, oneLiner, profiles } = message.attributes
           const messageUrl = `/messages/${slug}`
           const profileNames = profiles.data
-            .map((p) => p.attributes.name)
+            .map((p) => p.attributes.name.split(' ').join('\u00A0'))
             .join(',')
           return (
           <a class="card" href={messageUrl}>
         <div class="inner">
           <h3>{title}</h3>
           <div class="details">
-            <span class="gathering-detail">{date}</span>
+            <span class="gathering-detail">{parseDate(date)}</span>
             <span class="gathering-detail">{profileNames}</span>
           </div>
           <p>{oneLiner}</p>

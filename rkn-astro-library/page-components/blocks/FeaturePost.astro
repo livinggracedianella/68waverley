@@ -16,8 +16,7 @@ const { title, body, date, profiles, featureImage, slug } =
   props?.post?.data?.attributes ?? props?.post?.attributes ?? props.post
 const { caption } = featureImage ?? ''
 const image =
-  featureImage?.image?.data?.attributes?.formats?.small ??
-  '/uploads/small_Sermon_Image_Background_ed63796e21.png'
+  featureImage?.image ?? '/uploads/small_Sermon_Image_Background_ed63796e21.png'
 let prefix, type
 if (site() === 'livinggracedianella') {
   prefix = '/posts/'
@@ -32,6 +31,7 @@ imageSide == 'left' ? (margin = '1rem auto 0 0') : (margin = '1rem 0 0 auto')
 const backgroundColour = `var(--${
   props?.backgroundColour?.colourPicker ?? 'light'
 })`
+console.log(props)
 const textColour = contrastingText(props.backgroundColour)
 let buttonColour
 backgroundColour == 'gunmetal'

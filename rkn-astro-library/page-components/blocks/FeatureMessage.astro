@@ -1,6 +1,6 @@
 ---
 import { strapiAsset, parseDate, Button } from '@rkn/page-components'
-const { message } = Astro.props
+const { message, featured = true } = Astro.props
 const { title, date, slug, profiles, soundcloudRecording, oneLiner } =
   message?.data?.attributes ?? message?.attributes ?? message
 const embedCode = soundcloudRecording.embedCode
@@ -12,7 +12,7 @@ const iframeUrl = embedCode
 <div class="flex-row full-width">
   <div class="container">
     <h2 class="message-title">
-      <span>Featured Message</span>
+      {featured && <span>Featured Message</span>}
       <a href={`/messages/${slug}/`}>{title}</a>
     </h2>
     <p class="message-metadata">
