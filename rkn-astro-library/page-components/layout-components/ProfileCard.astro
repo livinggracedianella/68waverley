@@ -1,0 +1,84 @@
+---
+import { GridImageDiv } from '@rkn/page-components'
+const { profile } = Astro.props
+const bio = profile.attributes.bio
+---
+
+<a href={`/profiles/${profile.attributes.slug}`} class="card">
+  <div class="inner">
+    <div class="textContainer">
+      <h3>{profile.attributes.name}</h3>
+      <h4>
+        {
+          profile.attributes.title && (
+            <span class="profile-detail">{profile.attributes.title}</span>
+          )
+        }
+      </h4>
+      <p>
+        {bio.length >= 100 && `${bio.substring(0, 100)}...`}
+        {bio.length < 100 && `${bio}`}
+      </p>
+    </div>
+    <div class="imageContainer">
+      <GridImageDiv image={profile.attributes.portrait} />
+    </div>
+  </div>
+</a>
+<style>
+  a {
+    grid-column: span 2;
+    text-decoration: none;
+    color: var(--gunmetal);
+    background: var(--light);
+    container-type: inline-size;
+  }
+  div.inner {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-column: span 2;
+    height: 100%;
+  }
+  div.textContainer {
+    padding: 20px;
+  }
+  @media (max-width: 900px) {
+    div.textContainer {
+      padding: 10px;
+    }
+    h3 {
+      font-size: var(--font-size-h4);
+    }
+    h4 {
+      font-size: var(--font-size-h5);
+    }
+  }
+  .profile-detail:not(:last-of-type)::after {
+    content: '|';
+  }
+  h4 {
+    font-family: var(--italic);
+    margin-top: 0;
+  }
+  h2,
+  h3 {
+    margin-top: 0;
+  }
+  h3 {
+    color: var(--primary-color);
+  }
+  .imageContainer {
+    height: 100%;
+  }
+  @media (max-width: 420px) {
+    p {
+      display: none;
+    }
+  }
+  @container (max-width: 350px) {
+    div.inner {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+  }
+</style>
