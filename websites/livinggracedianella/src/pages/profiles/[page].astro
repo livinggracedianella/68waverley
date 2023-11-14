@@ -33,7 +33,7 @@ const provider = pageData.data[0].attributes
 const header = provider.header
 const portrait = provider.portrait
 
-let { url } = portrait.data.attributes.formats.medium
+let { url } = portrait?.data?.attributes?.formats?.medium ?? ""
 
 const profiles = await fetchPopulate('/api/profiles', ['portrait'])
 ---
@@ -43,7 +43,7 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
     <Header {...header} headerTitle={provider.name} subtitle={provider.title} />
     <TwoColumn columnReverse="true">
       <div class="ProfileTextContainer">
-        <article set:html={markedHelper(provider.bio)} />
+        <article set:html={markedHelper(provider?.bio ?? "")} />
       </div>
       <div class="sidePanel" slot="second">
         <div class="imageContainer">

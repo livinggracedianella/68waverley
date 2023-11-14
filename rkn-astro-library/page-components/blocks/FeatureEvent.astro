@@ -1,4 +1,5 @@
 ---
+//Takes event, imageSide, backgroundColour
 import {
   markedHelper,
   strapiAsset,
@@ -9,9 +10,8 @@ import {
   Button,
   contrastingText,
 } from '@rkn/page-components'
-
 const props = Astro.props
-const event = props.event.data.attributes
+const event = props?.event?.data?.attributes ?? props.event.attributes
 const imageCaption = event.featureImage?.caption ?? ''
 const { imageSide } = props
 const { title, shortDescription, date, featureImage, venue, slug } =
@@ -26,15 +26,16 @@ const backgroundColour = `var(--${
 })`
 const textColour = contrastingText(props.backgroundColour)
 let buttonColour
-backgroundColour == 'gunmetal'
-  ? (buttonColour = 'gunmetal')
-  : (buttonColour = 'var(--primary-color)')
+backgroundColour == 'var(--gunmetal)'
+  ? (buttonColour = 'var(--primary-color)')
+  : (buttonColour = 'var(--gunmetal)')
+console.log(backgroundColour, buttonColour)
 ---
 
 <TwoColumn smallSide={imageSide}>
   <div class="outer">
     <div class="inner">
-      <h2>Featured Event</h2>
+      {Astro.url.pathname != '/events' && <h2>Featured Event</h2>}
       <h3>{title}</h3>
       <p class="details">
         {parseDate(date)} |
@@ -101,4 +102,3 @@ backgroundColour == 'gunmetal'
     }
   }
 </style>
-

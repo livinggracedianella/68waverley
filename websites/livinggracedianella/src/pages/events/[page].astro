@@ -2,10 +2,12 @@
 import { BaseLayout } from '@rkn/base-components'
 import {
   Header,
-  Button,
   strapiAsset,
   fetchFilterPopulate,
   markedHelper,
+  parseDate,
+  TwoColumn,
+  TwoColumnImageDiv
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -21,6 +23,7 @@ const { page } = Astro.params
 const pageData = await fetchFilterPopulate(`/api/events`, page, [
   'header.headerImage',
   'featureImage',
+  'featureImage.image'
 ])
 
 const event = pageData.data[0].attributes
@@ -31,31 +34,53 @@ const featureImage = event.featureImage
 <BaseLayout title={event.title}>
   <article class="outer">
     <Header {...header} subtitle={event.oneLiner} />
-    <div class="inner">
       <dl class="details">
-        <dt>When</dt>
-        <dd>{event.date} {event.time}</dd>
-        <dt>Where</dt>
+        <div class="grid">
+        <div class="gridItem">
+          <div class="gridInner first">
+          <dt>When</dt>
+          </div>
+          <div class="gridInner second">
+        <dd>{event.time}<br/> {parseDate(event.date)}</dd>
+          </div>
+        </div>
+          <div class="gridItem">
+            <div class="gridInner first">
+            <dt>Where</dt>
+            </div>
+            <div class="gridInner second">
         <dd>{event.venue}</dd>
+            </div>
+          </div>
+          <div class="gridItem">
+            <div class="gridInner first">
         <dt>Cost</dt>
+            </div>
+            <div class="gridInner second">
         <dd>{event.cost}</dd>
+            </div>
+          </div>
+        </div>
       </dl>
-      <div set:html={markedHelper(event.shortDescription)} />
-      <div class="call-to-action">
+      <TwoColumn>
+      <div class="container">
+        <div class="containerInner">
+          <div class="eventPageDescription" set:html={markedHelper(event.shortDescription)} />
+          <div class="call-to-action">
         {
           event.contact && (
-            <Button
-              href={'mailto:' + event.contact}
-              label={'Email ' + event.contact}
-            />
+          <a class="button" href={'mailto:' + event.contact}>Contact: <span>{event.contact}</span></a>
           )
         }
         {event.register && <Button
           href={event.register}
           label="Register"
         />}
+          </div>
+        </div>
       </div>
-    </div>
+      <TwoColumnImageDiv slot="second" image={featureImage.image}/>
+    </TwoColumn>
   </article>
 </BaseLayout>
 <style>
@@ -65,14 +90,14 @@ const featureImage = event.featureImage
     align-items: center;
     justify-content: center;
   }
-  div.inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 700px;
-    flex-grow: 0;
-    text-wrap: wrap;
+  div.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 0 40px;
+    margin: 20px 0;
+    width: 100%;
+    background: var(--light);
   }
   div.flex-row {
     display: flex;
@@ -81,6 +106,144 @@ const featureImage = event.featureImage
   }
   section {
     max-width: 700px;
+  }
+  div.gridItem {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    height: 100%;
+    container-type: inline-size;
+  }
+
+  div.gridInner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+  }
+  div.gridInner.first {
+    background: white;
+  }
+div.gridInner.second {
+  background: var(--primary-color);
+}
+  dt, dd {
+    margin: 0 auto;
+    text-align: center;
+  }
+  dt {
+    font-size: var(--font-size-h3);
+    color: var(--gunmetal);
+    font-family: var(--black);
+  }
+  dd {
+    font-size: var(--font-size-h5);
+    font-family: var(--italic);
+    color: white;
+  }
+  dl.details {
+    background: var(--light);
+    height: max(20vh, 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  div.container {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction: column;
+    padding: 3rem 2rem;
+  }
+  div.eventPageDescription {
+    margin: auto;
+    padding: 0 20px;
+  }
+  :global(div.eventPageDescription *) {
+    color: var(--gunmetal);
+  }
+  div.call-to-action {
+    width: 100%;
+    margin-top: 1.2rem;
+  }
+  .button {
+    font-size: var(--font-size-h5);
+    line-height: var(--line-height-hero-p);
+    color: var(--gunmetal);
+    background: var(--light);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    transition: transform 0.25s;
+    font-family: var(--bold);
+    display: inline-block;
+    width: 100%;
+  }
+  .button:hover,
+  .button:active {
+    transform: scale(1.06);
+  }
+  .button span {
+    color: var(--primary-color);
+  }
+  @container (max-width: 400px) {
+    div.gridInner {
+      padding: 2rem 1rem;
+    }
+  }
+  @media (max-width: 1200px) {
+    dt {
+    font-size: var(--font-size-h4);
+  }
+    dd {
+      font-size: var(--font-size-hero-p);
+    }
+  }
+  @media (max-width: 1000px) and (min-width: 700px) {
+    div.gridItem {
+      grid-template-columns: 1fr;
+      grid-template-rows: 2fr 3fr;
+    }
+    div.gridInner {
+      padding: 0;
+    }
+    dt {
+      padding: 1rem;
+      color: white;
+      font-family: var(--bold);
+    }
+    div.gridInner.first {
+      background: var(--primary-color);
+    }
+    div.gridInner.second {
+      background: white;
+    }
+    dd {
+      color: var(--gunmetal);
+      font-family: var(--bold);
+    }
+  }
+  @media (max-width: 699px) {
+    div.grid {
+      grid-template-columns: 1fr;
+    }
+    div.gridItem {
+      grid-template-columns: 1fr 2fr;
+    }
+    .button {
+      font-size: var(--font-size-hero-p);
+    }
+  }
+  @media (max-width: 450px) {
+    div.grid {
+      padding: 0 10px;
+      margin: 10px 0;
+      gap: 10px;
+    }
+    div.container {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
   }
 </style>
 

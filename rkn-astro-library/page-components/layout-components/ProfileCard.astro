@@ -1,7 +1,7 @@
 ---
 import { GridImageDiv } from '@rkn/page-components'
 const { profile } = Astro.props
-const bio = profile.attributes.bio
+const bio = profile.attributes?.bio ?? ''
 ---
 
 <a href={`/profiles/${profile.attributes.slug}`} class="card">

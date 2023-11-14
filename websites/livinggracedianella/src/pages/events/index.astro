@@ -1,31 +1,47 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
-import { Header, fetchFilterPopulate, markedHelper } from '@rkn/page-components'
+import {
+  Header,
+  fetchFilterPopulate,
+  fetchPopulate,
+  markedHelper,
+  BlockRenderer,
+  FeatureEvent,
+} from '@rkn/page-components'
 
-const data = await fetchFilterPopulate('/api/pages', 'events', ['header.headerImage', 'blocks.event', 'blocks.event.featureImage', 'blocks.event.featureImage.image'])
+const data = await fetchFilterPopulate('/api/pages', 'events', [
+  'header.headerImage',
+  'blocks.event',
+  'blocks.event.featureImage',
+  'blocks.event.featureImage.image',
+])
 
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
+
+const events = await fetchPopulate('/api/events', [
+  'featureImage',
+  'featureImage.image',
+  'backgroundColour',
+])
 ---
 
 <BaseLayout title="events">
   <div class="outer">
     <Header {...header} subtitle={pageData.subtitle} />
+    <BlockRenderer {blocks} />
     {
-      blocks.map((block) => {
-        console.log(block)
-        let event = block?.event?.data?.attributes ?? ""
-        if (event) {
+      events.data.map((event, i) => {
+        let imageSide
+        i % 2 === 1 ? (imageSide = 'left') : (imageSide = 'right')
         return (
-        <h2>{event.title}</h2>
-        <h3>{event.date}</h3>
-        <h3>{event.venue ?? "Venue TBC"}</h3>
-        <p>{event.summary}</p>
-        <p>Cost: {event.cost ?? "free"}</p>
+          <FeatureEvent
+            {event}
+            {imageSide}
+            backgroundColour={event.attributes.backgroundColour}
+          />
         )
-      }
-      return
       })
     }
   </div>

@@ -27,7 +27,7 @@ profiles.data.forEach((profile) => {
   />
   {
     profiles.data.map((profile) => {
-      let bio = profile.attributes.bio
+      let bio = profile.attributes?.bio ?? ''
       if (profile.attributes.slug === Astro.params.page) {
         return
       }
