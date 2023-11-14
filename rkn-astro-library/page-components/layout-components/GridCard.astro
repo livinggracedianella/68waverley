@@ -1,0 +1,16 @@
+---
+//Takes columnSpan as a prop.
+const { columnSpan = 2 } = Astro.props
+---
+
+<li class="card">
+  <slot />
+</li>
+<style define:vars={{ columnSpan }}>
+  li.card {
+    grid-column: span var(--columnSpan);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

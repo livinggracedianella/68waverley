@@ -1,6 +1,6 @@
 ---
 //Requires length (number of other cards), title, overview. cardImage and href props optional (points to gatherings by default).
-import { strapiAsset, markedHelper } from '../util'
+import { strapiAsset, markedHelper, GridCard } from '@rkn/page-components'
 const {
   length,
   title = 'Add title prop',
@@ -16,22 +16,24 @@ const imageUrl = `url(${strapiAsset(
 )})`
 ---
 
-<a class="card" href={href}>
+<GridCard className={Astro.props.class}>
   <div class="backgroundColour">
     <div class="inner first"></div>
     <div class="firstText">
-      <h2>{title}</h2>
+      <h2><a href={href}>{title}</a></h2>
       <div class="gatheringDetails" set:html={markedHelper(overview)} />
     </div>
   </div>
-</a>
+</GridCard>
 <style define:vars={{ firstItemSpan, imageUrl }}>
-  a.card {
+  li.card {
     text-decoration: none;
-    color: white;
     height: 100%;
     transition: 0.25s;
     grid-column: span var(--firstItemSpan);
+  }
+  a {
+    color: white;
   }
   div.backgroundColour {
     background-color: var(--primary-color);
@@ -54,6 +56,7 @@ const imageUrl = `url(${strapiAsset(
     position: relative;
     z-index: 1;
     padding: var(--grid-card-padding);
+    color: white;
   }
   h2 {
     font-size: calc(36rem / 16);
@@ -61,12 +64,12 @@ const imageUrl = `url(${strapiAsset(
     line-height: 110%;
   }
   @media (max-width: 1240px) {
-    a.card {
+    li.card {
       grid-column: span min(4, var(--firstItemSpan));
     }
   }
   @media (max-width: 700px) {
-    a.card {
+    li.card {
       grid-column: span 2;
     }
   }

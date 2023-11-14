@@ -1,7 +1,11 @@
 ---
-import { strapiAsset, markedHelper } from '../util'
-import Grid from '../layout-components/Grid.astro'
-import GridFeatureCard from '../layout-components/GridFeatureCard.astro'
+import {
+  strapiAsset,
+  markedHelper,
+  Grid,
+  GridFeatureCard,
+  GridCard,
+} from '@rkn/page-components'
 const { title, overview, gatherings, cardImage } = Astro.props
 const imageUrl = `url(${strapiAsset(
   cardImage?.data?.attributes?.formats?.small?.url ??
@@ -18,9 +22,11 @@ const imageUrl = `url(${strapiAsset(
   />
   {
     gatherings.data.map((gathering) => (
-      <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
+      <GridCard className={Astro.props.class}>
         <div class="inner">
-          <h3>{gathering.attributes.title}</h3>
+          <a href={`/gatherings/${gathering.attributes.slug}`}>
+            <h3>{gathering.attributes.title}</h3>
+          </a>
           <div class="details">
             {gathering.attributes.timeSlot && (
               <span class="gathering-detail">
@@ -33,9 +39,9 @@ const imageUrl = `url(${strapiAsset(
               </span>
             )}
           </div>
-          <p>{gathering.attributes.oneLiner}</p>
+          <div set:html={markedHelper(gathering.attributes.oneLiner)} />
         </div>
-      </a>
+      </GridCard>
     ))
   }
 </Grid>
@@ -78,8 +84,7 @@ const imageUrl = `url(${strapiAsset(
     margin-top: 0;
     line-height: 110%;
   }
-  a.card {
-    text-decoration: none;
+  li.card {
     color: inherit;
     height: 100%;
     transition: 0.25s;
