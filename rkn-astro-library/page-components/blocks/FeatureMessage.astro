@@ -34,7 +34,11 @@ const iframeUrl = embedCode
         show_artwork="false"></iframe>
     </div>
     <div class="button">
-      <Button href="/messages" label="More Messages" />
+      {
+        Astro.url.pathname.split('#')[0] != '/messages' && (
+          <Button href="/messages#recent" label="More Messages" />
+        )
+      }
     </div>
   </div>
 </div>

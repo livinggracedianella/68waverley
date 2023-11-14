@@ -37,7 +37,7 @@ const { data: messages } = await fetchPageData('/api/sermons', {
   <div class="outer">
     <Header {...header} />
     <BlockRenderer blocks={blocks} />
-    <h2 class="recent-header">Recent messages</h2>
+    <h2 class="recent-header" id="recent">Recent messages</h2>
     <Grid>
       {
         messages.map((message) => {

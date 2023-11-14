@@ -1,0 +1,136 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  BlockRenderer,
+  Header,
+  fetchFilterPopulate,
+  markedHelper,
+  Post,
+  fetchPopulate,
+  Grid,
+  parseDate,
+} from '@rkn/page-components'
+
+const pageData = await fetchFilterPopulate('/api/pages', 'samples', [
+  'header.headerImage',
+  'blocks.image',
+  'blocks.cardImage',
+  'blocks.gatherings',
+  'blocks.message',
+  'blocks.message.featureImage',
+  'blocks.message.featureImage.image',
+  'blocks.message.soundcloudRecording',
+  'blocks.message.profiles',
+  'blocks.post',
+  'blocks.post.profiles',
+  'blocks.post.featureImage',
+  'blocks.post.featureImage.image',
+  'blocks.event',
+  'blocks.event.featureImage',
+  'blocks.event.featureImage.image',
+  'blocks.profiles',
+  'blocks.two-column',
+  'blocks.backgroundColour',
+])
+const blocks = pageData.data[0].attributes.blocks
+const header = pageData.data[0].attributes.header
+
+const { data: posts } = await fetchPopulate('/api/posts', [
+  'featureImage',
+  'featureImage.image',
+  'profiles',
+])
+---
+
+<BaseLayout title="Styleguide">
+  <div class="outer">
+    <Header {...header} slug="home" />
+
+    <BlockRenderer blocks={blocks} />
+    <h2 class="recent-header">Recent Posts</h2>
+    <Grid>
+    {
+      posts.map((post) => {
+        const { title, date, slug, body, profiles } = post.attributes
+          const postUrl = `/posts/${slug}`
+          const profileNames = profiles.data
+            .map((p) => p.attributes.name)
+            .join(',')
+        return (
+          <a class="card" href={postUrl}>
+        <div class="inner">
+          <h3>{title}</h3>
+          <div class="details">
+            <span class="gathering-detail">{parseDate(date)}</span>
+            <span class="gathering-detail">{profileNames}</span>
+          </div>
+          <div class="postCard" set:html={markedHelper(body.substring(0,100) + '...')}></div>
+        </div>
+      </a>
+      )
+      })
+    }
+    </Grid>
+  </div>
+  <style>
+    div.outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    :root {
+    --grid-card-padding: 2.5rem 25px 2rem 25px;
+  }
+  .recent-header {
+    color: var(--primary-color);
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
+    margin: 2rem 0;
+    text-align: center;
+  }
+  div.inner {
+    background: var(--light);
+    padding: var(--grid-card-padding);
+    height: 100%;
+  }
+  div.inner * {
+    color: var(--gunmetal);
+  }
+  .gathering-detail:not(:last-of-type)::after {
+    content: ' | ';
+  }
+  div.details {
+    margin-top: 0.2rem;
+  }
+  .gathering-detail {
+    font-size: var(--font-size-h5);
+    font-family: var(--italic);
+  }
+  div.inner h3 {
+    color: var(--primary-color);
+  }
+  div.inner p {
+    line-height: 140%;
+  }
+  .card h2 {
+    font-size: calc(36rem / 16);
+  }
+  .card h2,
+  .card h3 {
+    margin-top: 0;
+    line-height: 110%;
+  }
+  a.card {
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    transition: 0.25s;
+    grid-column: span 2;
+  }
+  :global(div.postCard *) {
+    color: var(--gunmetal);
+  }
+  </style>
+</BaseLayout>
