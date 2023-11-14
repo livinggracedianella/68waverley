@@ -1,13 +1,17 @@
 ---
-import { GridImageDiv } from '@rkn/page-components'
+import { GridImageDiv, GridCard } from '@rkn/page-components'
 const { profile } = Astro.props
 const bio = profile.attributes?.bio ?? ''
 ---
 
-<a href={`/profiles/${profile.attributes.slug}`} class="card">
+<GridCard>
   <div class="inner">
     <div class="textContainer">
-      <h3>{profile.attributes.name}</h3>
+      <h3>
+        <a class="click" href={`/profiles/${profile.attributes.slug}`}
+          >{profile.attributes.name}</a
+        >
+      </h3>
       <h4>
         {
           profile.attributes.title && (
@@ -24,14 +28,10 @@ const bio = profile.attributes?.bio ?? ''
       <GridImageDiv image={profile.attributes.portrait} />
     </div>
   </div>
-</a>
+</GridCard>
 <style>
   a {
-    grid-column: span 2;
-    text-decoration: none;
-    color: var(--gunmetal);
-    background: var(--light);
-    container-type: inline-size;
+    color: var(--primary-color);
   }
   div.inner {
     display: grid;
@@ -39,8 +39,13 @@ const bio = profile.attributes?.bio ?? ''
     grid-column: span 2;
     height: 100%;
   }
+  div.textContainer :is(h4, p) {
+    color: var(--gunmetal);
+  }
   div.textContainer {
     padding: 20px;
+    background: var(--light);
+    container-type: inline-size;
   }
   @media (max-width: 900px) {
     div.textContainer {

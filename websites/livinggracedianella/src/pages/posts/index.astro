@@ -8,7 +8,8 @@ import {
   Post,
   fetchPopulate,
   Grid,
-  parseDate
+  parseDate,
+  GridCard
 } from '@rkn/page-components'
 
 const data = await fetchFilterPopulate('/api/pages', 'posts', [
@@ -45,16 +46,16 @@ const { data: posts } = await fetchPopulate('/api/posts', [
             .map((p) => p.attributes.name)
             .join(',')
         return (
-          <a class="card" href={postUrl}>
-        <div class="inner">
-          <h3>{title}</h3>
+          <GridCard>
+        <div class="inner card">
+          <h3><a class="click" href={postUrl}>{title}</a></h3>
           <div class="details">
             <span class="gathering-detail">{parseDate(date)}</span>
             <span class="gathering-detail">{profileNames}</span>
           </div>
           <div class="postCard" set:html={markedHelper(body.substring(0,100) + '...')}></div>
         </div>
-      </a>
+      </GridCard>
       )
       })
     }
@@ -90,7 +91,7 @@ const { data: posts } = await fetchPopulate('/api/posts', [
     font-size: var(--font-size-h5);
     font-family: var(--italic);
   }
-  div.inner h3 {
+  div.inner h3 a {
     color: var(--primary-color);
   }
   div.inner p {
@@ -103,13 +104,6 @@ const { data: posts } = await fetchPopulate('/api/posts', [
   .card h3 {
     margin-top: 0;
     line-height: 110%;
-  }
-  a.card {
-    text-decoration: none;
-    color: inherit;
-    height: 100%;
-    transition: 0.25s;
-    grid-column: span 2;
   }
   :global(div.postCard *) {
     color: var(--gunmetal);

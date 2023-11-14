@@ -1,5 +1,5 @@
 ---
-//Takes columnSpan as a prop.
+//Takes columnSpan as a prop. As I've gone through and refactored I've given primary links the class 'click' ready for the click event.
 const { columnSpan = 2 } = Astro.props
 ---
 
@@ -12,5 +12,6 @@ const { columnSpan = 2 } = Astro.props
     list-style: none;
     padding: 0;
     margin: 0;
+    transition: 0.25s;
   }
 </style>
