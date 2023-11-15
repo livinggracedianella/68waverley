@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "test": "STATIC_BUILD=1 astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -18,3 +19,4 @@
     "astro": "^3.5.4"
   }
 }
+
