@@ -5,7 +5,6 @@ import {
   fetchFilterPopulate,
   markedHelper,
   BlockRenderer,
-  Post,
   fetchPopulate,
   Grid,
   parseDate,
@@ -33,7 +32,7 @@ const { data: posts } = await fetchPopulate('/api/posts', [
 ])
 ---
 
-<BaseLayout title="Posts">
+<BaseLayout title="Blog">
   <div class="outer">
     <Header {...header} />
     <BlockRenderer blocks={blocks} />
@@ -46,20 +45,27 @@ const { data: posts } = await fetchPopulate('/api/posts', [
           const profileNames = profiles.data
             .map((p) => p.attributes.name)
             .join(',')
-        return (
-          <GridCard>
-        <div class="inner card">
-          <h3><a class="click" href={postUrl}>{title}</a></h3>
-          <div class="details">
-            <span class="gathering-detail">{parseDate(date)}</span>
-            <span class="gathering-detail">{profileNames}</span>
-          </div>
-          <div class="postCard" set:html={markedHelper(body.substring(0,100) + '...')}></div>
-        </div>
-      </GridCard>
-      )
-      })
-    }
+          return (
+            <GridCard>
+              <div class="inner card">
+                <h3>
+                  <a class="click" href={postUrl}>
+                    {title}
+                  </a>
+                </h3>
+                <div class="details">
+                  <span class="detail">{parseDate(date)}</span>
+                  <span class="detail">{profileNames}</span>
+                </div>
+                <div
+                  class="postCard"
+                  set:html={markedHelper(body.substring(0, 100) + '...')}
+                />
+              </div>
+            </GridCard>
+          )
+        })
+      }
     </Grid>
   </div>
 </BaseLayout>
@@ -82,13 +88,13 @@ const { data: posts } = await fetchPopulate('/api/posts', [
   div.inner * {
     color: var(--gunmetal);
   }
-  .gathering-detail:not(:last-of-type)::after {
+  .detail:not(:last-of-type)::after {
     content: ' | ';
   }
   div.details {
     margin-top: 0.2rem;
   }
-  .gathering-detail {
+  .detail {
     font-size: var(--font-size-h5);
     font-family: var(--italic);
   }
@@ -110,3 +116,4 @@ const { data: posts } = await fetchPopulate('/api/posts', [
     color: var(--gunmetal);
   }
 </style>
+
