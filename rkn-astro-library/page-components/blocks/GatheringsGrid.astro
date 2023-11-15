@@ -22,7 +22,7 @@ const imageUrl = `url(${strapiAsset(
   />
   {
     gatherings.data.map((gathering) => (
-      <GridCard className={Astro.props.class}>
+      <GridCard>
         <div class="inner">
           <a class="click" href={`/gatherings/${gathering.attributes.slug}`}>
             <h3>{gathering.attributes.title}</h3>

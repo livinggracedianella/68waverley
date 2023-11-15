@@ -1,0 +1,103 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  strapiAsset,
+  markedHelper,
+  fetchFilterPopulate,
+  TwoColumn,
+  TwoColumnImageDiv,
+  fetchPopulate,
+  ProfilesGrid,
+} from '@rkn/page-components'
+
+export async function getStaticPaths() {
+  const pages = await fetch(
+    `${import.meta.env.STRAPI_HOST}/api/profiles?filters[websites][key][$eq]=${
+      import.meta.env.THIS_SITE
+    }`
+  ).then((res) => res.json())
+  return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
+}
+
+const { page } = Astro.params
+const pageData = await fetchFilterPopulate(`/api/profiles`, page, [
+  'header.headerImage',
+  'portrait',
+])
+
+const provider = pageData.data[0].attributes
+const header = provider.header
+const portrait = provider.portrait
+
+let { url } = portrait?.data?.attributes?.formats?.medium ?? ""
+
+const profiles = await fetchPopulate('/api/profiles', ['portrait'])
+---
+
+<BaseLayout title={provider.name}>
+  <div class="outer">
+    <Header {...header} headerTitle={provider.name} subtitle={provider.title} />
+    <TwoColumn columnReverse="true">
+      <div class="ProfileTextContainer">
+        <article set:html={markedHelper(provider?.bio ?? "")} />
+      </div>
+      <div class="sidePanel" slot="second">
+        <div class="imageContainer">
+          <TwoColumnImageDiv image={portrait} />
+        </div>
+        <!--The below line looks wrong in my code editor but works fine RKN-->
+        {provider.email && <a class="cta" href=`mailto:${provider.email}`
+          >{provider.email}</a
+        >}
+      </div>
+    </TwoColumn>
+    <ProfilesGrid
+      title="More People"
+      overview="Who else would you like to meet?"
+    />
+  </div>
+</BaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.imageContainer {
+    height: 100%;
+    max-height: max(40vh, 250px);
+  }
+  div.sidePanel {
+    background-color: var(--primary-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  a.cta {
+    color: white;
+    padding: 20px;
+    display: block;
+  }
+  div.ProfileTextContainer {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 50px;
+  }
+  :global(div.ProfileTextContainer :is(p, a)) {
+    color: var(--gunmetal);
+  }
+  :global(div.ProfileTextContainer :is(h3, h4)) {
+    color: var(--primary-color);
+  }
+  :global(div.ProfileTextContainer p:first-of-type:first-line) {
+    color: var(--primary-color);
+    font-size: var(--font-size-hero-p);
+  }
+  @media (max-width: 750px) {
+    div.imageContainer {
+      height: 300px;
+    }
+  }
+</style>

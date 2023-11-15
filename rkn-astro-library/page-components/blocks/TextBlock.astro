@@ -11,7 +11,7 @@ let backgroundColor = `var(--${
 <div class="full-width">
   <h2>{props.title}</h2>
   <div class="inner">
-    <div set:html={markedHelper(props.body ?? 'Rohan was here')} />
+    <div set:html={markedHelper(props.body ?? 'No text content entered')} />
   </div>
 </div>
 <style define:vars={{ textColor, backgroundColor }}>

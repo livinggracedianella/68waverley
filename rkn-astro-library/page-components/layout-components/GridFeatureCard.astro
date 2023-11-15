@@ -16,11 +16,11 @@ const imageUrl = `url(${strapiAsset(
 )})`
 ---
 
-<GridCard className={Astro.props.class}>
+<GridCard>
   <div class="backgroundColour">
     <div class="inner first"></div>
     <div class="firstText">
-      <h2><a class="click" href={href}>{title}</a></h2>
+      <h2><a class="click" href={href ? href : null}>{title}</a></h2>
       <div class="gatheringDetails" set:html={markedHelper(overview)} />
     </div>
   </div>

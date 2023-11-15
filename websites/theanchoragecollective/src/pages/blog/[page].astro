@@ -1,0 +1,116 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  TwoColumn,
+  markedHelper,
+  Header,
+  fetchFilterPopulate,
+  TwoColumnImageDiv,
+  ProfileCard,
+  parseDate,
+} from '@rkn/page-components'
+
+export async function getStaticPaths() {
+  const pages = await fetch(
+    `${import.meta.env.STRAPI_HOST}/api/posts?filters[websites][key][$eq]=${
+      import.meta.env.THIS_SITE
+    }`
+  ).then((res) => res.json())
+  return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
+}
+
+const { page } = Astro.params
+const pageData = await fetchFilterPopulate(`/api/posts`, page, [
+  'profiles',
+  'profiles.portrait',
+  'featureImage',
+  'featureImage.image',
+])
+const post = pageData.data[0].attributes
+const profiles = post?.profiles?.data ?? []
+---
+
+<BaseLayout title={post.title}>
+  <Header
+    headerTitle={post.title}
+    subtitle={`${parseDate(post.date)} | <a href="/profiles/${
+      profiles?.[0]?.attributes?.slug ?? ''
+    }">${profiles?.[0]?.attributes?.name.split(' ').join('\u00A0') ?? ''}</a>`}
+  />
+  <TwoColumn columnReverse="true">
+    <div class="textContainer">
+      <div set:html={markedHelper(post.body)} />
+    </div>
+    <div slot="second" class="sidePanel">
+      <div class="imageContainer">
+        <TwoColumnImageDiv image={post?.featureImage?.image ?? ''} />
+      </div>
+      <div class="profilesContainer wide">
+        {
+          profiles.map((profile) => {
+            return <ProfileCard profile={profile} />
+          })
+        }
+      </div>
+    </div>
+  </TwoColumn>
+  <div class="profilesContainer narrow">
+    {
+      profiles.map((profile) => {
+        return <ProfileCard profile={profile} />
+      })
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  div.imageContainer {
+    height: 100%;
+    max-height: max(40vh, 250px);
+  }
+  div.sidePanel {
+    background-color: var(--primary-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .profilesContainer {
+    padding: 1rem;
+    display: grid;
+    background-color: var(--primary-color);
+  }
+  .profilesContainer.narrow {
+    display: none;
+  }
+  .textContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 0 75px;
+  }
+  :global(.textContainer blockquote) {
+    color: var(--primary-color);
+  }
+  @media (max-width: 910px) and (min-width: 750px), (max-width: 600px) {
+    .textContainer {
+      padding: 0 60px;
+      margin: 2rem 0;
+    }
+  }
+  @media (max-width: 500px) {
+    .textContainer {
+      margin: 1rem 0 1.5rem 0;
+      padding: 0 25px;
+    }
+  }
+  @media (max-width: 750px) {
+    .profilesContainer.wide {
+      display: none;
+    }
+    .profilesContainer.narrow {
+      display: grid;
+    }
+  }
+</style>

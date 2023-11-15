@@ -1,0 +1,75 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  BlockRenderer,
+  Header,
+  fetchFilterPopulate,
+  fetchPageData,
+  ProfilesGrid,
+  TextBlock,
+} from '@rkn/page-components'
+
+export async function getStaticPaths() {
+  const pages = await fetch(`${import.meta.env.STRAPI_HOST}/api/services`).then(
+    (res) => res.json()
+  )
+  return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
+}
+const { page } = Astro.params
+
+const pageData = await fetchPageData(`/api/services`, {
+  filters: {
+    slug: {
+      $eq: page,
+    },
+  },
+  populate: [
+    'blocks.image',
+    'blocks.post',
+    'blocks.post.profiles',
+    'blocks.post.featureImage',
+    'blocks.post.featureImage.image',
+    'blocks.event',
+    'profiles',
+    'profiles.portrait',
+  ],
+})
+const blocks = pageData.data[0].attributes.blocks
+const service = pageData.data[0].attributes
+console.log(service)
+---
+
+<BaseLayout title={pageData.data[0].attributes.title}>
+  <div class="outer">
+    <Header
+      headerTitle={service.name
+        .split(' ')
+        .map((word) => {
+          if (word.toLowerCase() == 'trainer') {
+            return word + 's'
+          } else {
+            return word
+          }
+        })
+        .join(' ') + 's'}
+    />
+    <TextBlock>
+      {service.shortDescription}
+    </TextBlock>
+    <ProfilesGrid
+      profiles={service.profiles}
+      title={service?.profilesTitle ?? `Find a ${service.name}`}
+      overview={service?.profilesOverview ?? ''}
+      href="false"
+    />
+    <BlockRenderer blocks={blocks} />
+    <style>
+      div.outer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </div>
+</BaseLayout>
