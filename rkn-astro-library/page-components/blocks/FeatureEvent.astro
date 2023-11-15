@@ -34,7 +34,7 @@ backgroundColour == 'var(--gunmetal)'
 <TwoColumn smallSide={imageSide}>
   <div class="outer">
     <div class="inner">
-      {Astro.url.pathname != '/events' && <h2>Featured Event</h2>}
+      {Astro.url.pathname != '/events' && <h2>Coming Up</h2>}
       <h3>{title}</h3>
       <p class="details">
         {parseDate(date)} |
@@ -101,3 +101,4 @@ backgroundColour == 'var(--gunmetal)'
     }
   }
 </style>
+
