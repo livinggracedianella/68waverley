@@ -8,7 +8,7 @@ import {
   fetchPopulate,
   Grid,
   parseDate,
-  GridCard
+  GridCard,
 } from '@rkn/page-components'
 
 const data = await fetchFilterPopulate('/api/pages', 'blog', [
@@ -17,9 +17,9 @@ const data = await fetchFilterPopulate('/api/pages', 'blog', [
   'blocks.post.profiles',
   'blocks.post.featureImage',
   'blocks.post.featureImage.image',
-  'blocks.backgroundColour'
+  'blocks.backgroundColour',
 ])
-console.log(data);
+console.log(data)
 
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
@@ -38,9 +38,9 @@ const { data: posts } = await fetchPopulate('/api/posts', [
     <BlockRenderer blocks={blocks} />
     <h2 class="recent-header">Recent Posts</h2>
     <Grid>
-    {
-      posts.map((post) => {
-        const { title, date, slug, body, profiles } = post.attributes
+      {
+        posts.map((post) => {
+          const { title, date, slug, body, profiles } = post.attributes
           const postUrl = `/blog/${slug}`
           const profileNames = profiles.data
             .map((p) => p.attributes.name)
@@ -70,7 +70,7 @@ const { data: posts } = await fetchPopulate('/api/posts', [
   </div>
 </BaseLayout>
 <style>
-:root {
+  :root {
     --grid-card-padding: 2.5rem 25px 2rem 25px;
   }
   .recent-header {
@@ -116,4 +116,3 @@ const { data: posts } = await fetchPopulate('/api/posts', [
     color: var(--gunmetal);
   }
 </style>
-

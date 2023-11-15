@@ -34,7 +34,9 @@ const pageData = await fetchFilterPopulate('/api/pages', 'find-me-a', [
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
 
-const services = await fetchPageData('/api/services', { populate: [ 'profiles', 'backgroundColour' ] })
+const services = await fetchPageData('/api/services', {
+  populate: ['profiles', 'backgroundColour'],
+})
 ---
 
 <BaseLayout title="Styleguide">
@@ -50,16 +52,20 @@ const services = await fetchPageData('/api/services', { populate: [ 'profiles', 
             oneLiner,
             profiles,
             slug,
-            backgroundColour
+            backgroundColour,
           } = service.attributes
-          console.log(service.attributes)
           return (
             <GridCard>
-              <div class="container" style={`background: var(--${backgroundColour.colourPicker ?? 'var(--light)'})`}>
-              <h2>
-                <a href={`find-me-a/${slug}`}>{name}</a>
-              </h2>
-              <div class="text" set:html={markedHelper(oneLiner ?? '')} />
+              <div
+                class="container"
+                style={`background: var(--${
+                  backgroundColour.colourPicker ?? 'var(--light)'
+                })`}
+              >
+                <h2>
+                  <a href={`find-me-a/${slug}`}>{name}</a>
+                </h2>
+                <div class="text" set:html={markedHelper(oneLiner ?? '')} />
               </div>
             </GridCard>
           )
@@ -79,7 +85,8 @@ const services = await fetchPageData('/api/services', { populate: [ 'profiles', 
       width: 100%;
       padding: 1rem 32px;
     }
-    h2, h2 a {
+    h2,
+    h2 a {
       color: white;
       margin: 0 0 1rem 0;
       font-size: var(--font-size-h3);

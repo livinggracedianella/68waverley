@@ -15,4 +15,3 @@ function outputOptions() {
     ? { output: 'static' }
     : { output: 'server', adapter: cloudflare() }
 }
-

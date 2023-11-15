@@ -1,8 +1,20 @@
 ---
 import { BaseLayout } from '@rkn/base-components'
-import { Header, fetchFilterPopulate, markedHelper, strapiAsset, site, BoxesCard, BoxesWrapper } from '@rkn/page-components'
+import {
+  Header,
+  fetchFilterPopulate,
+  markedHelper,
+  strapiAsset,
+  site,
+  BoxesCard,
+  BoxesWrapper,
+} from '@rkn/page-components'
 
-const data = await fetchFilterPopulate('/api/pages', 'gatherings', ['header.headerImage', 'blocks.gatherings', 'blocks.gatherings.featureImage'])
+const data = await fetchFilterPopulate('/api/pages', 'gatherings', [
+  'header.headerImage',
+  'blocks.gatherings',
+  'blocks.gatherings.featureImage',
+])
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
@@ -10,31 +22,47 @@ const header = pageData.header
 
 <BaseLayout title="Gatherings">
   <div class="outer">
-    <Header {...header} subtitle={pageData.subtitle}/>
+    <Header {...header} subtitle={pageData.subtitle} />
     {
-        blocks.map((block) => {
-          let gatherings = block.gatherings.data
-          return (
-            <div class="gathering-type">
-              <h2>{block.title}</h2>
-              <section class="overview" set:html={markedHelper(block.overview ?? "")}/>
-              <BoxesWrapper>
+      blocks.map((block) => {
+        let gatherings = block.gatherings.data
+        return (
+          <div class="gathering-type">
+            <h2>{block.title}</h2>
+            <section
+              class="overview"
+              set:html={markedHelper(block.overview ?? '')}
+            />
+            <BoxesWrapper>
               {gatherings.map((gathering) => {
-                let { width, height, url } = gathering.attributes.featureImage?.data?.attributes?.formats?.small ?? { 'width':234, 'height':156, 'url':'/uploads/small_Michael_Living_Grace_10c3d24f38.jpg' }
+                let { width, height, url } = gathering.attributes.featureImage
+                  ?.data?.attributes?.formats?.small ?? {
+                  width: 234,
+                  height: 156,
+                  url: '/uploads/small_Michael_Living_Grace_10c3d24f38.jpg',
+                }
                 return (
-                <a class="card" href={`/gatherings/${gathering.attributes.slug}`}>
-                    <BoxesCard imageUri={url} description={gathering?.attributes?.shortDescription ?? ""}>
-                        <h3>{gathering.attributes.title}</h3>
-                        <h4>{gathering.attributes.timeSlot}</h4>
-                        <h4>{gathering.attributes.location}</h4>
+                  <a
+                    class="card"
+                    href={`/gatherings/${gathering.attributes.slug}`}
+                  >
+                    <BoxesCard
+                      imageUri={url}
+                      description={
+                        gathering?.attributes?.shortDescription ?? ''
+                      }
+                    >
+                      <h3>{gathering.attributes.title}</h3>
+                      <h4>{gathering.attributes.timeSlot}</h4>
+                      <h4>{gathering.attributes.location}</h4>
                     </BoxesCard>
                   </a>
                 )
               })}
-              </BoxesWrapper>
+            </BoxesWrapper>
           </div>
-              )
-        })
+        )
+      })
     }
   </div>
 </BaseLayout>
@@ -65,12 +93,14 @@ const header = pageData.header
   :global(div.gathering-type p) {
     color: var(--gunmetal);
   }
-  a.card:hover, a.card:focus {
+  a.card:hover,
+  a.card:focus {
     transform: scale(101%);
     transition: 0.25s;
   }
   /*BOXES LAYOUT STYLES*/
-  h3, h4 {
+  h3,
+  h4 {
     color: white;
     margin-top: 0;
     text-align: left;

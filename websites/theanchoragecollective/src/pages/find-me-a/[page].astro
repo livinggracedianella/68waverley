@@ -36,7 +36,6 @@ const pageData = await fetchPageData(`/api/services`, {
 })
 const blocks = pageData.data[0].attributes.blocks
 const service = pageData.data[0].attributes
-console.log(service)
 ---
 
 <BaseLayout title={pageData.data[0].attributes.title}>

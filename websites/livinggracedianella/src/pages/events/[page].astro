@@ -7,7 +7,7 @@ import {
   markedHelper,
   parseDate,
   TwoColumn,
-  TwoColumnImageDiv
+  TwoColumnImageDiv,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -23,7 +23,7 @@ const { page } = Astro.params
 const pageData = await fetchFilterPopulate(`/api/events`, page, [
   'header.headerImage',
   'featureImage',
-  'featureImage.image'
+  'featureImage.image',
 ])
 
 const event = pageData.data[0].attributes
@@ -34,52 +34,58 @@ const featureImage = event.featureImage
 <BaseLayout title={event.title}>
   <article class="outer">
     <Header {...header} subtitle={event.oneLiner} />
-      <dl class="details">
-        <div class="grid">
+    <dl class="details">
+      <div class="grid">
         <div class="gridItem">
           <div class="gridInner first">
-          <dt>When</dt>
+            <dt>When</dt>
           </div>
           <div class="gridInner second">
-        <dd>{event.time}<br/> {parseDate(event.date)}</dd>
+            <dd>{event.time}<br /> {parseDate(event.date)}</dd>
           </div>
         </div>
-          <div class="gridItem">
-            <div class="gridInner first">
+        <div class="gridItem">
+          <div class="gridInner first">
             <dt>Where</dt>
-            </div>
-            <div class="gridInner second">
-        <dd>{event.venue}</dd>
-            </div>
           </div>
-          <div class="gridItem">
-            <div class="gridInner first">
-        <dt>Cost</dt>
-            </div>
-            <div class="gridInner second">
-        <dd>{event.cost}</dd>
-            </div>
+          <div class="gridInner second">
+            <dd>{event.venue}</dd>
           </div>
         </div>
-      </dl>
-      <TwoColumn>
-      <div class="container">
-        <div class="containerInner">
-          <div class="eventPageDescription" set:html={markedHelper(event.shortDescription)} />
-          <div class="call-to-action">
-        {
-          event.contact && (
-          <a class="button" href={'mailto:' + event.contact}>Contact: <span>{event.contact}</span></a>
-          )
-        }
-        {event.register && <Button
-          href={event.register}
-          label="Register"
-        />}
+        <div class="gridItem">
+          <div class="gridInner first">
+            <dt>Cost</dt>
+          </div>
+          <div class="gridInner second">
+            <dd>{event.cost}</dd>
           </div>
         </div>
       </div>
-      <TwoColumnImageDiv slot="second" image={featureImage.image}/>
+    </dl>
+    <TwoColumn>
+      <div class="container">
+        <div class="containerInner">
+          <div
+            class="eventPageDescription"
+            set:html={markedHelper(event.shortDescription)}
+          />
+          <div class="call-to-action">
+            {
+              event.contact && (
+                <a class="button" href={'mailto:' + event.contact}>
+                  Contact: <span>{event.contact}</span>
+                </a>
+              )
+            }
+            {
+              event.register && (
+                <Button href={event.register} label="Register" />
+              )
+            }
+          </div>
+        </div>
+      </div>
+      <TwoColumnImageDiv slot="second" image={featureImage.image} />
     </TwoColumn>
   </article>
 </BaseLayout>
@@ -125,10 +131,11 @@ const featureImage = event.featureImage
   div.gridInner.first {
     background: white;
   }
-div.gridInner.second {
-  background: var(--primary-color);
-}
-  dt, dd {
+  div.gridInner.second {
+    background: var(--primary-color);
+  }
+  dt,
+  dd {
     margin: 0 auto;
     text-align: center;
   }
@@ -151,8 +158,8 @@ div.gridInner.second {
   }
   div.container {
     display: flex;
-    justify-content:center;
-    align-items:center;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     padding: 3rem 2rem;
   }
@@ -193,8 +200,8 @@ div.gridInner.second {
   }
   @media (max-width: 1200px) {
     dt {
-    font-size: var(--font-size-h4);
-  }
+      font-size: var(--font-size-h4);
+    }
     dd {
       font-size: var(--font-size-hero-p);
     }
@@ -246,4 +253,3 @@ div.gridInner.second {
     }
   }
 </style>
-
