@@ -14,6 +14,6 @@
     "@astrojs/mdx": "^0.16.0",
     "@rkn/base-components": "file:../../rkn-astro-library/base-components",
     "@rkn/page-components": "file:../../rkn-astro-library/page-components",
-    "astro": "^2.8.0"
+    "astro": "^3.5.4"
   }
 }
