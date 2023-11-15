@@ -5,11 +5,10 @@ import {
   fetchFilterPopulate,
   markedHelper,
   BlockRenderer,
-  Post,
   fetchPopulate,
   Grid,
   parseDate,
-  GridCard
+  GridCard,
 } from '@rkn/page-components'
 
 const data = await fetchFilterPopulate('/api/pages', 'posts', [
@@ -18,7 +17,7 @@ const data = await fetchFilterPopulate('/api/pages', 'posts', [
   'blocks.post.profiles',
   'blocks.post.featureImage',
   'blocks.post.featureImage.image',
-  'blocks.backgroundColour'
+  'blocks.backgroundColour',
 ])
 
 const pageData = data.data[0].attributes
@@ -38,32 +37,39 @@ const { data: posts } = await fetchPopulate('/api/posts', [
     <BlockRenderer blocks={blocks} />
     <h2 class="recent-header">Recent Posts</h2>
     <Grid>
-    {
-      posts.map((post) => {
-        const { title, date, slug, body, profiles } = post.attributes
+      {
+        posts.map((post) => {
+          const { title, date, slug, body, profiles } = post.attributes
           const postUrl = `/posts/${slug}`
           const profileNames = profiles.data
             .map((p) => p.attributes.name)
             .join(',')
-        return (
-          <GridCard>
-        <div class="inner card">
-          <h3><a class="click" href={postUrl}>{title}</a></h3>
-          <div class="details">
-            <span class="gathering-detail">{parseDate(date)}</span>
-            <span class="gathering-detail">{profileNames}</span>
-          </div>
-          <div class="postCard" set:html={markedHelper(body.substring(0,100) + '...')}></div>
-        </div>
-      </GridCard>
-      )
-      })
-    }
+          return (
+            <GridCard>
+              <div class="inner card">
+                <h3>
+                  <a class="click" href={postUrl}>
+                    {title}
+                  </a>
+                </h3>
+                <div class="details">
+                  <span class="detail">{parseDate(date)}</span>
+                  <span class="detail">{profileNames}</span>
+                </div>
+                <div
+                  class="postCard"
+                  set:html={markedHelper(body.substring(0, 100) + '...')}
+                />
+              </div>
+            </GridCard>
+          )
+        })
+      }
     </Grid>
   </div>
 </BaseLayout>
 <style>
-:root {
+  :root {
     --grid-card-padding: 2.5rem 25px 2rem 25px;
   }
   .recent-header {
@@ -81,13 +87,13 @@ const { data: posts } = await fetchPopulate('/api/posts', [
   div.inner * {
     color: var(--gunmetal);
   }
-  .gathering-detail:not(:last-of-type)::after {
+  .detail:not(:last-of-type)::after {
     content: ' | ';
   }
   div.details {
     margin-top: 0.2rem;
   }
-  .gathering-detail {
+  .detail {
     font-size: var(--font-size-h5);
     font-family: var(--italic);
   }
@@ -109,3 +115,4 @@ const { data: posts } = await fetchPopulate('/api/posts', [
     color: var(--gunmetal);
   }
 </style>
+

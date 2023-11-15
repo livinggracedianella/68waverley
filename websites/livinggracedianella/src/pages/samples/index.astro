@@ -5,7 +5,6 @@ import {
   Header,
   fetchFilterPopulate,
   markedHelper,
-  Post,
   fetchPopulate,
   Grid,
   parseDate,
@@ -50,27 +49,34 @@ const { data: posts } = await fetchPopulate('/api/posts', [
     <BlockRenderer blocks={blocks} />
     <h2 class="recent-header">Recent Posts</h2>
     <Grid>
-    {
-      posts.map((post) => {
-        const { title, date, slug, body, profiles } = post.attributes
+      {
+        posts.map((post) => {
+          const { title, date, slug, body, profiles } = post.attributes
           const postUrl = `/posts/${slug}`
           const profileNames = profiles.data
             .map((p) => p.attributes.name)
             .join(',')
-        return (
-          <GridCard>
-        <div class="inner card">
-          <h3><a class="click" href={postUrl}>{title}</a></h3>
-          <div class="details">
-            <span class="gathering-detail">{parseDate(date)}</span>
-            <span class="gathering-detail">{profileNames}</span>
-          </div>
-          <div class="postCard" set:html={markedHelper(body.substring(0,100) + '...')}></div>
-        </div>
-      </GridCard>
-      )
-      })
-    }
+          return (
+            <GridCard>
+              <div class="inner card">
+                <h3>
+                  <a class="click" href={postUrl}>
+                    {title}
+                  </a>
+                </h3>
+                <div class="details">
+                  <span class="detail">{parseDate(date)}</span>
+                  <span class="detail">{profileNames}</span>
+                </div>
+                <div
+                  class="postCard"
+                  set:html={markedHelper(body.substring(0, 100) + '...')}
+                />
+              </div>
+            </GridCard>
+          )
+        })
+      }
     </Grid>
   </div>
   <style>
@@ -82,49 +88,50 @@ const { data: posts } = await fetchPopulate('/api/posts', [
       height: 100%;
     }
     :root {
-    --grid-card-padding: 2.5rem 25px 2rem 25px;
-  }
-  .recent-header {
-    color: var(--primary-color);
-    font-size: var(--font-size-h3);
-    line-height: var(--line-height-h3);
-    margin: 2rem 0;
-    text-align: center;
-  }
-  div.inner {
-    background: var(--light);
-    padding: var(--grid-card-padding);
-    height: 100%;
-  }
-  div.inner * {
-    color: var(--gunmetal);
-  }
-  .gathering-detail:not(:last-of-type)::after {
-    content: ' | ';
-  }
-  div.details {
-    margin-top: 0.2rem;
-  }
-  .gathering-detail {
-    font-size: var(--font-size-h5);
-    font-family: var(--italic);
-  }
-  div.inner h3 a {
-    color: var(--primary-color);
-  }
-  div.inner p {
-    line-height: 140%;
-  }
-  .card h2 {
-    font-size: calc(36rem / 16);
-  }
-  .card h2,
-  .card h3 {
-    margin-top: 0;
-    line-height: 110%;
-  }
-  :global(div.postCard *) {
-    color: var(--gunmetal);
-  }
+      --grid-card-padding: 2.5rem 25px 2rem 25px;
+    }
+    .recent-header {
+      color: var(--primary-color);
+      font-size: var(--font-size-h3);
+      line-height: var(--line-height-h3);
+      margin: 2rem 0;
+      text-align: center;
+    }
+    div.inner {
+      background: var(--light);
+      padding: var(--grid-card-padding);
+      height: 100%;
+    }
+    div.inner * {
+      color: var(--gunmetal);
+    }
+    .detail:not(:last-of-type)::after {
+      content: ' | ';
+    }
+    div.details {
+      margin-top: 0.2rem;
+    }
+    .detail {
+      font-size: var(--font-size-h5);
+      font-family: var(--italic);
+    }
+    div.inner h3 a {
+      color: var(--primary-color);
+    }
+    div.inner p {
+      line-height: 140%;
+    }
+    .card h2 {
+      font-size: calc(36rem / 16);
+    }
+    .card h2,
+    .card h3 {
+      margin-top: 0;
+      line-height: 110%;
+    }
+    :global(div.postCard *) {
+      color: var(--gunmetal);
+    }
   </style>
 </BaseLayout>
+
