@@ -13,7 +13,7 @@ const description =
 culture or gender.`
 ---
 
-<div class="container">
+<div class="boxes-card container">
   <div class="details">
     <slot />
   </div>
@@ -33,6 +33,12 @@ culture or gender.`
     grid-template-rows: 20px 1fr 10px 3fr 20px;
     min-height: 30vh;
     height: 100%;
+  }
+  .boxes-card:hover,
+  .boxes-card:focus {
+    transform: scale(101%);
+    transition: 0.25s;
+    cursor: pointer;
   }
   div.details {
     background: var(--chapel-purple);
@@ -101,3 +107,15 @@ culture or gender.`
     }
   }
 </style>
+<script>
+  document.querySelectorAll('.boxes-card').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      // If the thing they clicked is already a link, do nothing, let their link click go through.
+      if (e.target.nodeName === 'A') {
+        return
+      }
+      card.querySelector('.click')?.click()
+    })
+  })
+</script>
+

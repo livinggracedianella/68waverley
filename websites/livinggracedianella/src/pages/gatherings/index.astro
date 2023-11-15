@@ -9,7 +9,6 @@ import {
   BoxesCard,
   BoxesWrapper,
 } from '@rkn/page-components'
-
 const data = await fetchFilterPopulate('/api/pages', 'gatherings', [
   'header.headerImage',
   'blocks.gatherings',
@@ -42,21 +41,21 @@ const header = pageData.header
                   url: '/uploads/small_Michael_Living_Grace_10c3d24f38.jpg',
                 }
                 return (
-                  <a
-                    class="card"
-                    href={`/gatherings/${gathering.attributes.slug}`}
+                  <BoxesCard
+                    imageUri={url}
+                    description={gathering?.attributes?.shortDescription ?? ''}
                   >
-                    <BoxesCard
-                      imageUri={url}
-                      description={
-                        gathering?.attributes?.shortDescription ?? ''
-                      }
-                    >
-                      <h3>{gathering.attributes.title}</h3>
-                      <h4>{gathering.attributes.timeSlot}</h4>
-                      <h4>{gathering.attributes.location}</h4>
-                    </BoxesCard>
-                  </a>
+                    <h3>
+                      <a
+                        class="click"
+                        href={`/gatherings/${gathering.attributes.slug}`}
+                      >
+                        {gathering.attributes.title}
+                      </a>
+                    </h3>
+                    <h4>{gathering.attributes.timeSlot}</h4>
+                    <h4>{gathering.attributes.location}</h4>
+                  </BoxesCard>
                 )
               })}
             </BoxesWrapper>
@@ -81,7 +80,7 @@ const header = pageData.header
     max-width: 750px;
     margin: 0 auto;
   }
-  a.card {
+  a {
     color: white;
     text-decoration: none;
   }
@@ -92,11 +91,6 @@ const header = pageData.header
   }
   :global(div.gathering-type p) {
     color: var(--gunmetal);
-  }
-  a.card:hover,
-  a.card:focus {
-    transform: scale(101%);
-    transition: 0.25s;
   }
   /*BOXES LAYOUT STYLES*/
   h3,
