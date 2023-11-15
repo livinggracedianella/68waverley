@@ -1,13 +1,16 @@
 ---
-//Takes columnSpan as a prop. As I've gone through and refactored I've given primary links the class 'click' ready for the click event.
+/**
+ * If one of the children has a class called `click`, any clicks to this card will behave as if they are clicks on that child.
+ * This is useful for making the entire card clickable
+ */
 const { columnSpan = 2 } = Astro.props
 ---
 
-<li class="card">
+<li class="grid-card">
   <slot />
 </li>
 <style define:vars={{ columnSpan }}>
-  li.card {
+  li.grid-card {
     grid-column: span var(--columnSpan);
     list-style: none;
     padding: 0;
@@ -15,3 +18,15 @@ const { columnSpan = 2 } = Astro.props
     transition: 0.25s;
   }
 </style>
+<script>
+  document.querySelectorAll('.grid-card').forEach((gridCard) => {
+    gridCard.addEventListener('click', (e) => {
+      // If the thing they clicked is already a link, do nothing, let their link click go through.
+      if (e.target.nodeName === 'A') {
+        return
+      }
+      gridCard.querySelector('.click')?.click()
+    })
+  })
+</script>
+

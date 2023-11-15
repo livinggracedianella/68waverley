@@ -24,9 +24,11 @@ const imageUrl = `url(${strapiAsset(
     gatherings.data.map((gathering) => (
       <GridCard>
         <div class="inner">
-          <a class="click" href={`/gatherings/${gathering.attributes.slug}`}>
-            <h3>{gathering.attributes.title}</h3>
-          </a>
+          <h3>
+            <a class="click" href={`/gatherings/${gathering.attributes.slug}`}>
+              {gathering.attributes.title}
+            </a>
+          </h3>
           <div class="details">
             {gathering.attributes.timeSlot && (
               <span class="gathering-detail">
@@ -70,7 +72,7 @@ const imageUrl = `url(${strapiAsset(
     font-size: var(--font-size-h5);
     font-family: var(--italic);
   }
-  div.inner h3 {
+  div.inner h3 a {
     color: var(--primary-color);
   }
   div.inner p {
@@ -91,3 +93,4 @@ const imageUrl = `url(${strapiAsset(
     grid-column: span 2;
   }
 </style>
+
