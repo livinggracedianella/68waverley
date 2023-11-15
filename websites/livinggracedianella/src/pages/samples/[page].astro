@@ -1,0 +1,54 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  BlockRenderer,
+  Header,
+  fetchFilterPopulate,
+} from '@rkn/page-components'
+
+export async function getStaticPaths() {
+  const pages = await fetch(
+    `${import.meta.env.STRAPI_HOST}/api/pages?filters[websites][key][$eq]=${
+      import.meta.env.THIS_SITE
+    }`
+  ).then((res) => res.json())
+  return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
+}
+const { page } = Astro.params
+const pageData = await fetchFilterPopulate(`/api/pages`, page, [
+  'header.headerImage',
+  'blocks.image',
+  'blocks.gatherings',
+  'blocks.message',
+  'blocks.message.featureImage',
+  'blocks.message.featureImage.image',
+  'blocks.message.soundcloudRecording',
+  'blocks.message.profiles',
+  'blocks.post',
+  'blocks.post.profiles',
+  'blocks.post.featureImage',
+  'blocks.post.featureImage.image',
+  'blocks.event',
+  'blocks.profiles',
+  'blocks.profiles.portrait',
+  'blocks.backgroundColour',
+  'blocks.standards',
+])
+const blocks = pageData.data[0].attributes.blocks
+const header = pageData.data[0].attributes.header
+---
+
+<BaseLayout title="Styleguide">
+  <div class="outer" id="our-ethos">
+    <Header {...header} />
+    <BlockRenderer blocks={blocks} />
+  </div>
+  <style>
+    div.outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</BaseLayout>

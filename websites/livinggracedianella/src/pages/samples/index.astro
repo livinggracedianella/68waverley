@@ -45,7 +45,7 @@ const { data: posts } = await fetchPopulate('/api/posts', [
 
 <BaseLayout title="Styleguide">
   <div class="outer">
-    <Header {...header} slug="home" />
+    <Header {...header}/>
 
     <BlockRenderer blocks={blocks} />
     <h2 class="recent-header">Recent Posts</h2>

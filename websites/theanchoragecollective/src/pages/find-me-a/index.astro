@@ -5,6 +5,9 @@ import {
   Header,
   fetchFilterPopulate,
   Grid,
+  GridCard,
+  fetchPageData,
+  markedHelper,
 } from '@rkn/page-components'
 
 const pageData = await fetchFilterPopulate('/api/pages', 'find-me-a', [
@@ -30,13 +33,39 @@ const pageData = await fetchFilterPopulate('/api/pages', 'find-me-a', [
 ])
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
+
+const services = await fetchPageData('/api/services', { populate: [ 'profiles', 'backgroundColour' ] })
 ---
 
 <BaseLayout title="Styleguide">
   <div class="outer">
     <Header {...header} />
     <BlockRenderer blocks={blocks} />
-    <Grid />
+    <Grid>
+      {
+        services.data.map((service) => {
+          const {
+            name,
+            shortDescription = '',
+            oneLiner,
+            profiles,
+            slug,
+            backgroundColour
+          } = service.attributes
+          console.log(service.attributes)
+          return (
+            <GridCard>
+              <div class="container" style={`background: var(--${backgroundColour.colourPicker ?? 'var(--light)'})`}>
+              <h2>
+                <a href={`find-me-a/${slug}`}>{name}</a>
+              </h2>
+              <div class="text" set:html={markedHelper(oneLiner ?? '')} />
+              </div>
+            </GridCard>
+          )
+        })
+      }
+    </Grid>
   </div>
   <style>
     div.outer {
@@ -44,6 +73,19 @@ const header = pageData.data[0].attributes.header
       flex-direction: column;
       align-items: center;
       justify-content: center;
+    }
+    div.container {
+      height: 100%;
+      width: 100%;
+      padding: 1rem 32px;
+    }
+    h2, h2 a {
+      color: white;
+      margin: 0 0 1rem 0;
+      font-size: var(--font-size-h3);
+    }
+    .text {
+      color: white;
     }
   </style>
 </BaseLayout>

@@ -1,5 +1,5 @@
 ---
-let { title, overview, profiles } = Astro.props
+let { title, overview, profiles, href } = Astro.props
 import {
   fetchPopulate,
   ProfileCard,
@@ -15,6 +15,14 @@ profiles.data.forEach((profile) => {
     length -= 1
   }
 })
+let link
+if (href == 'false') {
+  link = ''
+} else if (href) {
+  link = href
+} else {
+  link = '/about-us#our-people'
+}
 ---
 
 <div id="our-people"></div>
@@ -23,7 +31,7 @@ profiles.data.forEach((profile) => {
     length={length}
     title={title}
     overview={overview}
-    href="/about-us#our-people"
+    href={link}
   />
   {
     profiles.data.map((profile) => {
