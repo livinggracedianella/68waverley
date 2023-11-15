@@ -41,7 +41,7 @@ const { data: posts } = await fetchPopulate('/api/posts', [
     {
       posts.map((post) => {
         const { title, date, slug, body, profiles } = post.attributes
-          const postUrl = `/posts/${slug}`
+          const postUrl = `/blog/${slug}`
           const profileNames = profiles.data
             .map((p) => p.attributes.name)
             .join(',')

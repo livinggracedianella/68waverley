@@ -17,7 +17,7 @@ const { title, body, date, profiles, featureImage, slug } =
 const { caption } = featureImage ?? ''
 const image =
   featureImage?.image ?? '/uploads/small_Sermon_Image_Background_ed63796e21.png'
-const prefix = site() === 'livinggracedianella' ? '/posts/' : '/blog'
+const prefix = site() === 'livinggracedianella' ? '/posts/' : '/blog/'
 const margin = imageSide == 'left' ? '1rem auto 0 0' : '1rem 0 0 auto'
 
 const backgroundColour = `var(--${
@@ -108,4 +108,3 @@ backgroundColour == 'var(--gunmetal)'
     }
   }
 </style>
-
