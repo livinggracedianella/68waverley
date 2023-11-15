@@ -9,6 +9,7 @@ import {
   TwoColumnImageDiv,
   fetchPopulate,
   ProfilesGrid,
+  site,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -24,31 +25,55 @@ const { page } = Astro.params
 const pageData = await fetchFilterPopulate(`/api/profiles`, page, [
   'header.headerImage',
   'portrait',
+  'websites',
+  'alternateDetails',
+  'alternateDetails.portrait',
+  'alternateDetails.websites',
 ])
 
 const provider = pageData.data[0].attributes
-const header = provider.header
-const portrait = provider.portrait
+const {
+  header,
+  name,
+  slug,
+  alternateDetails,
+} = provider
 
-let { url } = portrait?.data?.attributes?.formats?.medium ?? ""
+let trueDetails
+alternateDetails.forEach((detail) => {
+  let match
+  detail.websites.data.forEach((website) => {
+    if (website.attributes.key == site()) {
+      match = true
+    }
+  })
+  if (match) {trueDetails = detail}
+})
+const bio = trueDetails?.bio ?? provider.bio
+const email = trueDetails?.email ?? provider.email
+const title = trueDetails?.title ?? provider?.title ?? ''
+const portrait = trueDetails?.portrait?.data
+  ? trueDetails.portrait
+  : provider.portrait
 
 const profiles = await fetchPopulate('/api/profiles', ['portrait'])
+
 ---
 
-<BaseLayout title={provider.name}>
+<BaseLayout title={name}>
   <div class="outer">
-    <Header {...header} headerTitle={provider.name} subtitle={provider.title} />
+    <Header headerTitle={name} subtitle={title} />
     <TwoColumn columnReverse="true">
       <div class="ProfileTextContainer">
-        <article set:html={markedHelper(provider?.bio ?? "")} />
+        <article set:html={markedHelper(bio ?? "")} />
       </div>
       <div class="sidePanel" slot="second">
         <div class="imageContainer">
           <TwoColumnImageDiv image={portrait} />
         </div>
         <!--The below line looks wrong in my code editor but works fine RKN-->
-        {provider.email && <a class="cta" href=`mailto:${provider.email}`
-          >{provider.email}</a
+        {email && <a class="cta" href=`mailto:${email}`
+          >{email}</a
         >}
       </div>
     </TwoColumn>

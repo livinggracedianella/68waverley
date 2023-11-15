@@ -7,7 +7,13 @@ import {
   GridFeatureCard,
 } from '@rkn/page-components'
 if (!profiles?.data?.[0]) {
-  profiles = await fetchPopulate('/api/profiles', ['portrait'])
+  profiles = await fetchPopulate('/api/profiles', [
+    'portrait',
+    'websites',
+    'alternateDetails',
+    'alternateDetails.portrait',
+    'alternateDetails.websites',
+  ])
 }
 let length = profiles.data.length
 profiles.data.forEach((profile) => {
@@ -35,7 +41,6 @@ if (href == 'false') {
   />
   {
     profiles.data.map((profile) => {
-      let bio = profile.attributes?.bio ?? ''
       if (profile.attributes.slug === Astro.params.page) {
         return
       }

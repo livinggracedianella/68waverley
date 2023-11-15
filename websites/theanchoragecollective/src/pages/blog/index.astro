@@ -19,7 +19,6 @@ const data = await fetchFilterPopulate('/api/pages', 'blog', [
   'blocks.post.featureImage.image',
   'blocks.backgroundColour',
 ])
-console.log(data)
 
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks

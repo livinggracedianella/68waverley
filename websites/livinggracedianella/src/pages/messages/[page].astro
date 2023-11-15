@@ -26,6 +26,11 @@ const pageData = await fetchPageData(`/api/sermons`, {
     'featureImage.image',
     'soundcloudRecording',
     'profiles',
+    'profiles.portrait',
+    'websites',
+    'profiles.alternateDetails',
+    'profiles.alternateDetails.portrait',
+    'profiles.alternateDetails.websites',
   ],
 })
 const message = pageData.data[0].attributes

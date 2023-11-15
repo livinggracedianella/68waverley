@@ -50,7 +50,9 @@ alternateDetails.forEach((detail) => {
       match = true
     }
   })
-  trueDetails = detail
+  if (match) {
+    trueDetails = detail
+  }
 })
 const bio = trueDetails?.bio ?? provider.bio
 const email = trueDetails?.email ?? provider.email
@@ -58,7 +60,6 @@ const title = trueDetails?.title ?? provider?.title ?? ''
 const portrait = trueDetails?.portrait?.data
   ? trueDetails.portrait
   : provider.portrait
-let { url } = portrait?.data?.attributes?.formats?.medium ?? ''
 const { qualifications, memberships, experienceAreas, specialtyAreas } =
   anchorageDetails ? anchorageDetails : ''
 

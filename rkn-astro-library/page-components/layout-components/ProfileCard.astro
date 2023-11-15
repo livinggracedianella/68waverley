@@ -1,31 +1,43 @@
 ---
-import { GridImageDiv, GridCard } from '@rkn/page-components'
-const { profile } = Astro.props
-const bio = profile.attributes?.bio ?? ''
+import { GridImageDiv, GridCard, site } from '@rkn/page-components'
+const profile = Astro.props.profile.attributes
+const { name, slug, alternateDetails = [] } = profile
+let trueDetails
+alternateDetails.forEach((detail) => {
+  let match
+  detail.websites.data.forEach((website) => {
+    console.log(website, site())
+    if (website.attributes.key == site()) {
+      match = true
+    }
+  })
+  if (match) {
+    trueDetails = detail
+  }
+})
+const bio = trueDetails?.bio ?? profile.bio
+const title = trueDetails?.title ?? profile?.title ?? ''
+const portrait = trueDetails?.portrait?.data
+  ? trueDetails.portrait
+  : profile.portrait
 ---
 
 <GridCard>
   <div class="inner">
     <div class="textContainer">
       <h3>
-        <a class="click" href={`/profiles/${profile.attributes.slug}`}
-          >{profile.attributes.name}</a
-        >
+        <a class="click" href={`/profiles/${slug}`}>{name}</a>
       </h3>
       <h4>
-        {
-          profile.attributes.title && (
-            <span class="profile-detail">{profile.attributes.title}</span>
-          )
-        }
+        {title && <span class="profile-detail">{title}</span>}
       </h4>
       <p>
-        {bio.length >= 100 && `${bio.substring(0, 100)}...`}
-        {bio.length < 100 && `${bio}`}
+        {bio?.length >= 100 && `${bio.substring(0, 100)}...`}
+        {bio?.length < 100 && `${bio}`}
       </p>
     </div>
     <div class="imageContainer">
-      <GridImageDiv image={profile.attributes.portrait} />
+      <GridImageDiv image={portrait} />
     </div>
   </div>
 </GridCard>

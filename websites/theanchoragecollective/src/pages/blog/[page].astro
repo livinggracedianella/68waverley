@@ -25,6 +25,10 @@ const pageData = await fetchFilterPopulate(`/api/posts`, page, [
   'profiles.portrait',
   'featureImage',
   'featureImage.image',
+  'websites',
+  'profiles.alternateDetails',
+  'profiles.alternateDetails.portrait',
+  'profiles.alternateDetails.websites',
 ])
 const post = pageData.data[0].attributes
 const profiles = post?.profiles?.data ?? []

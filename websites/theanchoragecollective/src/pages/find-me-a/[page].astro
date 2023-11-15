@@ -32,6 +32,10 @@ const pageData = await fetchPageData(`/api/services`, {
     'blocks.event',
     'profiles',
     'profiles.portrait',
+    'websites',
+    'profiles.alternateDetails',
+    'profiles.alternateDetails.portrait',
+    'profiles.alternateDetails.websites',
   ],
 })
 const blocks = pageData.data[0].attributes.blocks
