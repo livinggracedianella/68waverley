@@ -92,7 +92,7 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
   }
   div.imageContainer {
     height: 100%;
-    max-height: max(40vh, 250px);
+    max-height: 60vh;
   }
   div.sidePanel {
     background-color: var(--primary-color);
@@ -119,10 +119,5 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
   :global(div.ProfileTextContainer p:first-of-type:first-line) {
     color: var(--primary-color);
     font-size: var(--font-size-hero-p);
-  }
-  @media (max-width: 750px) {
-    div.imageContainer {
-      height: 300px;
-    }
   }
 </style>
