@@ -5,7 +5,7 @@ const {
   image,
   verticalAlignment = 'center',
   horizontalAlignment = 'center',
-  minimumHeight = 'short',
+  minimumHeight = 'medium',
 } = Astro.props
 const imageUrl = `url(${strapiAsset(
   image?.data?.attributes?.formats?.medium?.url ??
@@ -32,6 +32,5 @@ let minHeight = `var(--two-column-min-height-${minimumHeight})`
     width: auto;
     min-height: var(--minHeight);
     height: 100%;
-    max-height: 80vh;
   }
 </style>
