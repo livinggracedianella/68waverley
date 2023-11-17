@@ -55,7 +55,7 @@ const featureImage = pageData.data[0]?.attributes?.featureImage
     <TwoColumn>
       <div class="containerOuter">
         <div class="containerInner">
-          <p>{gathering.oneLiner}</p>
+          <p set:html={markedHelper(gathering.oneLiner) ?? ''} />
           <section set:html={markedHelper(gathering.shortDescription ?? '')} />
         </div>
       </div>
@@ -91,3 +91,4 @@ const featureImage = pageData.data[0]?.attributes?.featureImage
     max-width: 700px;
   }
 </style>
+
