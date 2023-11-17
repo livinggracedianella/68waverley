@@ -34,7 +34,7 @@ const { data: posts } = await fetchPopulate('/api/posts', [
 ])
 ---
 
-<BaseLayout title="Posts">
+<BaseLayout title={pageData.title}>
   <div class="outer">
     <Header {...header} />
     <BlockRenderer blocks={blocks} />

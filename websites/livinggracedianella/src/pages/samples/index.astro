@@ -44,7 +44,7 @@ const { data: posts } = await fetchPopulate('/api/posts', [
 ])
 ---
 
-<BaseLayout title="Styleguide">
+<BaseLayout title={pageData.data[0].attributes.title}>
   <div class="outer">
     <Header {...header} />
 

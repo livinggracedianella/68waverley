@@ -88,7 +88,7 @@ const featureImage = event.featureImage
           </div>
         </div>
       </div>
-      <TwoColumnImageDiv slot="second" image={featureImage.image} />
+      <TwoColumnImageDiv slot="second" {...featureImage} />
     </TwoColumn>
   </article>
 </BaseLayout>
@@ -169,6 +169,7 @@ const featureImage = event.featureImage
   div.eventPageDescription {
     margin: auto;
     padding: 0 20px;
+    max-width: 700px;
   }
   :global(div.eventPageDescription *) {
     color: var(--gunmetal);

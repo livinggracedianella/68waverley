@@ -13,6 +13,9 @@ const data = await fetchFilterPopulate('/api/pages', 'gatherings', [
   'header.headerImage',
   'blocks.gatherings',
   'blocks.gatherings.featureImage',
+  'blocks.gatherings.featureImage.image',
+  'blocks.featureImage',
+  'blocks.featureImage.image',
 ])
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
@@ -35,7 +38,7 @@ const header = pageData.header
             <BoxesWrapper>
               {gatherings.map((gathering) => {
                 let { width, height, url } = gathering.attributes.featureImage
-                  ?.data?.attributes?.formats?.small ?? {
+                  ?.image?.data?.attributes?.formats?.small ?? {
                   width: 234,
                   height: 156,
                   url: '/uploads/small_Michael_Living_Grace_10c3d24f38.jpg',

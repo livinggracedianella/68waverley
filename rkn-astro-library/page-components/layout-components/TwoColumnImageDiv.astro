@@ -7,10 +7,9 @@ const {
   horizontalAlignment = 'center',
   minimumHeight = 'medium',
 } = Astro.props
-console.log(Astro.props)
 const imageUrl = `url(${strapiAsset(
-  image?.data?.attributes?.formats?.small?.url ??
-    '/uploads/small_Sermon_Image_Background_ed63796e21.png'
+  image?.data?.attributes?.formats?.medium?.url ??
+    '/uploads/medium_Sermon_Image_Background_ed63796e21.png'
 )})`
 let minHeight = `var(--two-column-min-height-${minimumHeight})`
 ---

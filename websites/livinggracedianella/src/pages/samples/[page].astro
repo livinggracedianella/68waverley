@@ -41,7 +41,7 @@ const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
 ---
 
-<BaseLayout title="Styleguide">
+<BaseLayout title={pageData.data[0].attributes.title}>
   <div class="outer" id="our-ethos">
     <Header {...header} />
     <BlockRenderer blocks={blocks} />

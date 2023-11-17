@@ -50,7 +50,9 @@ const featureImage = pageData.data[0]?.attributes?.featureImage
   <div class="outer">
     <Header
       {...header}
-      subtitle={`${gathering.timeSlot} | ${gathering.location}`}
+      subtitle={`${gathering.timeSlot ?? ''} ${
+        (gathering.timeSlot && gathering.location && '|') ?? ''
+      } ${gathering.location ?? ''}`}
     />
     <TwoColumn>
       <div class="containerOuter">
@@ -91,4 +93,3 @@ const featureImage = pageData.data[0]?.attributes?.featureImage
     max-width: 700px;
   }
 </style>
-
