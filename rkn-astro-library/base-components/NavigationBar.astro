@@ -291,7 +291,7 @@ const logoAltText =
     text-align: center;
     background-color: var(--primaryColour);
   }
-  .headerNavToggle {
+  header .headerNavToggle {
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -305,10 +305,11 @@ const logoAltText =
     margin-right: max(10px, 1vw);
     width: auto;
     padding: 10px;
+    min-height: 5em;
   }
 
   .headerNavToggle:focus-within {
-    outline: auto;
+    outline: 1px solid white;
   }
 
   .headerNavToggle:hover {
@@ -331,14 +332,14 @@ const logoAltText =
   .toggled div:nth-of-type(1) {
     border-radius: 10px;
     transform: rotate(45deg);
+    margin: 0;
     position: relative;
-    top: 0.85em;
+    top: 4px;
   }
 
   .toggled div:nth-of-type(2) {
-    width: 3.1em;
-    margin: 0.15em 0.4em 0.15em 0;
     border-radius: 10px;
+    margin: 0;
     transform: rotate(405deg);
     opacity: 0;
   }
@@ -346,11 +347,12 @@ const logoAltText =
   .toggled div:nth-of-type(3) {
     border-radius: 10px;
     transform: rotate(-45deg);
+    margin: 0;
     position: relative;
-    bottom: 0.85em;
+    bottom: 4px;
   }
   @media (max-width: 916px) {
-    .headerNavToggle {
+    header .headerNavToggle {
       display: flex;
       margin-left: auto;
     }
