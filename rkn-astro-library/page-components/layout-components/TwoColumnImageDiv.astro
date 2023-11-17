@@ -1,21 +1,37 @@
 ---
 //just requires image prop, can send through imageUri as fallback
 import { strapiAsset } from '../util.js'
-const image = Astro.props.image
+const {
+  image,
+  verticalAlignment = 'center',
+  horizontalAlignment = 'center',
+  minimumHeight = 'medium',
+} = Astro.props
+console.log(Astro.props)
 const imageUrl = `url(${strapiAsset(
-  image?.data?.attributes?.formats?.small?.url ?? image
+  image?.data?.attributes?.formats?.small?.url ??
+    '/uploads/small_Sermon_Image_Background_ed63796e21.png'
 )})`
+let minHeight = `var(--two-column-min-height-${minimumHeight})`
 ---
 
 <div class="image"></div>
-<style define:vars={{ imageUrl }}>
+<style
+  define:vars={{ imageUrl, verticalAlignment, horizontalAlignment, minHeight }}
+>
+  :root {
+    --two-column-min-height-tall: 450px;
+    --two-column-min-height-medium: 350px;
+    --two-column-min-height-short: 250px;
+  }
   div.image {
     background-image: var(--imageUrl);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position-y: var(--verticalAlignment);
+    background-position-x: var(--horizontalAlignment);
     width: auto;
-    min-height: var(--two-column-min-height);
+    min-height: var(--minHeight);
     height: 100%;
   }
 </style>

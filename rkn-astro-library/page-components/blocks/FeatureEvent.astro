@@ -12,11 +12,9 @@ import {
 } from '@rkn/page-components'
 const props = Astro.props
 const event = props?.event?.data?.attributes ?? props.event.attributes
-const imageCaption = event.featureImage?.caption ?? ''
 const { imageSide } = props
 const { title, shortDescription, date, featureImage, venue, slug } =
   props?.event?.data?.attributes ?? props?.event?.attributes ?? props.event
-const { caption } = featureImage ?? ''
 const image =
   featureImage?.image ?? '/uploads/small_Sermon_Image_Background_ed63796e21.png'
 let margin
@@ -50,7 +48,7 @@ backgroundColour == 'var(--gunmetal)'
       </div>
     </div>
   </div>
-  <TwoColumnImageDiv image={image} slot="second" />
+  <TwoColumnImageDiv {...featureImage} slot="second" />
 </TwoColumn>
 <style define:vars={{ margin, backgroundColour, textColour }}>
   div.outer {
@@ -74,6 +72,7 @@ backgroundColour == 'var(--gunmetal)'
   :global(.featureEventBody *) {
     font-size: var(--font-size-hero-p);
     line-height: var(--line-height-hero-p);
+    max-width: 700px;
   }
   p.details {
     font-size: var(--font-size-h4);

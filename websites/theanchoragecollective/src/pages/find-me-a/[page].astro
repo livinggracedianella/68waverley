@@ -36,6 +36,8 @@ const pageData = await fetchPageData(`/api/services`, {
     'profiles.alternateDetails',
     'profiles.alternateDetails.portrait',
     'profiles.alternateDetails.websites',
+    'blocks.textImage',
+    'blocks.textImage.featureImage',
   ],
 })
 const blocks = pageData.data[0].attributes.blocks

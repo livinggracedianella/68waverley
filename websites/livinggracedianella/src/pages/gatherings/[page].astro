@@ -24,6 +24,7 @@ const { page } = Astro.params
 const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
   'header.headerImage',
   'featureImage',
+  'featureImage.image',
   'blocks',
   'blocks.image',
   'blocks.message',
@@ -36,11 +37,13 @@ const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
   'blocks.post.featureImage',
   'blocks.backgroundColour',
   'blocks.gatherings',
+  'blocks.featureImage',
+  'blocks.featureImage.image',
 ])
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
 const header = gathering.header
 const blocks = pageData.data[0]?.attributes?.blocks ?? ''
-const image = pageData.data[0]?.attributes?.featureImage
+const featureImage = pageData.data[0]?.attributes?.featureImage
 ---
 
 <BaseLayout title={gathering.title}>
@@ -56,7 +59,7 @@ const image = pageData.data[0]?.attributes?.featureImage
           <section set:html={markedHelper(gathering.shortDescription ?? '')} />
         </div>
       </div>
-      <TwoColumnImageDiv image={image} slot="second" />
+      <TwoColumnImageDiv {...featureImage} slot="second" />
     </TwoColumn>
     {blocks && <BlockRenderer blocks={blocks} />}
   </div>

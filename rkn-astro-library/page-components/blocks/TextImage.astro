@@ -1,15 +1,14 @@
 ---
 //formerly two-column.
 import { markedHelper, contrastingText } from '../util.js'
-import { strapiAsset, TwoColumn } from '@rkn/page-components'
+import { strapiAsset, TwoColumn, TwoColumnImageDiv } from '@rkn/page-components'
 const props = Astro.props
-const img = props.image.data.attributes
-const imgURL = strapiAsset(
+const { featureImage } = props
+/*const imgURL = strapiAsset(
   img.formats?.medium?.url ??
     img.formats?.small?.url ??
     img.formats.thumbnail.url
-)
-const { imageVerticalAlignment, imageHorizontalAlignment } = props
+)*/
 const backgroundColour = `var(--${
   props?.backgroundColour?.colourPicker ?? 'light'
 })`
@@ -29,19 +28,11 @@ const textColour = contrastingText(props.backgroundColour)
       </div>
     </div>
   </div>
-  <div
-    class="item image"
-    slot="second"
-    style={`background-image: url("${imgURL}")`}
-  >
-    <img src={imgURL} alt={img.alternativeText} class="sr-only" />
-  </div>
+  <TwoColumnImageDiv {...featureImage} slot="second" />
 </TwoColumn>
 
 <style
   define:vars={{
-    imageVerticalAlignment,
-    imageHorizontalAlignment,
     textColour,
     backgroundColour,
   }}
@@ -69,14 +60,6 @@ const textColour = contrastingText(props.backgroundColour)
   h2 {
     margin-top: 0;
     font-size: var(--font-size-h3);
-  }
-  div.image {
-    background-position: var(--imageVerticalAlignment)
-      var(--imageHorizontalAlignment);
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: auto;
-    min-height: var(--two-column-min-height);
   }
   @media (max-width: 900px) {
     div.outer {

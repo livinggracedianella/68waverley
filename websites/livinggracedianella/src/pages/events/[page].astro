@@ -24,6 +24,9 @@ const pageData = await fetchFilterPopulate(`/api/events`, page, [
   'header.headerImage',
   'featureImage',
   'featureImage.image',
+  'blocks.featureImage',
+  'blocks.featureImage.image',
+  ,
 ])
 
 const event = pageData.data[0].attributes

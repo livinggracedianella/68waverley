@@ -6,7 +6,6 @@ let trueDetails
 alternateDetails.forEach((detail) => {
   let match
   detail.websites.data.forEach((website) => {
-    console.log(website, site())
     if (website.attributes.key == site()) {
       match = true
     }
