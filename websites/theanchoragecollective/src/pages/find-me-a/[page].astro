@@ -44,7 +44,7 @@ const blocks = pageData.data[0].attributes.blocks
 const service = pageData.data[0].attributes
 ---
 
-<BaseLayout title={pageData.data[0].attributes.title}>
+<BaseLayout title={'Find Me A ' + service.name}>
   <div class="outer">
     <Header
       headerTitle={service.name
