@@ -7,6 +7,8 @@
   --chapel-purple: #702082;
   --waverley-coral: #b04a5a;
   --light: #e7e5e4;
+  --mid-green: #279989;
+  --anchorage-blue-shade: #00314e;
   scroll-padding-top: calc(var(--header-height) * 0.6);
 }
 /*See '../BaseLayout.astro' for definition of var(--primary-color) */

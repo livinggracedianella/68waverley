@@ -43,24 +43,17 @@ const { anchorageDetails } = event
     <Header {...header} subtitle={event.oneLiner} />
     <dl class="details">
       <div class="grid">
-        <div class="gridItem">
-          <div class="gridInner first">
-            <dt>When</dt>
-          </div>
-          <div class="gridInner second">
-            <dd>
-              {event.time}
-              <br />
-              {parseDate(event.date)}
-            </dd>
-          </div>
+        <div class="gridInner pdHours">
+          <dd>
+            {event.anchorageDetails.pdHours} PD Hours
+          </dd>
         </div>
         <div class="gridItem">
           <div class="gridInner first">
-            <dt>Where</dt>
+            <dt>Venue</dt>
           </div>
           <div class="gridInner second">
-            <dd>{event.venue}</dd>
+            <dd>Negotiable</dd>
           </div>
         </div>
         <div class="gridItem">
@@ -68,7 +61,9 @@ const { anchorageDetails } = event
             <dt>Cost</dt>
           </div>
           <div class="gridInner second">
-            <dd>{event.cost}</dd>
+            <dd>
+              <a href="/about-us#contact-us" target="_About Us">Contact Us</a>
+            </dd>
           </div>
         </div>
       </div>
@@ -145,7 +140,8 @@ const { anchorageDetails } = event
   div.gridInner.first {
     background: white;
   }
-  div.gridInner.second {
+  div.gridInner.second,
+  div.gridInner.pdHours {
     background: var(--primary-color);
   }
   dt,
@@ -158,10 +154,14 @@ const { anchorageDetails } = event
     color: var(--gunmetal);
     font-family: var(--black);
   }
-  dd {
+  dd,
+  dd a {
     font-size: var(--font-size-h5);
     font-family: var(--italic);
     color: white;
+  }
+  .pdHours dd {
+    font-family: var(--bold);
   }
   dl.details {
     background: var(--light);

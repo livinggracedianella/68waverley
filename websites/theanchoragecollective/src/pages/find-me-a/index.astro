@@ -63,7 +63,9 @@ const services = await fetchPageData('/api/services', {
                 })`}
               >
                 <h2>
-                  <a href={`find-me-a/${slug}`}>{name}</a>
+                  <a class="click" href={`find-me-a/${slug}`}>
+                    {name}
+                  </a>
                 </h2>
                 <div class="text" set:html={markedHelper(oneLiner ?? '')} />
               </div>

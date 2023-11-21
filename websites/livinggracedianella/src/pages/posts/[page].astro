@@ -42,9 +42,10 @@ const profiles = post?.profiles?.data ?? []
       <div set:html={markedHelper(post.body)} />
     </div>
     <div slot="second" class="sidePanel">
-      <div class="imageContainer">
-        <TwoColumnImageDiv image={post?.featureImage?.image ?? ''} />
-      </div>
+      <TwoColumnImageDiv
+        image={post?.featureImage?.image ?? ''}
+        maximumHeight="true"
+      />
       <div class="profilesContainer wide">
         {
           profiles.map((profile) => {
@@ -64,10 +65,6 @@ const profiles = post?.profiles?.data ?? []
 </BaseLayout>
 
 <style>
-  div.imageContainer {
-    height: 100%;
-    max-height: max(40vh, 250px);
-  }
   div.sidePanel {
     background-color: var(--primary-color);
     height: 100%;

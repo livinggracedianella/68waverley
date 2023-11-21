@@ -39,7 +39,7 @@ if (slug === 'home') {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: var(--headerHeight);
+    min-height: var(--headerHeight);
 
     background-position: center center;
     background-repeat: no-repeat;
@@ -63,17 +63,23 @@ if (slug === 'home') {
     width: 100%;
     text-align: center;
   }
+  :global(div.subtitle) {
+    padding-bottom: 1rem;
+  }
   :global(div.subtitle a) {
     color: white;
   }
   @media (max-width: 640px) {
     .wrapper {
-      height: calc(var(--headerHeight) - 2rem);
+      min-height: calc(var(--headerHeight) - 2rem);
+    }
+    :global(div.subtitle) {
+      padding-bottom: 0.8rem;
     }
   }
   @media (max-width: 400px) {
     .wrapper {
-      height: calc(var(--headerHeight) - 3rem);
+      min-height: calc(var(--headerHeight) - 3rem);
     }
   }
 </style>
