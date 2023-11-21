@@ -9,6 +9,7 @@ import {
 const pageData = await fetchFilterPopulate('/api/pages', 'home', [
   'header.headerImage',
   'blocks.image',
+  'blocks.cardImage',
   'blocks.gatherings',
   'blocks.message',
   'blocks.message.featureImage',
@@ -20,18 +21,23 @@ const pageData = await fetchFilterPopulate('/api/pages', 'home', [
   'blocks.post.featureImage',
   'blocks.post.featureImage.image',
   'blocks.event',
+  'blocks.event.featureImage',
+  'blocks.event.featureImage.image',
   'blocks.profiles',
+  'blocks.two-column',
+  'blocks.backgroundColour',
+  'blocks.featureImage',
+  'blocks.featureImage.image',
 ])
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
 ---
 
-<BaseLayout title="Styleguide">
+<BaseLayout title="Home - 68 Waverley">
   <div class="outer">
-    <Header {...header} />
-    <div class="inner">
-      <BlockRenderer blocks={blocks} />
-    </div>
+    <Header {...header} slug="home" />
+
+    <BlockRenderer blocks={blocks} />
   </div>
   <style>
     div.outer {
@@ -39,13 +45,7 @@ const header = pageData.data[0].attributes.header
       flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-    div.inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      max-width: 700px;
+      height: 100%;
     }
   </style>
 </BaseLayout>

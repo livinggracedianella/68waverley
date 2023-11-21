@@ -41,8 +41,7 @@ const pageData = await fetchFilterPopulate(`/api/pages`, page, [
   'blocks.featureImage',
   'blocks.featureImage.image',
 ])
-console.log(pageData)
-const blocks = pageData.data[0].attributes.blocks
+const blocks = pageData.data[0].attributes?.blocks ?? []
 const header = pageData.data[0].attributes.header
 ---
 
