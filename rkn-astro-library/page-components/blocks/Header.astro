@@ -66,4 +66,14 @@ if (slug === 'home') {
   :global(div.subtitle a) {
     color: white;
   }
+  @media (max-width: 640px) {
+    .wrapper {
+      height: calc(var(--headerHeight) - 2rem);
+    }
+  }
+  @media (max-width: 400px) {
+    .wrapper {
+      height: calc(var(--headerHeight) - 3rem);
+    }
+  }
 </style>

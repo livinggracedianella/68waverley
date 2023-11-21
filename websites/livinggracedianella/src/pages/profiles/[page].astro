@@ -29,6 +29,8 @@ const pageData = await fetchFilterPopulate(`/api/profiles`, page, [
   'alternateDetails',
   'alternateDetails.portrait',
   'alternateDetails.websites',
+  'featureImage',
+  'featureImage.image',
 ])
 
 const provider = pageData.data[0].attributes
@@ -68,13 +70,11 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
         <article set:html={markedHelper(bio ?? "")} />
       </div>
       <div class="sidePanel" slot="second">
-        <div class="imageContainer">
-          <TwoColumnImageDiv image={portrait} />
-        </div>
+        <TwoColumnImageDiv image={portrait} maximumHeight={true} />
         <!--The below line looks wrong in my code editor but works fine RKN-->
-        {email && <a class="cta" href=`mailto:${email}`
+        <div>{email && <a class="cta" href=`mailto:${email}`
           >{email}</a
-        >}
+        >}</div>
       </div>
     </TwoColumn>
     <ProfilesGrid
