@@ -92,9 +92,7 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
         <article set:html={markedHelper(bio ?? '')} />
       </div>
       <div class="sidePanel" slot="second">
-        <div class="imageContainer">
-          <TwoColumnImageDiv image={portrait} />
-        </div>
+        <TwoColumnImageDiv image={portrait} maximumHeight="true" />
       </div>
     </TwoColumn>
     <div
@@ -135,10 +133,6 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  div.imageContainer {
-    height: 100%;
-    max-height: max(40vh, 250px);
   }
   div.sidePanel {
     background-color: var(--primary-color);

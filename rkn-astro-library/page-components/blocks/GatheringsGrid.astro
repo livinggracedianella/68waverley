@@ -41,7 +41,10 @@ const imageUrl = `url(${strapiAsset(
               </span>
             )}
           </div>
-          <div set:html={markedHelper(gathering.attributes.oneLiner)} />
+          <div
+            class="oneLiner"
+            set:html={markedHelper(gathering.attributes.oneLiner)}
+          />
         </div>
       </GridCard>
     ))
@@ -80,6 +83,9 @@ const imageUrl = `url(${strapiAsset(
   }
   div.inner p {
     line-height: 140%;
+  }
+  :global(div.inner .oneLiner a) {
+    color: var(--primary-color);
   }
   h2 {
     font-size: calc(36rem / 16);

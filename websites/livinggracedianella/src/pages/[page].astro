@@ -38,7 +38,6 @@ const pageData = await fetchFilterPopulate(`/api/pages`, page, [
 ])
 const blocks = pageData.data[0].attributes.blocks
 const header = pageData.data[0].attributes.header
-console.log(pageData.data)
 ---
 
 <BaseLayout title={pageData.data[0].attributes.title}>

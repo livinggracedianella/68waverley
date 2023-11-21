@@ -12,9 +12,16 @@ import {
 } from '@rkn/page-components'
 const props = Astro.props
 const event = props?.event?.data?.attributes ?? props.event.attributes
-const { imageSide } = props
-const { title, shortDescription, date, featureImage, venue, slug } =
-  props?.event?.data?.attributes ?? props?.event?.attributes ?? props.event
+const { imageSide, heading = 'Coming Up', onRequest = false } = props
+const {
+  title,
+  shortDescription,
+  date,
+  featureImage,
+  venue,
+  slug,
+  anchorageDetails = { pdHours: '' },
+} = props?.event?.data?.attributes ?? props?.event?.attributes ?? props.event
 const image =
   featureImage?.image ?? '/uploads/small_Sermon_Image_Background_ed63796e21.png'
 let margin
@@ -23,28 +30,42 @@ const backgroundColour = `var(--${
   props?.backgroundColour?.colourPicker ?? 'light'
 })`
 const textColour = contrastingText(props.backgroundColour)
-let buttonColour
-backgroundColour == 'var(--gunmetal)'
-  ? (buttonColour = 'var(--primary-color)')
-  : (buttonColour = 'var(--gunmetal)')
+let buttonColour =
+  backgroundColour == 'var(--gunmetal)'
+    ? 'var(--primary-color)'
+    : 'var(--gunmetal)'
+let href
+if (site() == 'anchorage' && !onRequest) {
+  href = '/retreats-and-courses/' + slug
+} else if (site() == 'anchorage' && onRequest) {
+  href = '/retreats-and-courses/on-request/' + slug
+} else {
+  href = '/events/' + slug
+}
 ---
 
 <TwoColumn smallSide={imageSide}>
   <div class="outer">
     <div class="inner">
-      {Astro.url.pathname != '/events' && <h2>Coming Up</h2>}
+      <h2>{heading}</h2>
       <h3>{title}</h3>
-      <p class="details">
-        {parseDate(date)} |
-        {venue.split(' ').join('\u00A0')}
-      </p>
+      {
+        !onRequest && (
+          <p class="details">
+            {parseDate(date)} | {venue.split(' ').join('\u00A0')}
+          </p>
+        )
+      }
+      {
+        onRequest && (
+          <p class="details">
+            {anchorageDetails.pdHours + ' PD hours'} | Venue Negotiable
+          </p>
+        )
+      }
       <div class="featureEventBody" set:html={markedHelper(shortDescription)} />
       <div class="button">
-        <Button
-          href={'/events/' + slug}
-          label="Find Out More"
-          buttonColour={buttonColour}
-        />
+        <Button {href} label="Find Out More" buttonColour={buttonColour} />
       </div>
     </div>
   </div>

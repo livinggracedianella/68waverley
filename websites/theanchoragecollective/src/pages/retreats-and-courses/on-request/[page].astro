@@ -9,7 +9,6 @@ import {
   TwoColumn,
   TwoColumnImageDiv,
   Button,
-  BlockRenderer,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -28,11 +27,13 @@ const pageData = await fetchFilterPopulate(`/api/events`, page, [
   'featureImage.image',
   'blocks.featureImage',
   'blocks.featureImage.image',
+  'anchorageDetails',
 ])
 
 const event = pageData.data[0].attributes
 const header = event.header
 const featureImage = event.featureImage
+const { anchorageDetails } = event
 ---
 
 <BaseLayout title={event.title}>
@@ -45,7 +46,11 @@ const featureImage = event.featureImage
             <dt>When</dt>
           </div>
           <div class="gridInner second">
-            <dd>{event.time}<br /> {parseDate(event.date)}</dd>
+            <dd>
+              {event.time}
+              <br />
+              {parseDate(event.date)}
+            </dd>
           </div>
         </div>
         <div class="gridItem">
