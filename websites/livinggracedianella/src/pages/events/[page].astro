@@ -28,11 +28,13 @@ const pageData = await fetchFilterPopulate(`/api/events`, page, [
   'featureImage.image',
   'blocks.featureImage',
   'blocks.featureImage.image',
+  'blocks.backgroundColour',
 ])
 
 const event = pageData.data[0].attributes
 const header = event.header
 const featureImage = event.featureImage
+const blocks = pageData.data[0].attributes.blocks
 ---
 
 <BaseLayout title={event.title}>
@@ -94,6 +96,7 @@ const featureImage = event.featureImage
       <TwoColumnImageDiv slot="second" {...featureImage} />
     </TwoColumn>
   </article>
+  <BlockRenderer {blocks} />
 </BaseLayout>
 <style>
   div.outer {
