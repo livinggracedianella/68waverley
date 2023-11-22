@@ -1,0 +1,87 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  markedHelper,
+  site,
+  fetchFilterPopulate,
+  BlockRenderer,
+  TwoColumn,
+  strapiAsset,
+  TwoColumnImageDiv,
+} from '@rkn/page-components'
+
+const { page } = Astro.params
+
+const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
+  'header.headerImage',
+  'featureImage',
+  'featureImage.image',
+  'blocks',
+  'blocks.image',
+  'blocks.message',
+  'blocks.message.featureImage',
+  'blocks.message.featureImage.image',
+  'blocks.message.soundcloudRecording',
+  'blocks.message.profiles',
+  'blocks.post',
+  'blocks.post.profiles',
+  'blocks.post.featureImage',
+  'blocks.backgroundColour',
+  'blocks.gatherings',
+  'blocks.featureImage',
+  'blocks.featureImage.image',
+])
+const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
+const header = gathering.header
+const blocks = pageData.data[0]?.attributes?.blocks ?? ''
+const featureImage = pageData.data[0]?.attributes?.featureImage
+---
+
+<BaseLayout title={gathering.title}>
+  <div class="outer">
+    <Header
+      {...header}
+      subtitle={`${gathering.timeSlot ?? ''} ${
+        (gathering.timeSlot && gathering.location && '|') ?? ''
+      } ${gathering.location ?? ''}`}
+    />
+    <TwoColumn>
+      <div class="containerOuter">
+        <div class="containerInner">
+          <p set:html={markedHelper(gathering.oneLiner) ?? ''} />
+          <section set:html={markedHelper(gathering.shortDescription ?? '')} />
+        </div>
+      </div>
+      <TwoColumnImageDiv {...featureImage} slot="second" />
+    </TwoColumn>
+    {blocks && <BlockRenderer blocks={blocks} />}
+  </div>
+</BaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.flex-row {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+  }
+  section {
+    max-width: 700px;
+  }
+  div.containerOuter {
+    padding: 30px 40px;
+    display: flex;
+    justify-content: center;
+  }
+  div.containerInner > p {
+    color: var(--primary-color);
+    font-size: var(--font-size-hero-p);
+    font-family: var(--italic);
+    max-width: 700px;
+  }
+</style>

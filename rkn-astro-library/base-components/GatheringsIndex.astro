@@ -1,0 +1,110 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  fetchFilterPopulate,
+  markedHelper,
+  strapiAsset,
+  site,
+  BoxesCard,
+  BoxesWrapper,
+} from '@rkn/page-components'
+const { pageSlug } = Astro.props
+const data = await fetchFilterPopulate('/api/pages', pageSlug, [
+  'header.headerImage',
+  'blocks.gatherings',
+  'blocks.gatherings.featureImage',
+  'blocks.gatherings.featureImage.image',
+  'blocks.featureImage',
+  'blocks.featureImage.image',
+])
+const pageData = data.data[0].attributes
+const blocks = pageData.blocks
+const header = pageData.header
+---
+
+<BaseLayout title="Gatherings">
+  <div class="outer">
+    <Header {...header} subtitle={pageData.subtitle} />
+    {
+      blocks.map((block) => {
+        let gatherings = block.gatherings.data
+        return (
+          <div class="gathering-type">
+            <h2>{block.title}</h2>
+            <section
+              class="overview"
+              set:html={markedHelper(block.overview ?? '')}
+            />
+            <BoxesWrapper>
+              {gatherings.map((gathering) => {
+                let { width, height, url } = gathering.attributes.featureImage
+                  ?.image?.data?.attributes?.formats?.small ?? {
+                  width: 234,
+                  height: 156,
+                  url: '/uploads/small_Michael_Living_Grace_10c3d24f38.jpg',
+                }
+                return (
+                  <BoxesCard
+                    imageUri={url}
+                    description={gathering?.attributes?.shortDescription ?? ''}
+                  >
+                    <h3>
+                      <a
+                        class="click"
+                        href={`/${pageSlug}/${gathering.attributes.slug}`}
+                      >
+                        {gathering.attributes.title}
+                      </a>
+                    </h3>
+                    <h4>{gathering.attributes.timeSlot}</h4>
+                    <h4>{gathering.attributes.location}</h4>
+                  </BoxesCard>
+                )
+              })}
+            </BoxesWrapper>
+          </div>
+        )
+      })
+    }
+  </div>
+</BaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.gathering-type {
+    width: 100%;
+  }
+  section.overview {
+    padding: 0 2rem 2rem 2rem;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  h2 {
+    width: 100%;
+    text-align: center;
+    color: var(--gunmetal);
+  }
+  :global(div.gathering-type p) {
+    color: var(--gunmetal);
+  }
+  /*BOXES LAYOUT STYLES*/
+  h3,
+  h4 {
+    color: white;
+    margin-top: 0;
+    text-align: left;
+  }
+  h4 {
+    font-family: var(--italic);
+    font-size: var(--font-size-h5);
+  }
+</style>

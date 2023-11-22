@@ -39,6 +39,8 @@ if (site() == 'anchorage' && !onRequest) {
   href = '/retreats-and-courses/' + slug
 } else if (site() == 'anchorage' && onRequest) {
   href = '/retreats-and-courses/on-request/' + slug
+} else if (site() == '68waverley') {
+  href = '/special-events/' + slug
 } else {
   href = '/events/' + slug
 }

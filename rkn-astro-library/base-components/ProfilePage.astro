@@ -1,0 +1,116 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  strapiAsset,
+  markedHelper,
+  fetchFilterPopulate,
+  TwoColumn,
+  TwoColumnImageDiv,
+  fetchPopulate,
+  ProfilesGrid,
+  site,
+} from '@rkn/page-components'
+
+const { page } = Astro.params
+const pageData = await fetchFilterPopulate(`/api/profiles`, page, [
+  'header.headerImage',
+  'portrait',
+  'websites',
+  'alternateDetails',
+  'alternateDetails.portrait',
+  'alternateDetails.websites',
+  'featureImage',
+  'featureImage.image',
+])
+
+const provider = pageData.data[0].attributes
+const { header, name, slug, alternateDetails } = provider
+
+let trueDetails
+alternateDetails.forEach((detail) => {
+  let match
+  detail.websites.data.forEach((website) => {
+    if (website.attributes.key == site()) {
+      match = true
+    }
+  })
+  if (match) {
+    trueDetails = detail
+  }
+})
+const bio = trueDetails?.bio ?? provider.bio
+const email = trueDetails?.email ?? provider.email
+const title = trueDetails?.title ?? provider?.title ?? ''
+const portrait = trueDetails?.portrait?.data
+  ? trueDetails.portrait
+  : provider.portrait
+
+const profiles = await fetchPopulate('/api/profiles', ['portrait'])
+---
+
+<BaseLayout title={name}>
+  <div class="outer">
+    <Header headerTitle={name} subtitle={title} />
+    <TwoColumn columnReverse="true">
+      <div class="ProfileTextContainer">
+        <article set:html={markedHelper(bio ?? '')} />
+      </div>
+      <div class="sidePanel" slot="second">
+        <TwoColumnImageDiv image={portrait} maximumHeight={true} />
+          <!--The below line looks wrong in my code editor but works fine RKN-->
+        <div>{email && <a class="cta" href=`mailto:${email}`
+          >{email}</a
+        >}</div>
+      </div>
+    </TwoColumn>
+    <ProfilesGrid
+      title="More People"
+      overview="Who else would you like to meet?"
+    />
+  </div>
+</BaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.imageContainer {
+    height: 100%;
+    max-height: max(40vh, 250px);
+    overflow: hidden;
+  }
+  div.sidePanel {
+    background-color: var(--primary-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  a.cta {
+    color: white;
+    padding: 20px;
+    display: block;
+  }
+  div.ProfileTextContainer {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 50px;
+  }
+  :global(div.ProfileTextContainer :is(p, a)) {
+    color: var(--gunmetal);
+  }
+  :global(div.ProfileTextContainer :is(h3, h4)) {
+    color: var(--primary-color);
+  }
+  :global(div.ProfileTextContainer p:first-of-type:first-line) {
+    color: var(--primary-color);
+    font-size: var(--font-size-hero-p);
+  }
+  @media (max-width: 750px) {
+    div.imageContainer {
+      height: 300px;
+    }
+  }
+</style>

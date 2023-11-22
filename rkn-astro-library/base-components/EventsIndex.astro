@@ -1,0 +1,95 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  fetchFilterPopulate,
+  fetchPopulate,
+  markedHelper,
+  BlockRenderer,
+  FeatureEvent,
+} from '@rkn/page-components'
+const { pageSlug } = Astro.props
+const data = await fetchFilterPopulate('/api/pages', pageSlug, [
+  'header.headerImage',
+  'blocks.event',
+  'blocks.event.featureImage',
+  'blocks.event.featureImage.image',
+  'blocks.featureImage',
+  'blocks.featureImage.image',
+  ,
+])
+
+const pageData = data.data[0].attributes
+const blocks = pageData.blocks
+const header = pageData.header
+
+const events = await fetchPopulate('/api/events', [
+  'featureImage',
+  'featureImage.image',
+  'backgroundColour',
+])
+---
+
+<BaseLayout title="Events">
+  <div class="outer">
+    <Header {...header} subtitle={pageData.subtitle} />
+    <BlockRenderer {blocks} />
+    {
+      events.data.map((event, i) => {
+        let imageSide
+        i % 2 === 1 ? (imageSide = 'left') : (imageSide = 'right')
+        return (
+          <FeatureEvent
+            {event}
+            {imageSide}
+            backgroundColour={event.attributes.backgroundColour}
+          />
+        )
+      })
+    }
+  </div>
+</BaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    flex-grow: 0;
+    text-wrap: wrap;
+  }
+  div.flex-row {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+  }
+  section {
+    max-width: 700px;
+  }
+  div.event-type {
+    width: 100%;
+    padding: 0 2rem 2rem 2rem;
+    border-bottom: 2px dotted black;
+  }
+  div.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  div.grid-item {
+    background: #51534a;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 0;
+  }
+  div.grid-item * {
+    color: white;
+  }
+</style>
