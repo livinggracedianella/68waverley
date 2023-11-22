@@ -1,10 +1,5 @@
 ---
-import { BaseLayout } from '@rkn/base-components'
-import {
-  BlockRenderer,
-  Header,
-  fetchFilterPopulate,
-} from '@rkn/page-components'
+import { DynamicPage } from '@rkn/base-components'
 
 export async function getStaticPaths() {
   const pages = await fetch(
@@ -14,48 +9,6 @@ export async function getStaticPaths() {
   ).then((res) => res.json())
   return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
 }
-const { page } = Astro.params
-const pageData = await fetchFilterPopulate(`/api/pages`, page, [
-  'header.headerImage',
-  'blocks.image',
-  'blocks.gatherings',
-  'blocks.message',
-  'blocks.message.featureImage',
-  'blocks.message.featureImage.image',
-  'blocks.message.soundcloudRecording',
-  'blocks.message.profiles',
-  'blocks.post',
-  'blocks.post.profiles',
-  'blocks.post.featureImage',
-  'blocks.post.featureImage.image',
-  'blocks.event',
-  'blocks.profiles',
-  'blocks.profiles.portrait',
-  'blocks.backgroundColour',
-  'blocks.standards',
-  'blocks.profiles.portrait',
-  'websites',
-  'blocks.profiles.alternateDetails',
-  'blocks.profiles.alternateDetails.portrait',
-  'blocks.profiles.alternateDetails.websites',
-  'blocks.featureImage',
-  'blocks.featureImage.image',
-])
-const blocks = pageData.data[0].attributes?.blocks ?? []
-const header = pageData.data[0].attributes.header
 ---
 
-<BaseLayout title={pageData.data[0].attributes.title}>
-  <div class="outer">
-    <Header {...header} />
-    <BlockRenderer blocks={blocks} />
-  </div>
-  <style>
-    div.outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-</BaseLayout>
+<DynamicPage />

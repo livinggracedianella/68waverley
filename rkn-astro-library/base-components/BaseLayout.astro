@@ -14,6 +14,14 @@ const siteData = await fetchPageData('/api/websites', {
   },
 })
 const primaryColor = `var(--${siteData.data[0].attributes.primaryColour})`
+let website
+if (site() == 'livinggracedianella') {
+  website = 'Living Grace Dianella'
+} else if (site() == 'anchorage') {
+  website = 'The Anchorage Collective'
+} else if (site() == '68waverley') {
+  website = '68 Waverley'
+}
 ---
 
 <!DOCTYPE html>
@@ -23,7 +31,7 @@ const primaryColor = `var(--${siteData.data[0].attributes.primaryColour})`
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{`${title} - ${website}`}</title>
   </head>
   <body>
     <NavigationBar />
