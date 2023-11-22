@@ -1,11 +1,11 @@
 ---
 //Requires length (number of other cards), title, overview. cardImage and href props optional (points to gatherings by default).
-import { strapiAsset, markedHelper, GridCard } from '@rkn/page-components'
+import { strapiAsset, markedHelper, GridCard, site } from '@rkn/page-components'
 const {
   length,
   title = 'Add title prop',
   overview = 'Add overview prop',
-  href = '/gatherings',
+  href = site() == 'livinggracedianella' ? '/gatherings' : '/groups',
 } = Astro.props
 const cardImage =
   Astro.props?.cardImage ??

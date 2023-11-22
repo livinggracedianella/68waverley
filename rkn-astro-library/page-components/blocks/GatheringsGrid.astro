@@ -5,12 +5,14 @@ import {
   Grid,
   GridFeatureCard,
   GridCard,
+  site,
 } from '@rkn/page-components'
 const { title, overview, gatherings, cardImage } = Astro.props
 const imageUrl = `url(${strapiAsset(
   cardImage?.data?.attributes?.formats?.small?.url ??
     '/uploads/small_Alpha_Lifeshared_CANADA_18_4_1905609_tomgphoto_be076bc705.jpg'
 )})`
+let link = site() == 'livinggracedianella' ? '/gatherings' : '/groups'
 ---
 
 <Grid>
@@ -25,7 +27,7 @@ const imageUrl = `url(${strapiAsset(
       <GridCard>
         <div class="inner">
           <h3>
-            <a class="click" href={`/gatherings/${gathering.attributes.slug}`}>
+            <a class="click" href={`${link}/${gathering.attributes.slug}`}>
               {gathering.attributes.title}
             </a>
           </h3>
