@@ -37,7 +37,7 @@ const events = await fetchPopulate('/api/events', [
     {
       events.data.map((event, i) => {
         let imageSide = i % 2 === 1 ? 'left' : 'right'
-        if (event.attributes.anchorageDetails.comingUp) {
+        if (event.attributes.anchorageDetails?.comingUp) {
           return (
             <FeatureEvent
               {event}
@@ -54,7 +54,7 @@ const events = await fetchPopulate('/api/events', [
     {
       events.data.map((event, i) => {
         let imageSide = i % 2 === 1 ? 'left' : 'right'
-        if (event.attributes.anchorageDetails.onRequest) {
+        if (event.attributes.anchorageDetails?.onRequest) {
           return (
             <FeatureEvent
               {event}

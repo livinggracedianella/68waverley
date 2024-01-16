@@ -60,6 +60,21 @@ export async function fetchPopulate(uri, populate) {
   return data
 }
 
+export async function fetchPopulateSort(uri, populate, sort) {
+  const data = await fetchPageData(uri, {
+    filters: {
+      websites: {
+        key: {
+          $eq: site(),
+        },
+      },
+    },
+    populate,
+    sort,
+  })
+  return data
+}
+
 export function strapiAsset(uri) {
   return import.meta.env.STRAPI_HOST + uri
 }

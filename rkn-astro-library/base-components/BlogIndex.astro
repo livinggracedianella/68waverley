@@ -5,7 +5,7 @@ import {
   fetchFilterPopulate,
   markedHelper,
   BlockRenderer,
-  fetchPopulate,
+  fetchPopulateSort,
   Grid,
   parseDate,
   GridCard,
@@ -29,11 +29,11 @@ const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
 
-const { data: posts } = await fetchPopulate('/api/posts', [
-  'featureImage',
-  'featureImage.image',
-  'profiles',
-])
+const { data: posts } = await fetchPopulateSort(
+  '/api/posts',
+  ['featureImage', 'featureImage.image', 'profiles'],
+  ['date:desc']
+)
 ---
 
 <BaseLayout title={pageData.title}>
