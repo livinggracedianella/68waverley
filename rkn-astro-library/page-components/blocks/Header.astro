@@ -14,7 +14,7 @@ if (site() === 'livinggracedianella') {
 } else if (site() == '68waverley') {
   watercolour = '/uploads/68_waverley_watercolour_banner_1920w_65352bc1af.jpg'
 }
-let imgUrl = strapiAsset(img?.formats?.large?.url ?? watercolour)
+let imgUrl = strapiAsset(img.url ?? watercolour)
 let headerHeight
 if (slug === 'home') {
   headerHeight = '50vh'

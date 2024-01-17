@@ -9,6 +9,7 @@ import {
   FeatureEvent,
 } from '@rkn/page-components'
 const { pageSlug } = Astro.props
+console.log(Astro.props)
 const data = await fetchFilterPopulate('/api/pages', pageSlug, [
   'header.headerImage',
   'blocks.event',
@@ -37,6 +38,15 @@ const events = await fetchPopulate('/api/events', [
   <div class="outer">
     <Header {...header} subtitle={pageData.subtitle} />
     <BlockRenderer {blocks} />
+    {
+      !events.data[0] && (
+        <div class="placeholder">
+          <h2>
+            We don't have any events on right now. Please check back later.
+          </h2>
+        </div>
+      )
+    }
     {
       events.data.map((event, i) => {
         let imageSide
@@ -94,5 +104,18 @@ const events = await fetchPopulate('/api/events', [
   }
   div.grid-item * {
     color: white;
+  }
+  .placeholder {
+    height: 100%;
+    background: var(--primary-color);
+    width: 100%;
+    min-height: 45vh;
+    display: flex;
+    justify-content: center;
+  }
+  .placeholder h2 {
+    color: white;
+    text-align: center;
+    max-width: 750px;
   }
 </style>
