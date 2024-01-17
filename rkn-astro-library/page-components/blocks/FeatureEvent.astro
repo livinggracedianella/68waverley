@@ -9,6 +9,7 @@ import {
   parseDate,
   Button,
   contrastingText,
+  contrastingAnchor,
 } from '@rkn/page-components'
 const props = Astro.props
 const event = props?.event?.data?.attributes ?? props.event.attributes
@@ -30,6 +31,7 @@ const backgroundColour = `var(--${
   props?.backgroundColour?.colourPicker ?? 'light'
 })`
 const textColour = contrastingText(props.backgroundColour)
+const anchorColour = contrastingAnchor(props.backgroundColour)
 let buttonColour =
   backgroundColour == 'var(--gunmetal)'
     ? 'var(--primary-color)'
@@ -73,7 +75,7 @@ if (site() == 'anchorage' && !onRequest) {
   </div>
   <TwoColumnImageDiv {...featureImage} slot="second" />
 </TwoColumn>
-<style define:vars={{ margin, backgroundColour, textColour }}>
+<style define:vars={{ margin, backgroundColour, textColour, anchorColour }}>
   div.outer {
     padding: 1rem 2rem 3rem 2rem;
     display: flex;
@@ -96,6 +98,9 @@ if (site() == 'anchorage' && !onRequest) {
     font-size: var(--font-size-hero-p);
     line-height: var(--line-height-hero-p);
     max-width: 700px;
+  }
+  :global(.featureEventBody a) {
+    color: var(--anchorColour);
   }
   p.details {
     font-size: var(--font-size-h4);

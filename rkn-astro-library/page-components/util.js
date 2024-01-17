@@ -120,3 +120,17 @@ export function contrastingText(backgroundColour) {
   }
   return textColor
 }
+
+export function contrastingAnchor(backgroundColour) {
+  let anchorColor = 'var(--primary-color)'
+  if (
+    backgroundColour?.colourPicker === 'primary-color' ||
+    backgroundColour?.colourPicker === 'chapel-purple' ||
+    backgroundColour?.colourPicker === 'anchorage-blue' ||
+    backgroundColour?.colourPicker === 'waverley-coral' ||
+    backgroundColour?.colourPicker === 'gunmetal'
+  ) {
+    anchorColor = 'white'
+  }
+  return anchorColor
+}

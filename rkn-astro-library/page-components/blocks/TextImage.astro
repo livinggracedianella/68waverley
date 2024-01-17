@@ -1,6 +1,6 @@
 ---
 //formerly two-column.
-import { markedHelper, contrastingText } from '../util.js'
+import { markedHelper, contrastingText, contrastingAnchor } from '../util.js'
 import { strapiAsset, TwoColumn, TwoColumnImageDiv } from '@rkn/page-components'
 const props = Astro.props
 const { featureImage } = props
@@ -13,6 +13,7 @@ const backgroundColour = `var(--${
   props?.backgroundColour?.colourPicker ?? 'light'
 })`
 const textColour = contrastingText(props.backgroundColour)
+const anchorColour = contrastingAnchor(props.backgroundColour)
 ---
 
 <TwoColumn smallSide={props.imageSide} backgroundColor="backgroundColour}">
@@ -21,6 +22,7 @@ const textColour = contrastingText(props.backgroundColour)
       <div class="inner">
         <h2>{props.title ?? ''}</h2>
         <div
+          class="TextImageContent"
           set:html={markedHelper(
             props.text ?? 'Here is some placeholder text.'
           )}
@@ -35,6 +37,7 @@ const textColour = contrastingText(props.backgroundColour)
   define:vars={{
     textColour,
     backgroundColour,
+    anchorColour,
   }}
 >
   div.item {
@@ -44,6 +47,9 @@ const textColour = contrastingText(props.backgroundColour)
   }
   div.item * {
     color: var(--textColour);
+  }
+  div.item a {
+    color: var(--anchorColour);
   }
   div.outer {
     display: flex;

@@ -1,8 +1,9 @@
 ---
 //formerly 'full width'
-import { markedHelper, contrastingText } from '../util.js'
+import { markedHelper, contrastingText, contrastingAnchor } from '../util.js'
 const props = Astro.props
 let textColor = contrastingText(props.backgroundColour)
+let anchorColour = contrastingAnchor(props.backgroundColour)
 let backgroundColor = `var(--${
   props?.backgroundColour?.colourPicker ?? 'white'
 })`
@@ -14,7 +15,7 @@ let backgroundColor = `var(--${
     <div set:html={markedHelper(props.body ?? 'No text content entered')} />
   </div>
 </div>
-<style define:vars={{ textColor, backgroundColor }}>
+<style define:vars={{ textColor, backgroundColor, anchorColour }}>
   div.full-width {
     display: flex;
     flex-direction: column;
@@ -40,5 +41,8 @@ let backgroundColor = `var(--${
   div.full-width :global(h4) {
     font-size: var(--font-size-h5);
     font-family: var(--italic);
+  }
+  div.full-width :global(a) {
+    color: var(--anchorColour);
   }
 </style>
