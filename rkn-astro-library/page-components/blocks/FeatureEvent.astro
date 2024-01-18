@@ -56,7 +56,7 @@ if (site() == 'anchorage' && !onRequest) {
       {
         !onRequest && (
           <p class="details">
-            {parseDate(date)} | {venue.split(' ').join('\u00A0')}
+            {parseDate(date)} | {venue}
           </p>
         )
       }
@@ -89,6 +89,7 @@ if (site() == 'anchorage' && !onRequest) {
   div.inner {
     display: flex;
     flex-direction: column;
+    min-width: 300px;
   }
   div.button,
   h2 {

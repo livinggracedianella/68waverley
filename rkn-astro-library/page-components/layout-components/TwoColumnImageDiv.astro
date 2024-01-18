@@ -27,9 +27,9 @@ let maxHeight = maximumHeight ? '60vh' : 'none'
   }}
 >
   :root {
-    --two-column-min-height-tall: 450px;
-    --two-column-min-height-medium: 350px;
-    --two-column-min-height-short: 250px;
+    --two-column-min-height-tall: max(450px, 33vh);
+    --two-column-min-height-medium: max(350px, 33vh);
+    --two-column-min-height-short: max(250px, 33vh);
   }
   div.image {
     background-image: var(--imageUrl);
@@ -44,9 +44,9 @@ let maxHeight = maximumHeight ? '60vh' : 'none'
   }
   @media (max-width: 500px) {
     :root {
-      --two-column-min-height-tall: 400px;
-      --two-column-min-height-medium: 300px;
-      --two-column-min-height-short: 250px;
+      --two-column-min-height-tall: max(400px, 33vh);
+      --two-column-min-height-medium: max(300px, 33vh);
+      --two-column-min-height-short: max(250px, 33vh);
     }
   }
 </style>

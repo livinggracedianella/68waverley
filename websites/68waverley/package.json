@@ -16,6 +16,7 @@
     "@astrojs/mdx": "^0.16.0",
     "@rkn/base-components": "*",
     "@rkn/page-components": "*",
-    "astro": "^3.5.4"
+    "astro": "^3.5.4",
+    "marked-plaintext": "^0.0.2"
   }
 }

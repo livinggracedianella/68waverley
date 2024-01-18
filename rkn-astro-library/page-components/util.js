@@ -1,5 +1,6 @@
 import qs from 'qs'
 import { marked } from 'marked'
+import { default as PlainTextRenderer } from 'marked-plaintext'
 
 export function site() {
   return import.meta.env.THIS_SITE
@@ -85,6 +86,17 @@ export function markedHelper(src) {
     breaks: true,
     mangle: false,
     headerIds: false,
+  })
+}
+
+export function markedPlain(text) {
+  const renderer = new PlainTextRenderer()
+  return marked(text, {
+    gfm: true,
+    breaks: true,
+    mangle: false,
+    headerIds: false,
+    renderer: renderer,
   })
 }
 

@@ -23,6 +23,7 @@
     "date-fns": "^2.30.0",
     "marked": "^9.0.3",
     "marked-gfm-heading-id": "^3.0.3",
+    "marked-plaintext": "^0.0.2",
     "qs": "^6.11.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

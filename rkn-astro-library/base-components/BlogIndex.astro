@@ -10,6 +10,7 @@ import {
   parseDate,
   GridCard,
   strapiAsset,
+  markedPlain,
 } from '@rkn/page-components'
 
 const { pageSlug } = Astro.props
@@ -65,10 +66,17 @@ const { data: posts } = await fetchPopulateSort(
                   <span class="detail">{profileNames}</span>
                 </div>
                 <div class="container">
-                  <div
-                    class="postCard"
-                    set:html={markedHelper(body.substring(0, 100) + '...')}
-                  />
+                  <div class="postCard">
+                    <p
+                      set:html={
+                        markedPlain(body)
+                          .substring(0, 120)
+                          .split(' ')
+                          .slice(0, -1)
+                          .join(' ') + '...'
+                      }
+                    />
+                  </div>
                   <img src={strapiAsset(url)} />
                 </div>
               </div>
@@ -81,7 +89,7 @@ const { data: posts } = await fetchPopulateSort(
 </BaseLayout>
 <style>
   :root {
-    --grid-card-padding: 2.5rem 25px 2rem 25px;
+    --grid-card-padding: 2rem 25px 2rem 25px;
   }
   .recent-header {
     color: var(--primary-color);
@@ -104,7 +112,7 @@ const { data: posts } = await fetchPopulateSort(
     content: ' | ';
   }
   div.details {
-    margin-top: 0.2rem;
+    margin-top: 0.3rem;
   }
   .detail {
     font-size: var(--font-size-h5);
@@ -147,7 +155,7 @@ const { data: posts } = await fetchPopulateSort(
   }
   @container (max-width: 380px) {
     div.postCard {
-      padding-right: calc(40% + 5px);
+      padding-right: calc(40% + 7px);
     }
     img {
       width: 40%;
