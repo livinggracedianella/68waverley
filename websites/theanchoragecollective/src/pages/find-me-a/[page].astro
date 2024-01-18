@@ -52,6 +52,8 @@ const service = pageData.data[0].attributes
         .map((word) => {
           if (word.toLowerCase() == 'trainer') {
             return word + 's'
+          } else if (word.toLowerCase() == 'coach') {
+            return word + 'e'
           } else {
             return word
           }
