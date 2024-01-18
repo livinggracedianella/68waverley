@@ -9,7 +9,6 @@ import {
   FeatureEvent,
 } from '@rkn/page-components'
 const { pageSlug } = Astro.props
-console.log(Astro.props)
 const data = await fetchFilterPopulate('/api/pages', pageSlug, [
   'header.headerImage',
   'blocks.event',

@@ -12,37 +12,38 @@ let backgroundColor = `var(--${
 <div class="full-width">
   <h2>{props.title}</h2>
   <div class="inner">
-    <div set:html={markedHelper(props.body ?? 'No text content entered')} />
+    {props.body && <div set:html={markedHelper(props.body)} />}
+    <slot />
   </div>
+  <style define:vars={{ textColor, backgroundColor, anchorColour }}>
+    div.full-width {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: var(--backgroundColor);
+      width: 100%;
+      padding: calc(50rem / 16) 50px;
+    }
+    div.full-width * {
+      color: var(--textColor);
+    }
+    div.inner,
+    h2 {
+      margin: 0 auto;
+      max-width: 700px;
+    }
+    h2 {
+      font-size: var(--font-size-h3);
+    }
+    div.full-width :global(h3) {
+      font-size: var(--font-size-h4);
+    }
+    div.full-width :global(h4) {
+      font-size: var(--font-size-h5);
+      font-family: var(--italic);
+    }
+    div.full-width :global(a) {
+      color: var(--anchorColour);
+    }
+  </style>
 </div>
-<style define:vars={{ textColor, backgroundColor, anchorColour }}>
-  div.full-width {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: var(--backgroundColor);
-    width: 100%;
-    padding: calc(50rem / 16) 50px;
-  }
-  div.full-width * {
-    color: var(--textColor);
-  }
-  div.inner,
-  h2 {
-    margin: 0 auto;
-    max-width: 700px;
-  }
-  h2 {
-    font-size: var(--font-size-h3);
-  }
-  div.full-width :global(h3) {
-    font-size: var(--font-size-h4);
-  }
-  div.full-width :global(h4) {
-    font-size: var(--font-size-h5);
-    font-family: var(--italic);
-  }
-  div.full-width :global(a) {
-    color: var(--anchorColour);
-  }
-</style>

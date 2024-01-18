@@ -9,6 +9,7 @@ import {
   Grid,
   parseDate,
   GridCard,
+  strapiAsset,
 } from '@rkn/page-components'
 
 const { pageSlug } = Astro.props
@@ -44,6 +45,8 @@ const { data: posts } = await fetchPopulateSort(
     <Grid>
       {
         posts.map((post) => {
+          const { url, width, height } =
+            post.attributes.featureImage.image.data.attributes.formats.small
           const { title, date, slug, body, profiles } = post.attributes
           const postUrl = `/${pageSlug}/${slug}`
           const profileNames = profiles.data
@@ -61,10 +64,13 @@ const { data: posts } = await fetchPopulateSort(
                   <span class="detail">{parseDate(date)}</span>
                   <span class="detail">{profileNames}</span>
                 </div>
-                <div
-                  class="postCard"
-                  set:html={markedHelper(body.substring(0, 100) + '...')}
-                />
+                <div class="container">
+                  <div
+                    class="postCard"
+                    set:html={markedHelper(body.substring(0, 100) + '...')}
+                  />
+                  <img src={strapiAsset(url)} />
+                </div>
               </div>
             </GridCard>
           )
@@ -88,6 +94,8 @@ const { data: posts } = await fetchPopulateSort(
     background: var(--light);
     padding: var(--grid-card-padding);
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   div.inner * {
     color: var(--gunmetal);
@@ -116,7 +124,25 @@ const { data: posts } = await fetchPopulateSort(
     margin-top: 0;
     line-height: 110%;
   }
+  div.container {
+    display: flex;
+    container-type: inline-size;
+    margin: 0 -25px -2rem -25px;
+    flex-grow: 1;
+  }
   :global(div.postCard *) {
     color: var(--gunmetal);
+  }
+  div.postCard {
+    padding: 0 calc(40% + 5px) 2rem 25px;
+    height: 100%;
+  }
+  img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40%;
+    height: calc(100% - 1rem);
+    object-fit: cover;
   }
 </style>
