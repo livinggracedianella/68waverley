@@ -12,6 +12,8 @@ import {
   ContactForm,
   StandardsBlock,
   QuoteBlock,
+  Spaces,
+  FeatureSpace,
 } from '@rkn/page-components'
 const { blocks } = Astro.props
 ---
@@ -88,6 +90,12 @@ const { blocks } = Astro.props
       return (
         <section>
           <QuoteBlock {...componentData} />
+        </section>
+      )
+    } else if (componentData.__component == 'blocks.feature-space') {
+      return (
+        <section>
+          <FeatureSpace {...componentData} />
         </section>
       )
     } else {

@@ -9,6 +9,7 @@
   --light: #e7e5e4;
   --mid-green: #279989;
   --anchorage-blue-shade: #00314e;
+  --taupe: #9d968d;
   scroll-padding-top: calc(var(--header-height) * 0.6);
 }
 /*See '../BaseLayout.astro' for definition of var(--primary-color) */

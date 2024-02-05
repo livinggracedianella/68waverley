@@ -1,0 +1,215 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  fetchPageData,
+  markedHelper,
+  strapiAsset,
+  TwoColumn,
+  TwoColumnImageDiv,
+  Grid,
+  GridCard,
+} from '@rkn/page-components'
+
+export async function getStaticPaths() {
+  const pages = await fetch(`${import.meta.env.STRAPI_HOST}/api/spaces`).then(
+    (res) => res.json()
+  )
+  return pages.data.map((page) => ({ params: { page: page.attributes.slug } }))
+}
+
+const { page } = Astro.params
+console.log('page', page)
+
+const pageData = await fetchPageData('/api/spaces', {
+  filters: {
+    slug: {
+      $eq: page,
+    },
+  },
+  populate: [
+    'header.headerImage',
+    'featureImage',
+    'featureImage.image',
+    'blocks',
+    'gallery',
+    'pricing',
+    'pricing.pricing_type',
+    'features',
+    'features.feature',
+    'contactEmail',
+  ],
+})
+const space = pageData.data[0].attributes
+console.log(space)
+const featureImage = space.featureImage
+---
+
+<BaseLayout title={space.title}>
+  <div class="outer">
+    <Header headerTitle={space.title} subtitle={space?.oneLiner ?? ''} />
+    <TwoColumn columnReverse="true">
+      <div class="container">
+        <div class="inner">
+          <div
+            class="description"
+            set:html={markedHelper(space.shortDescription)}
+          />
+          <a href=`mailto:${space.contactEmail.email}`
+            ><span class="pre">Enquire now:</span>
+            <span class="anchor">{space.contactEmail.email}</span></a
+          >
+        </div>
+      </div>
+      <TwoColumnImageDiv slot="second" image={featureImage} />
+    </TwoColumn>
+    <div class="gridContainer">
+      <Grid>
+        <GridCard columnSpan="1">
+          <div class="gridCardInner">
+            <h3>Capacity</h3>
+            <p>{space.capacity}</p>
+          </div>
+        </GridCard>
+        <GridCard columnSpan="1">
+          <div class="gridCardInner">
+            <h3>Size</h3>
+            <p>{space.size}</p>
+          </div>
+        </GridCard>
+        <GridCard columnSpan="2">
+          <div class="gridCardInner">
+            <h3>Features</h3>
+            <ul>
+              {
+                space.features?.feature.map((feature) => {
+                  return <li>{feature.feature}</li>
+                })
+              }
+            </ul>
+          </div>
+        </GridCard>
+        <GridCard columnSpan="2">
+          <div class="gridCardInner">
+            <h3>Pricing</h3>
+            <div class="pricingContainer">
+              {
+                space.pricing.pricing_type.map((type) => {
+                  return (
+                    <div>
+                      <h4>{type.typeName}</h4>
+                      <p>{type?.amount ?? 'amount'}</p>
+                      More to do here - RN
+                    </div>
+                  )
+                })
+              }
+            </div>
+          </div>
+        </GridCard>
+      </Grid>
+    </div>
+    <div class="gallery">
+      <h2>Gallery to come</h2>
+    </div>
+  </div>
+</BaseLayout>
+<style>
+  /*TEXT AND IMAGE STYLES*/
+  div.container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  div.inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  div.description :global(p::first-line) {
+    color: var(--primary-color);
+    font-style: italic;
+    line-height: 200%;
+    font-size: var(--font-size-hero-p);
+  }
+  div.description {
+    margin-bottom: 1rem;
+  }
+  div.description :global(p) {
+    margin-top: 0;
+    color: var(--gunmetal);
+  }
+  div.inner a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 2rem;
+    background: var(--gunmetal-tint);
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: var(--font-size-h5);
+    font-weight: bold;
+  }
+  div.inner a:hover {
+    transform: scale(102%);
+  }
+  a span.pre {
+    font-weight: bold;
+    color: var(--gunmetal);
+  }
+  a span.anchor {
+    text-decoration: underline;
+  }
+  @media (max-width: calc(500rem/16)) {
+    div.inner {
+      padding: 1.5rem;
+    }
+    div.inner a {
+      padding: 1rem;
+    }
+  }
+  /*DETAILS GRID STYLES*/
+  div.gridContainer {
+    background-color: var(--primary-color);
+    height: 100%;
+    padding: 0.5rem 0;
+  }
+  div.gridCardInner {
+    background: white;
+    padding: 1.2rem;
+    height: 100%;
+  }
+  .gridContainer h3 {
+    color: var(--primary-color);
+    font-size: var(--font-size-h4);
+    margin-top: 0;
+  }
+  .gridContainer li {
+    list-style: none;
+    margin: 0.5rem 0;
+    color: var(--gunmetal);
+  }
+  .gridContainer p {
+    color: var(--gunmetal);
+  }
+  div.pricingContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .pricingContainer h4 {
+    color: var(--primary-color);
+    font-size: var(--font-size-hero-p);
+    font-style: italic;
+    font-weight: 500;
+  }
+  div.gallery {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+  }
+  .gallery h2 {
+    margin: 0 auto;
+  }
+</style>

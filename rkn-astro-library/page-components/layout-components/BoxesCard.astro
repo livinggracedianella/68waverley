@@ -11,6 +11,7 @@ const description =
   Astro.props.description ??
   `Placeholder text. You are welcome, whatever your age,
 culture or gender.`
+const backgroundColour = Astro.props.backgroundColour ?? 'white'
 ---
 
 <div class="boxes-card container">
@@ -23,7 +24,7 @@ culture or gender.`
   />
   <div class="image"></div>
 </div>
-<style define:vars={{ imageUrl }}>
+<style define:vars={{ imageUrl, backgroundColour }}>
   div {
     width: 100%;
   }
@@ -48,7 +49,7 @@ culture or gender.`
     padding: 10px;
   }
   div.description {
-    background: white;
+    background: var(--backgroundColour);
     grid-column: 2/-1;
     grid-row: 2/-2;
     padding: 5px 10px 15px 25px;

@@ -1,0 +1,104 @@
+---
+import { BaseLayout } from '@rkn/base-components'
+import {
+  Header,
+  fetchFilterPopulate,
+  markedHelper,
+  strapiAsset,
+  site,
+  BoxesCard,
+  BoxesWrapper,
+} from '@rkn/page-components'
+const data = await fetchFilterPopulate('/api/pages', 'spaces-for-hire', [
+  'header.headerImage',
+  'blocks.spaces',
+  'blocks.spaces.featureImage',
+  'blocks.featureImage',
+])
+const pageData = data.data[0].attributes
+const blocks = pageData.blocks
+const header = pageData.header
+---
+
+<BaseLayout title="Spaces">
+  <div class="outer">
+    <Header {...header} subtitle={pageData.subtitle} />
+    {
+      blocks.map((block) => {
+        let spaces = block.spaces.data
+        return (
+          <div class="space-type">
+            <BoxesWrapper backgroundColour="white">
+              {spaces.map((space) => {
+                console.log(space.attributes.featureImage.data)
+                let { width, height, url } = space.attributes.featureImage?.data
+                  ?.attributes?.formats?.small ?? {
+                  width: 234,
+                  height: 156,
+                  url: '/uploads/small_Image_from_i_OS_1_scaled_5366379b79.jpg',
+                }
+                return (
+                  <BoxesCard
+                    backgroundColour="var(--gunmetal-tint)"
+                    imageUri={url}
+                    description={space?.attributes?.shortDescription ?? ''}
+                  >
+                    <h3>
+                      <a
+                        class="click"
+                        href={`/spaces-for-hire/${space.attributes.slug}`}
+                      >
+                        {space.attributes.title}
+                      </a>
+                    </h3>
+                    <h4>{space.attributes.timeSlot}</h4>
+                    <h4>{space.attributes.location}</h4>
+                  </BoxesCard>
+                )
+              })}
+            </BoxesWrapper>
+          </div>
+        )
+      })
+    }
+  </div>
+</BaseLayout>
+<style>
+  div.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.space-type {
+    width: 100%;
+  }
+  section.overview {
+    padding: 0 2rem 2rem 2rem;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  h2 {
+    width: 100%;
+    text-align: center;
+    color: var(--gunmetal);
+  }
+  :global(div.space-type p) {
+    color: var(--gunmetal);
+  }
+  /*BOXES LAYOUT STYLES*/
+  h3,
+  h4 {
+    color: white;
+    margin-top: 0;
+    text-align: left;
+  }
+  h4 {
+    font-family: var(--italic);
+    font-size: var(--font-size-h5);
+  }
+</style>
