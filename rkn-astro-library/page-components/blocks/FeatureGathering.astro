@@ -1,0 +1,112 @@
+---
+//Takes gathering, imageSide, backgroundColour
+import {
+  markedHelper,
+  strapiAsset,
+  site,
+  TwoColumn,
+  TwoColumnImageDiv,
+  parseDate,
+  Button,
+  contrastingText,
+  contrastingAnchor,
+} from '@rkn/page-components'
+const props = Astro.props
+console.log(props)
+const gathering =
+  props?.gathering?.data?.attributes ?? props.gathering.attributes
+const { imageSide, heading = 'Featured Group' } = props
+const { title, shortDescription, featureImage, slug, timeSlot, location } =
+  props?.gathering?.data?.attributes ??
+  props?.gathering?.attributes ??
+  props.gathering
+let margin
+imageSide == 'left' ? (margin = '1rem auto 0 0') : (margin = '1rem 0 0 auto')
+const backgroundColour = `var(--${
+  props?.backgroundColour?.colourPicker ?? 'light'
+})`
+const textColour = contrastingText(props.backgroundColour)
+const anchorColour = contrastingAnchor(props.backgroundColour)
+let buttonColour =
+  backgroundColour == 'var(--gunmetal)'
+    ? 'var(--primary-color)'
+    : 'var(--gunmetal)'
+let href
+
+if (site() == '68waverley') {
+  href = '/groups/' + slug
+} else {
+  href = '/gatherings/' + slug
+}
+---
+
+<TwoColumn smallSide={imageSide}>
+  <div class="outer">
+    <div class="inner">
+      <h2>{heading}</h2>
+      <h3>{title}</h3>
+      <div
+        class="featureGatheringBody"
+        set:html={markedHelper(shortDescription)}
+      />
+      <div class="button">
+        <Button {href} label="Find Out More" buttonColour={buttonColour} />
+      </div>
+    </div>
+  </div>
+  <TwoColumnImageDiv {...featureImage} slot="second" />
+</TwoColumn>
+<style define:vars={{ margin, backgroundColour, textColour, anchorColour }}>
+  div.outer {
+    padding: 1rem 2rem 3rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--backgroundColour);
+  }
+  div.outer * {
+    color: var(--textColour);
+  }
+  div.inner {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+  div.button,
+  h2 {
+    margin: var(--margin);
+  }
+  :global(.featureGatheringBody *) {
+    font-size: var(--font-size-hero-p);
+    line-height: var(--line-height-hero-p);
+    max-width: 700px;
+  }
+  :global(.featureGatheringBody a) {
+    color: var(--anchorColour);
+  }
+  p.details {
+    font-size: var(--font-size-h4);
+    font-family: var(--italic);
+    margin: 0.8rem 0 1.5rem 0;
+    line-height: var(--line-height-h4);
+  }
+  div.button {
+    padding-top: 1rem;
+  }
+  @media (max-width: 750px) {
+    div.button,
+    h2 {
+      margin: 0.3rem auto;
+    }
+    div.button {
+      padding: 1rem 0 0.2rem 0;
+    }
+    div.outer {
+      padding: 2rem;
+    }
+    p.details {
+      margin: 0 0 1.4rem 0;
+      font-size: var(--font-size-h5);
+    }
+  }
+</style>
