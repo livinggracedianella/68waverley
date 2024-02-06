@@ -25,7 +25,7 @@ const header = pageData.header
     <Header {...header} subtitle={pageData.subtitle} />
     {
       blocks.map((block) => {
-        let spaces = block.spaces.data
+        let spaces = block.spaces?.data
         return (
           <div class="space-type">
             <BoxesWrapper backgroundColour="white">

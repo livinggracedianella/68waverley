@@ -40,7 +40,6 @@ const pageData = await fetchPageData('/api/spaces', {
   ],
 })
 const space = pageData.data[0].attributes
-console.log(space)
 const featureImage = space.featureImage
 ---
 
@@ -54,9 +53,12 @@ const featureImage = space.featureImage
             class="description"
             set:html={markedHelper(space.shortDescription)}
           />
-          <a href=`mailto:${space.contactEmail.email}`
+          <a
+            href=`mailto:${space.contactEmail?.email ?? "admin@68waverly.org.au"}`
             ><span class="pre">Enquire now:</span>
-            <span class="anchor">{space.contactEmail.email}</span></a
+            <span class="anchor"
+              >{space.contactEmail?.email ?? 'admin@68waverley.org.au'}</span
+            ></a
           >
         </div>
       </div>
