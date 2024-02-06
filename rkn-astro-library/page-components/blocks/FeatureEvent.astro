@@ -23,8 +23,6 @@ const {
   slug,
   anchorageDetails = { pdHours: '' },
 } = props?.event?.data?.attributes ?? props?.event?.attributes ?? props.event
-const image =
-  featureImage?.image ?? '/uploads/small_Sermon_Image_Background_ed63796e21.png'
 let margin
 imageSide == 'left' ? (margin = '1rem auto 0 0') : (margin = '1rem 0 0 auto')
 const backgroundColour = `var(--${

@@ -13,7 +13,7 @@ const data = await fetchFilterPopulate('/api/pages', 'spaces-for-hire', [
   'header.headerImage',
   'blocks.spaces',
   'blocks.spaces.featureImage',
-  'blocks.featureImage',
+  'blocks.spaces.featureImage.image',
 ])
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
@@ -30,9 +30,8 @@ const header = pageData.header
           <div class="space-type">
             <BoxesWrapper backgroundColour="white">
               {spaces.map((space) => {
-                console.log(space.attributes.featureImage.data)
-                let { width, height, url } = space.attributes.featureImage?.data
-                  ?.attributes?.formats?.small ?? {
+                let { width, height, url } = space.attributes.featureImage
+                  ?.image?.data?.attributes?.formats?.small ?? {
                   width: 234,
                   height: 156,
                   url: '/uploads/small_Image_from_i_OS_1_scaled_5366379b79.jpg',
