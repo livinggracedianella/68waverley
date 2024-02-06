@@ -34,7 +34,7 @@ const header = pageData.header
             <h2>{block.title}</h2>
             <section
               class="overview"
-              set:html={markedHelper(block.overview ?? '')}
+              set:html={markedHelper(block?.overview ?? '')}
             />
             <BoxesWrapper>
               {gatherings.map((gathering) => {
