@@ -1,4 +1,5 @@
 ---
+//Content comes from Navigation Menu content type in Strapi.
 import { fetchPageData } from '../page-components/util.js'
 const site = import.meta.env.THIS_SITE
 const strapi = import.meta.env.STRAPI_HOST
@@ -31,9 +32,9 @@ const logoData = await fetchPageData('/api/navigations', {
     },
   },
 })
-const logoURL = `${strapi}${logoData.data[0].attributes.logo.data[0].attributes.url}`
+const logoURL = `${strapi}${logoData.data[0].attributes.logo.data.attributes.url}`
 const logoAltText =
-  logoData.data[0].attributes.logo.data[0].attributes.alternativeText
+  logoData.data[0].attributes.logo.data.attributes.alternativeText
 ---
 
 <header class="header-wrapper">
