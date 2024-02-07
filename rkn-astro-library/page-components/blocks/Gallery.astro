@@ -1,0 +1,117 @@
+---
+import { strapiAsset } from '../util.js'
+const title = Astro.props?.title ?? ''
+const gallery = Astro.props?.gallery?.data ?? false
+---
+
+{
+  gallery && (
+    <>
+      <h2>Gallery</h2>
+      <div class="wrapper">
+        <div class="focus" />
+        <div class="galleryGrid">
+          {gallery.map((picture, i) => {
+            let pic = picture.attributes
+            console.log(pic.formats)
+            return (
+              <div
+                class={`thumbnail ${'pic-' + i}`}
+                style={`background-image: url(${strapiAsset(
+                  pic.formats?.large?.url ?? pic.url
+                )})`}
+              />
+            )
+          })}
+        </div>
+      </div>
+    </>
+  )
+}
+<style>
+  h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  div.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  div.thumbnail {
+    height: calc(160rem / 16);
+    width: auto;
+    transition: 0.2s;
+  }
+  div.thumbnail:hover {
+    transform: scale(105%);
+  }
+  div.galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1rem 2rem;
+    max-height: min(
+      calc(((160rem * 3) / 16) + 4rem),
+      calc(80vh - var(--header-height))
+    );
+    overflow-y: scroll;
+  }
+  div.thumbnail,
+  div.focus {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: center;
+  }
+  @media (max-width: calc(1400rem/16)) {
+    div.galleryGrid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+  @media (max-width: calc(1024rem/16)) {
+    div.galleryGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+    div.wrapper {
+      grid-template-columns: 4fr 3fr;
+    }
+  }
+  @media (max-width: calc(916rem/16)) {
+    div.galleryGrid {
+      grid-template-columns: 1fr;
+    }
+    div.wrapper {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+  @media (max-width: calc(700rem/16)) {
+    div.wrapper {
+      grid-template-columns: 1fr;
+    }
+    div.focus {
+      height: calc(50vh);
+    }
+    div.galleryGrid {
+      display: flex;
+      margin: 1rem;
+      overflow-y: hidden;
+    }
+    div.thumbnail {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+  }
+</style>
+<script>
+  const focus = document.querySelector('.focus')
+  const thumbnails = document.querySelectorAll('.thumbnail')
+  focus.style.backgroundImage = thumbnails[0].style.backgroundImage
+  thumbnails.forEach((thumbnail) => {
+    thumbnail.addEventListener('click', (e) => {
+      console.log('clicked', e)
+      return (focus.style.backgroundImage = e.target.style.backgroundImage)
+    })
+  })
+</script>

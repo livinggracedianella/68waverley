@@ -9,6 +9,7 @@ import {
   TwoColumnImageDiv,
   Grid,
   GridCard,
+  Gallery,
 } from '@rkn/page-components'
 
 export async function getStaticPaths() {
@@ -37,10 +38,13 @@ const pageData = await fetchPageData('/api/spaces', {
     'features',
     'features.feature',
     'contactEmail',
+    'gallery.gallery',
+    'gallery.gallery.image',
   ],
 })
 const space = pageData.data[0].attributes
 const featureImage = space.featureImage
+const gallery = space.gallery
 ---
 
 <BaseLayout title={space.title}>
@@ -54,6 +58,7 @@ const featureImage = space.featureImage
             set:html={markedHelper(space.shortDescription)}
           />
           <a
+            class="enquire"
             href=`mailto:${space.contactEmail?.email ?? "admin@68waverly.org.au"}`
             ><span class="pre">Enquire now:</span>
             <span class="anchor"
@@ -109,107 +114,107 @@ const featureImage = space.featureImage
         </GridCard>
       </Grid>
     </div>
-    <div class="gallery">
-      <h2>Gallery to come</h2>
-    </div>
+    <Gallery {...gallery} />
   </div>
-</BaseLayout>
-<style>
-  /*TEXT AND IMAGE STYLES*/
-  div.container {
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
-  div.inner {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  div.description :global(p::first-line) {
-    color: var(--primary-color);
-    font-style: italic;
-    line-height: 200%;
-    font-size: var(--font-size-hero-p);
-  }
-  div.description {
-    margin-bottom: 1rem;
-  }
-  div.description :global(p) {
-    margin-top: 0;
-    color: var(--gunmetal);
-  }
-  div.inner a {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 2rem;
-    background: var(--gunmetal-tint);
-    color: var(--primary-color);
-    text-decoration: none;
-    font-size: var(--font-size-h5);
-    font-weight: bold;
-  }
-  div.inner a:hover {
-    transform: scale(102%);
-  }
-  a span.pre {
-    font-weight: bold;
-    color: var(--gunmetal);
-  }
-  a span.anchor {
-    text-decoration: underline;
-  }
-  @media (max-width: calc(500rem/16)) {
+  <style>
+    /*TEXT AND IMAGE STYLES*/
+    div.container {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
     div.inner {
-      padding: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    div.description :global(p::first-line) {
+      color: var(--primary-color);
+      font-style: italic;
+      line-height: 200%;
+      font-size: var(--font-size-hero-p);
+    }
+    div.description {
+      margin-bottom: 1rem;
+    }
+    div.description :global(p) {
+      margin-top: 0;
+      color: var(--gunmetal);
     }
     div.inner a {
-      padding: 1rem;
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 2rem;
+      background: var(--gunmetal-tint);
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: var(--font-size-h5);
+      font-weight: bold;
     }
-  }
-  /*DETAILS GRID STYLES*/
-  div.gridContainer {
-    background-color: var(--primary-color);
-    height: 100%;
-    padding: 0.5rem 0;
-  }
-  div.gridCardInner {
-    background: white;
-    padding: 1.2rem;
-    height: 100%;
-  }
-  .gridContainer h3 {
-    color: var(--primary-color);
-    font-size: var(--font-size-h4);
-    margin-top: 0;
-  }
-  .gridContainer li {
-    list-style: none;
-    margin: 0.5rem 0;
-    color: var(--gunmetal);
-  }
-  .gridContainer p {
-    color: var(--gunmetal);
-  }
-  div.pricingContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .pricingContainer h4 {
-    color: var(--primary-color);
-    font-size: var(--font-size-hero-p);
-    font-style: italic;
-    font-weight: 500;
-  }
-  div.gallery {
-    height: 200px;
-    display: flex;
-    align-items: center;
-    padding: 2rem;
-    width: 100%;
-  }
-  .gallery h2 {
-    margin: 0 auto;
-  }
-</style>
+    div.inner a:hover {
+      transform: scale(102%);
+    }
+    a span.pre {
+      font-weight: bold;
+      color: var(--gunmetal);
+    }
+    a span.anchor {
+      text-decoration: underline;
+    }
+    @media (max-width: calc(500rem/16)) {
+      div.inner {
+        padding: 1.5rem;
+      }
+      div.inner a {
+        padding: 1rem;
+      }
+    }
+    /*DETAILS GRID STYLES*/
+    div.gridContainer {
+      background-color: var(--primary-color);
+      height: 100%;
+      padding: 0.5rem 0;
+    }
+    div.gridCardInner {
+      background: white;
+      padding: 1.2rem;
+      height: 100%;
+    }
+    .gridContainer h3 {
+      color: var(--primary-color);
+      font-size: var(--font-size-h4);
+      margin-top: 0;
+    }
+    .gridContainer li {
+      list-style: none;
+      margin: 0.5rem 0;
+      color: var(--gunmetal);
+    }
+    .gridContainer p {
+      color: var(--gunmetal);
+    }
+    div.pricingContainer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .pricingContainer h4 {
+      color: var(--primary-color);
+      font-size: var(--font-size-hero-p);
+      font-style: italic;
+      font-weight: 500;
+    }
+    div.gallery {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      padding: 2rem;
+      width: 100%;
+    }
+    .gallery h2 {
+      margin: 0 auto;
+    }
+  </style>
+</BaseLayout>
