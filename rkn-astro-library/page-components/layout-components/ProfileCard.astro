@@ -1,5 +1,5 @@
 ---
-import { GridImageDiv, GridCard, site } from '@rkn/page-components'
+import { GridImageDiv, GridCard, site, excerpt } from '@rkn/page-components'
 const profile = Astro.props.profile.attributes
 const { name, slug, alternateDetails = [] } = profile
 let trueDetails
@@ -27,13 +27,10 @@ const portrait = trueDetails?.portrait?.data
       <h3>
         <a class="click" href={`/profiles/${slug}`}>{name}</a>
       </h3>
-      <h4>
-        {title && <span class="profile-detail">{title}</span>}
+      <h4 class={title.length > 40 && 'longTitle'}>
+        {title && title}
       </h4>
-      <p>
-        {bio?.length >= 100 && `${bio.substring(0, 100)}...`}
-        {bio?.length < 100 && `${bio}`}
-      </p>
+      {(<p set:html={excerpt(bio, 100)} />)}
     </div>
     <div class="imageContainer">
       <GridImageDiv image={portrait} />
@@ -49,6 +46,8 @@ const portrait = trueDetails?.portrait?.data
     grid-template-columns: 3fr 2fr;
     grid-column: span 2;
     height: 100%;
+    min-height: calc(165rem / 16);
+    transition: 0.25s;
   }
   div.textContainer :is(h4, p) {
     color: var(--gunmetal);
@@ -56,25 +55,16 @@ const portrait = trueDetails?.portrait?.data
   div.textContainer {
     padding: 20px;
     background: var(--light);
-    container-type: inline-size;
   }
-  @media (max-width: 900px) {
-    div.textContainer {
-      padding: 10px;
-    }
-    h3 {
-      font-size: var(--font-size-h4);
-    }
-    h4 {
-      font-size: var(--font-size-h5);
-    }
-  }
-  .profile-detail:not(:last-of-type)::after {
-    content: '|';
+  .imageContainerAlt {
+    display: none;
   }
   h4 {
     font-family: var(--italic);
     margin-top: 0;
+  }
+  h4.longTitle {
+    font-size: calc(var(--font-size-h4) - 0.125rem);
   }
   h2,
   h3 {
@@ -86,15 +76,56 @@ const portrait = trueDetails?.portrait?.data
   .imageContainer {
     height: 100%;
   }
-  @media (max-width: 420px) {
+  @container (min-width: 600px) {
+    div.inner {
+      display: grid;
+      grid-template-columns: 4fr 2fr;
+    }
+  }
+  @container (max-width: 450px) {
+    div.textContainer {
+      padding: 10px;
+    }
+    h3 {
+      font-size: var(--font-size-h4);
+    }
+    h4 {
+      font-size: var(--font-size-h5);
+    }
+    h4.longTitle {
+      font-size: calc(var(--font-size-h5) - 0.125rem);
+    }
+  }
+  @container (max-width: 350px) {
     p {
       display: none;
     }
   }
-  @container (max-width: 350px) {
+  @container (max-width: 300px) {
+    h3 {
+      font-size: var(--font-size-h5);
+    }
+    h4 {
+      font-size: var(--font-size-hero-p);
+    }
+    h4.longTitle {
+      font-size: calc(var(--font-size-hero-p) - 0.0625rem);
+    }
+    div.textContainer {
+      padding: 7px;
+    }
+  }
+  @container (max-width: 260px) {
+    h4 {
+      display: none;
+    }
     div.inner {
       grid-template-columns: 1fr;
-      grid-template-rows: 1fr 1fr;
+      grid-template-rows: 1fr 4fr;
+      border: 1px solid white;
+    }
+    div.textContainer {
+      padding: 5px 8px;
     }
   }
 </style>

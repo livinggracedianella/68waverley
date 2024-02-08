@@ -146,3 +146,35 @@ export function contrastingAnchor(backgroundColour) {
   }
   return anchorColor
 }
+
+export function excerpt(text, length = 100) {
+  if (text) {
+    if (text.length <= length) {
+      return markedPlain(text)
+    } else {
+      return (
+        markedPlain(text)
+          .substring(0, length)
+          .split(' ')
+          .slice(0, -1)
+          .join(' ') + '...'
+      )
+    }
+  }
+}
+
+export function richExcerpt(text, length = 200) {
+  if (text) {
+    if (text.length <= length) {
+      return markedHelper(text)
+    } else {
+      return (
+        markedHelper(text)
+          .substring(0, length)
+          .split(' ')
+          .slice(0, -1)
+          .join(' ') + '...'
+      )
+    }
+  }
+}

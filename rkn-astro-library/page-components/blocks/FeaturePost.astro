@@ -1,6 +1,6 @@
 ---
 import {
-  markedHelper,
+  richExcerpt,
   strapiAsset,
   site,
   TwoColumn,
@@ -51,10 +51,7 @@ backgroundColour == 'var(--gunmetal)'
           ))
         }
       </p>
-      <div
-        class="featurePostBody"
-        set:html={markedHelper(body.substring(0, 200).trim() + '...')}
-      />
+      <div class="featurePostBody" set:html={richExcerpt(body, 200)} />
       <div class="button">
         <Button
           href={prefix + slug}

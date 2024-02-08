@@ -57,6 +57,11 @@ const gallery = Astro.props?.gallery?.data ?? false
     );
     overflow-y: scroll;
   }
+  @media (min-width: calc(916rem/16)) {
+    div.galleryGrid {
+      min-height: calc((320rem / 16) + 3rem);
+    }
+  }
   div.thumbnail,
   div.focus {
     background-repeat: no-repeat;

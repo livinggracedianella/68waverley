@@ -57,8 +57,12 @@ const header = pageData.header
                         {gathering.attributes.title}
                       </a>
                     </h3>
-                    <h4>{gathering.attributes.timeSlot}</h4>
-                    <h4>{gathering.attributes.location}</h4>
+                    {gathering.attributes.timeSlot && (
+                      <h4>{gathering.attributes.timeSlot}</h4>
+                    )}
+                    {gathering.attributes.location && (
+                      <h4>{gathering.attributes.location}</h4>
+                    )}
                   </BoxesCard>
                 )
               })}

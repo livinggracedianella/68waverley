@@ -1,14 +1,9 @@
 ---
-//formerly two-column.
+//formerly two-column. Content comes from 'Text-Image' block in Strapi.
 import { markedHelper, contrastingText, contrastingAnchor } from '../util.js'
 import { strapiAsset, TwoColumn, TwoColumnImageDiv } from '@rkn/page-components'
 const props = Astro.props
 const { featureImage } = props
-/*const imgURL = strapiAsset(
-  img.formats?.medium?.url ??
-    img.formats?.small?.url ??
-    img.formats.thumbnail.url
-)*/
 const backgroundColour = `var(--${
   props?.backgroundColour?.colourPicker ?? 'light'
 })`

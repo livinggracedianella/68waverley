@@ -1,4 +1,5 @@
 ---
+//Populated from gatherings content-type in Strapi
 import { BaseLayout } from '@rkn/base-components'
 import {
   Header,
@@ -31,6 +32,9 @@ const pageData = await fetchFilterPopulate(`/api/gatherings`, page, [
   'blocks.gatherings',
   'blocks.featureImage',
   'blocks.featureImage.image',
+  'blocks.gallery',
+  'blocks.gallery.gallery',
+  'blocks.gallery.gallery.image',
 ])
 const gathering = pageData.data[0]?.attributes ?? pageData.data.attributes
 const header = gathering.header
