@@ -1,4 +1,5 @@
 ---
+//Populated from post content-type in Strapi
 import { BaseLayout } from '@rkn/base-components'
 import {
   Header,
@@ -46,8 +47,10 @@ const { data: posts } = await fetchPopulateSort(
     <Grid>
       {
         posts.map((post) => {
-          const { url, width, height } =
-            post.attributes.featureImage.image.data.attributes.formats.small
+          const url =
+            post.attributes?.featureImage?.image?.data?.attributes?.formats
+              ?.small?.url ??
+            '/uploads/small_Sermon_Image_Background_ed63796e21.png'
           const { title, date, slug, body, profiles } = post.attributes
           const postUrl = `/${pageSlug}/${slug}`
           const profileNames = profiles.data
@@ -62,7 +65,7 @@ const { data: posts } = await fetchPopulateSort(
                   </a>
                 </h3>
                 <div class="details">
-                  <span class="detail">{parseDate(date)}</span>
+                  {date && <span class="detail">{parseDate(date)}</span>}
                   <span class="detail">{profileNames}</span>
                 </div>
                 <div class="container">
