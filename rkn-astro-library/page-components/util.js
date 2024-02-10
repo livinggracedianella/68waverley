@@ -100,7 +100,10 @@ export function markedPlain(text) {
   })
 }
 
-export function parseDate(givenDate) {
+export function parseDate(givenDate, year = true) {
+  if (!givenDate) {
+    return ''
+  }
   const months = [
     'January',
     'February',
@@ -117,7 +120,7 @@ export function parseDate(givenDate) {
   ]
   const date = new Date(givenDate)
   const fullDate =
-    date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear()
+    months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear()
   return fullDate
 }
 

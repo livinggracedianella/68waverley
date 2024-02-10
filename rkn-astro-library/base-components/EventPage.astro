@@ -39,7 +39,27 @@ const blocks = pageData.data[0].attributes.blocks
             <dt>When</dt>
           </div>
           <div class="gridInner second">
-            <dd>{event.time}<br /> {parseDate(event.date)}</dd>
+            <dd>
+              {
+                (event?.time ? event.time + ',' : '') +
+                  ' ' +
+                  parseDate(event.date, false)
+              }
+              {
+                event.endDate && (
+                  <>
+                    <br />
+                    <span class="to">to</span>
+                    <br />
+                  </>
+                )
+              }
+              {
+                (event?.endTime ? event.endTime + ',' : '') +
+                  ' ' +
+                  parseDate(event.endDate, false)
+              }
+            </dd>
           </div>
         </div>
         <div class="gridItem">
@@ -212,6 +232,10 @@ const blocks = pageData.data[0].attributes.blocks
   }
   .button span {
     color: var(--primary-color);
+  }
+  span.to {
+    font-size: 1rem;
+    line-height: 0.8;
   }
   @container (max-width: 400px) {
     div.gridInner {
