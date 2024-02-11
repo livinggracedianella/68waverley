@@ -7,7 +7,7 @@ const gallery = Astro.props?.gallery?.data ?? false
 {
   gallery && (
     <>
-      <h2>Gallery</h2>
+      <h2>{title ? title : 'Gallery'}</h2>
       <div class="wrapper">
         <div class="focus" />
         <div class="galleryGrid">

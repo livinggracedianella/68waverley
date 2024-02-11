@@ -21,6 +21,9 @@ const pageData = await fetchFilterPopulate(`/api/events`, page, [
   'blocks.featureImage',
   'blocks.featureImage.image',
   'blocks.backgroundColour',
+  'blocks.gallery',
+  'blocks.gallery.gallery',
+  'blocks.gallery.gallery.image',
 ])
 
 const event = pageData.data[0].attributes
@@ -31,7 +34,7 @@ const blocks = pageData.data[0].attributes.blocks
 
 <BaseLayout title={event.title}>
   <article class="outer">
-    <Header {...header} subtitle={event.oneLiner} />
+    <Header {...header} />
     <dl class="details">
       <div class="grid">
         <div class="gridItem">

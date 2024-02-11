@@ -65,7 +65,7 @@ if (slug === 'home') {
     text-align: center;
   }
   :global(div.subtitle) {
-    padding-bottom: 1rem;
+    padding: 0 3rem 1rem 3rem;
   }
   :global(div.subtitle a) {
     color: white;
@@ -75,12 +75,17 @@ if (slug === 'home') {
       min-height: calc(var(--headerHeight) - 2rem);
     }
     :global(div.subtitle) {
-      padding-bottom: 0.8rem;
+      padding: 0 2rem 0.8rem 2rem;
+      hyphens: auto;
     }
   }
   @media (max-width: 400px) {
     .wrapper {
       min-height: calc(var(--headerHeight) - 3rem);
+    }
+    :global(div.subtitle) {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
   }
 </style>
