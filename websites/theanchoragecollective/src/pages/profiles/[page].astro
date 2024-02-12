@@ -95,14 +95,6 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
         <TwoColumnImageDiv image={portrait} maximumHeight="true" />
       </div>
     </TwoColumn>
-    <div
-      class="banner"
-      style=`background-image: url(${strapiAsset('/uploads/anchorage_watercolour_banner_1920w_c5af4e4197.jpg')});`
-    >
-      <span class="contact">Contact {name.split(' ')[0]}</span>
-      <a href=`mailto:${email}
-      `>{email}</a>
-    </div>
     <dl class="detailsGrid">
       <div class="card">
         <dt>Qualifications</dt>
@@ -121,6 +113,14 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
         <dd set:html={markedHelper(specialtyAreas ?? '')} />
       </div>
     </dl>
+    <div
+      class="banner cta"
+      style=`background-image: url(${strapiAsset('/uploads/anchorage_watercolour_banner_1920w_c5af4e4197.jpg')});`
+    >
+      <span class="contact">Contact {name.split(' ')[0]}</span>
+      <a class="click" href=`mailto:${email}
+    `>{email}</a>
+    </div>
     <ProfilesGrid
       title="Our People"
       overview="Who else would you like to meet?"
@@ -142,7 +142,7 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
   }
   a.cta {
     color: white;
-    padding: 20px;
+    padding: 10px 0 20px 0;
     display: block;
   }
   div.ProfileTextContainer {
@@ -197,7 +197,7 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
     min-width: 100%;
   }
   span.contact {
-    font-size: var(--font-size-h3);
+    font-size: var(--font-size-h2);
     font-family: var(--bold);
     color: white;
     text-shadow: 2px 2px 3px black;
@@ -205,12 +205,13 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
     margin: 0.2rem 0;
   }
   div.banner a {
-    font-size: var(--font-size-h5);
+    font-size: var(--font-size-h4);
     font-family: var(--bold);
     text-shadow: 1px 1px 2px black;
     letter-spacing: 1px;
     color: white;
     padding: 0 1rem;
+    hyphens: auto;
   }
   dl.detailsGrid {
     display: grid;
@@ -230,6 +231,9 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
     color: var(--primary-color);
     font-family: var(--bold);
   }
+  .banner.cta:hover {
+    cursor: pointer;
+  }
   @media (max-width: 1200px) and (min-width: 1024px), (max-width: 700px) {
     .detailsGrid .card {
       padding: 1rem 16px;
@@ -247,5 +251,18 @@ const profiles = await fetchPopulate('/api/profiles', ['portrait'])
     dl.detailsGrid {
       grid-template-columns: 1fr;
     }
+    div.banner a {
+      font-size: var(--font-size-h5);
+    }
   }
 </style>
+<script>
+  const banner = document.querySelector('.banner.cta')
+  banner.addEventListener('click', (e) => {
+    // If the thing they clicked is already a link, do nothing, let their link click go through.
+    if (e.target.nodeName === 'A') {
+      return
+    }
+    banner.querySelector('.click')?.click()
+  })
+</script>

@@ -25,6 +25,7 @@ const data = await fetchFilterPopulate('/api/pages', pageSlug, [
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
+console.log(header)
 
 const events = await fetchPopulate('/api/events', [
   'featureImage',
@@ -33,7 +34,7 @@ const events = await fetchPopulate('/api/events', [
 ])
 ---
 
-<BaseLayout title={header[0].headerTitle}>
+<BaseLayout title={header.headerTitle}>
   <div class="outer">
     <Header {...header} subtitle={pageData.subtitle} />
     <BlockRenderer {blocks} />

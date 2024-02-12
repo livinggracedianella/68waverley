@@ -61,7 +61,7 @@ const service = pageData.data[0].attributes
         .join(' ') + 's'}
     />
     <TextBlock>
-      {service.shortDescription}
+      {service.shortDescription ? service.shortDescription : service.oneLiner}
     </TextBlock>
     <ProfilesGrid
       profiles={service.profiles}
