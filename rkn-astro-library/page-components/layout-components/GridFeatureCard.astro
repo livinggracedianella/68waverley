@@ -7,9 +7,19 @@ const {
   overview = 'Add overview prop',
   href = site() == 'livinggracedianella' ? '/gatherings' : '/groups',
 } = Astro.props
-const cardImage =
-  Astro.props?.cardImage ??
-  '/uploads/small_Alpha_Lifeshared_CANADA_18_4_1905609_tomgphoto_be076bc705.jpg'
+let cardImage
+if (Astro.props.cardImage) {
+  cardIMage = Astro.props.cardImage
+} else if (site() === 'livinggracedianella') {
+  cardImage =
+    '/uploads/small_Alpha_Lifeshared_CANADA_18_4_1905609_tomgphoto_be076bc705.jpg'
+} else if (site() == 'anchorage') {
+  cardImage = '/uploads/small_079_A6863_Edit_Edit_c796ab8d39.jpg'
+} else if (site() == '68waverley') {
+  cardImage =
+    '/uploads/small_Alpha_Lifeshared_CANADA_18_4_1905609_tomgphoto_be076bc705.jpg'
+}
+
 const firstItemSpan = (3 - (length % 3)) * 2
 const imageUrl = `url(${strapiAsset(
   cardImage?.data?.attributes?.formats?.small?.url ?? cardImage
