@@ -12,7 +12,6 @@ import {
 
 const { page } = Astro.params
 const pageData = await fetchFilterPopulate(`/api/standards`, page, [])
-console.log(pageData.data)
 const standard = pageData.data[0].attributes
 ---
 

@@ -21,7 +21,12 @@ let minHeight = `var(--two-column-min-height-${minimumHeight})`
 let maxHeight = maximumHeight ? '60vh' : 'none'
 ---
 
-<div class="image"></div>
+<div
+  class="image"
+  role="img"
+  aria-label={image?.data?.attributes?.alternativeText ?? ''}
+>
+</div>
 <style
   define:vars={{
     imageUrl,

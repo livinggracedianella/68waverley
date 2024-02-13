@@ -7,7 +7,12 @@ const imageUrl = `url(${strapiAsset(
 )})`
 ---
 
-<div class="image"></div>
+<div
+  class="image"
+  role="img"
+  aria-label={image?.data?.attributes?.alternativeText ?? ''}
+>
+</div>
 <style define:vars={{ imageUrl }}>
   div.image {
     background-image: var(--imageUrl);

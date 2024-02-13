@@ -13,9 +13,10 @@ const gallery = Astro.props?.gallery?.data ?? false
         <div class="galleryGrid">
           {gallery.map((picture, i) => {
             let pic = picture.attributes
-            console.log(pic.formats)
             return (
               <div
+                role="img"
+                aria-label={pic?.alternativeText ?? ''}
                 class={`thumbnail ${'pic-' + i}`}
                 style={`background-image: url(${strapiAsset(
                   pic.formats?.large?.url ?? pic.url
@@ -88,6 +89,11 @@ const gallery = Astro.props?.gallery?.data ?? false
     }
     div.wrapper {
       grid-template-columns: 2fr 1fr;
+    }
+  }
+  @media (min-width: calc(700rem/16 + 1px)) {
+    div.galleryGrid {
+      overflow-x: hidden;
     }
   }
   @media (max-width: calc(700rem/16)) {

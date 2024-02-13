@@ -43,8 +43,12 @@ const props = Astro.props
     font-family: var(--black);
     color: var(--primary-color);
     margin-top: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     font-size: var(--font-size-h2);
+  }
+  div.contactColumn :global(a[href^='tel:']) {
+    color: var(--gunmetal);
+    text-decoration: none;
   }
   :global(div.contactColumn .contactInner p) {
     color: var(--gunmetal);

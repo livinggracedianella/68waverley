@@ -25,8 +25,6 @@ const data = await fetchFilterPopulate('/api/pages', pageSlug, [
 const pageData = data.data[0].attributes
 const blocks = pageData.blocks
 const header = pageData.header
-console.log(header)
-
 const events = await fetchPopulate('/api/events', [
   'featureImage',
   'featureImage.image',
