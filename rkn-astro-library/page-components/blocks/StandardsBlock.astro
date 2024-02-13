@@ -2,6 +2,8 @@
 import TwoColumn from '../layout-components/TwoColumn.astro'
 import { markedHelper } from '../util.js'
 const props = Astro.props
+const standards = props.standards.data
+console.log(standards)
 ---
 
 <TwoColumn>
@@ -14,10 +16,10 @@ const props = Astro.props
   <div class="secondOuter" slot="second">
     <ul>
       {
-        props.standards.map((standard) => {
+        standards.map((standard) => {
           return (
-            <a href={standard.urlPath}>
-              <li>{standard.name}</li>
+            <a href={`/standards/${standard.attributes.slug}`}>
+              <li>{standard.attributes.title}</li>
             </a>
           )
         })

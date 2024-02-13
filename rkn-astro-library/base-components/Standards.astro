@@ -12,6 +12,7 @@ import {
 
 const { page } = Astro.params
 const pageData = await fetchFilterPopulate(`/api/standards`, page, [])
+console.log(pageData.data)
 const standard = pageData.data[0].attributes
 ---
 
@@ -21,13 +22,17 @@ const standard = pageData.data[0].attributes
     <div class="wrapper">
       <article class="standardBody" set:html={markedHelper(standard.body)} />
       <div class="metaDetails">
-        <p>
-          <span class="detail">Effective since:</span>
-          {parseDate(standard.dateEffective)}
-        </p>
+        {
+          standard.dateEffective && (
+            <p>
+              <span class="detail">Effective since:</span>
+              {parseDate(standard.dateEffective)}
+            </p>
+          )
+        }
         <p>
           <span class="detail">Last edited:</span>
-          {parseDate(standard.updatedAt)}<p></p>
+          {parseDate(standard.updatedAt)}
         </p>
       </div>
     </div>
@@ -43,25 +48,28 @@ const standard = pageData.data[0].attributes
     padding: 4rem 80px;
     background: var(--light);
   }
+  div.wrapper {
+    background: white;
+    margin: auto;
+  }
   article,
   div.metaDetails {
     max-width: 750px;
     margin: 2rem 40px;
   }
-  div.wrapper {
-    background: white;
-    margin: auto;
+  div.metaDetails {
+    width: fit-content;
   }
   @media (max-width: 1024px) {
     div.outer {
-      margin-top: 2.5rem;
-      padding: 0 60px;
+      padding: 2rem 60px;
     }
   }
   @media (max-width: 600px) {
     div.outer {
-      margin-top: 1.2rem;
-      padding: 0 20px;
+      padding: 0;
+      margin: 1.5rem 30px;
+      background: white;
     }
     html {
       background: none;
@@ -69,6 +77,7 @@ const standard = pageData.data[0].attributes
     article,
     div.metaDetails {
       margin: 0;
+      margin: 1rem 0;
     }
   }
 </style>

@@ -40,6 +40,7 @@ const pageData = await fetchFilterPopulate(`/api/pages`, page, [
   'blocks.gallery',
   'blocks.gallery.gallery',
   'blocks.gallery.gallery.image',
+  'blocks.standards',
 ])
 const blocks = pageData.data[0].attributes?.blocks ?? []
 const header = pageData.data[0].attributes.header
