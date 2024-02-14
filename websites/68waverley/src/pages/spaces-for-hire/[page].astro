@@ -49,7 +49,7 @@ const gallery = space.gallery
 
 <BaseLayout title={space.title}>
   <div class="outer">
-    <Header headerTitle={space.title} subtitle={space?.oneLiner ?? ''} />
+    <Header headerTitle={space.title} />
     <TwoColumn columnReverse="true">
       <div class="container">
         <div class="inner">
@@ -57,13 +57,9 @@ const gallery = space.gallery
             class="description"
             set:html={markedHelper(space.shortDescription)}
           />
-          <a
-            class="enquire"
-            href=`mailto:${space.contactEmail?.email ?? "admin@68waverly.org.au"}`
+          <a class="enquire" href="mailto:admin@68waverly.org.au"
             ><span class="pre">Enquire now:</span>
-            <span class="anchor"
-              >{space.contactEmail?.email ?? 'admin@68waverley.org.au'}</span
-            ></a
+            <span class="anchor">admin@68waverley.org.au</span></a
           >
         </div>
       </div>
@@ -104,7 +100,7 @@ const gallery = space.gallery
                   return (
                     <div>
                       <h4>{type.typeName}</h4>
-                      <p>{type?.amount ?? 'amount'}</p>
+                      <p set:html={markedHelper(type.amount)}/></p>
                     </div>
                   )
                 })
