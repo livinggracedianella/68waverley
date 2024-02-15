@@ -12,11 +12,6 @@ let imageUrl = `url(${strapiAsset(
   image?.data?.attributes?.formats?.medium?.url ??
     '/uploads/medium_Sermon_Image_Background_ed63796e21.png'
 )})`
-if (Astro.url.pathname.includes('spaces')) {
-  imageUrl = `url(${strapiAsset(
-    '/uploads/small_Image_from_i_OS_1_scaled_5366379b79.jpg'
-  )})`
-}
 let minHeight = `var(--two-column-min-height-${minimumHeight})`
 let maxHeight = maximumHeight ? '60vh' : 'none'
 ---
