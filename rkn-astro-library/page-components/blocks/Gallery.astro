@@ -115,7 +115,7 @@ const gallery = Astro.props?.gallery?.data ?? false
     }
   }
 </style>
-<script>
+<script is:inline>
   const focus = document.querySelector('.focus')
   const thumbnails = document.querySelectorAll('.thumbnail')
   focus.style.backgroundImage = thumbnails[0].style.backgroundImage
